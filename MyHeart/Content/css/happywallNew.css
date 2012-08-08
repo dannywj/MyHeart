@@ -1,0 +1,264 @@
+﻿
+#titlebar {
+    width: 100%;
+    border-bottom: solid 6px #dedede;
+    background-color: #b2f0e8;
+    height: 30px;
+}
+
+#endbar {
+    margin: 0 auto;
+    width: 50%;
+    height: 6px;
+    background-color: #b1c8ea;
+    margin-top: 20px;
+}
+
+#endInfo {
+    margin: 0 auto;
+    width: 50%;
+    height: 20px;
+    font-size: 12px;
+    line-height: 20px;
+    margin-bottom: 30px;
+}
+
+    #endInfo a {
+        color: #666;
+    }
+
+a {
+    color: #fff;
+}
+
+    a:hover {
+        color: #fff;
+    }
+
+    a :visited {
+        color: #fff;
+    }
+
+#title {
+    width: 800px;
+    height: 50px;
+    margin: 0 auto;
+    background-image: url('../img/wall.png');
+    background-repeat: no-repeat;
+    margin-top: 6px;
+}
+
+.kuang {
+    width: 94%;
+    height: 550px;
+    margin: 0 auto; /*   border: solid 1px #dedede;*/
+}
+
+#content {
+    width: 750px; /*   border: solid 1px red; */
+    height: 530px;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+.items {
+    width: 106px;
+    height: 106px;
+    margin-left: 14px;
+    margin-top: 14px;
+    float: left;
+}
+
+.bg {
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    background-image: url('img/it.png');
+    background-repeat: no-repeat;
+    border: 1px solid #C0C0C0;
+    background-color: red; /*#DBEAFF;*/
+    -webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+    filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=5, OffY=5, Color='gray');
+    -ms-filter: "progid:DXImageTransform.Microsoft.dropshadow(OffX=5, OffY=5, Color='gray')";
+}
+
+.info {
+    text-align: center;
+    line-height: 25px;
+    font-size: 14px;
+    color: Red;
+    font-weight: bold;
+    height: 50px;
+}
+
+.person {
+    height: 16px;
+    text-align: right;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.date {
+    height: 14px;
+    text-align: right;
+    font-size: 12px;
+}
+
+.k {
+    height: 19px;
+}
+
+#heartInfo {
+    width: 450px;
+    height: 350px;
+}
+
+.heartInfoLine {
+    height: 30px;
+    width: 450px;
+    line-height: 30px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#logo_font {
+    padding-top: 6px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+}
+
+#desp_font {
+    margin-left: 40px;
+    padding-bottom: 6px;
+    font-size: 12px;
+}
+
+#footer_font {
+    float: left;
+    margin-left: 10px;
+    position: absolute;
+}
+
+#footer_desp {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.LoginError {
+    color: Red;
+    font-weight: bold;
+}
+
+p {
+    line-height: 16px;
+}
+
+.pubHeart {
+    height: 20px;
+    line-height: 20px !important;
+    padding-left: 20px !important;
+    cursor: pointer; /* display: inline-block;*/
+    display: none;
+    width: 60px;
+    position: relative;
+    background: url(../images/pubheart.png) no-repeat left 0;
+    margin-left: 10px;
+}
+/*发布心愿*/
+.PubNewHeart {
+    width: 450px;
+    height: 380px;
+    text-align: center;
+    display: none;
+}
+
+.PubTitleText {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: #666;
+    margin-bottom: 16px;
+    margin-top: 6px;
+}
+
+.PubNewHeart .inputText {
+    border: 1px solid #C3CED9;
+    border-radius: 5px 5px 5px 5px;
+    font-size: 14px;
+    height: 20px;
+    line-height: 20px;
+    margin-right: 10px;
+    padding: 0;
+    width: 240px;
+}
+
+.pubLine {
+    width: 400px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.publeft {
+    float: left;
+    width: 90px;
+    height: 30px;
+    line-height: 30px;
+    text-align: right;
+}
+
+.pubright {
+    float: left;
+    width: 300px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.pubBtn {
+    width: 80px;
+    height: 30px;
+    border: 1px solid #C3CED9;
+    border-radius: 5px 5px 5px 5px;
+    line-height: 30px;
+    color: #333;
+    font-weight: bold;
+}
+
+#pubErrorMessage {
+    color: #cc0000;
+    font-size: 12px;
+    margin: 6px;
+    display: none;
+}
+/*发布心愿end*/
+
+/*日期控件*/
+.ui-datepicker {
+    font-size: 70%;
+}
+
+/*loading样式*/
+#content_loading {
+    width: 750px;
+    height: 530px;
+    overflow: hidden;
+    position: relative;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+     
+}
+
+    #content_loading p {
+        position: static;
+        +position:absolute;
+        top: 50%;
+    }
+
+#loadingimg {
+    position: static;
+    +position:relative;
+    top: -50%;
+    left: -50%;
+}

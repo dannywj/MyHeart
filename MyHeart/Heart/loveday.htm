@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>我的纪念日</title>
+    <script src="Scripts/jquery-1.6.2.min.js" type="text/javascript"></script>
+    <script src="Scripts/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
+    <link href="css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css" />
+    <link href="../Common/css/type.css" rel="stylesheet" type="text/css" />
+    <link href="css/loveday.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/loveday.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="titlebar">
+        <table width="100%" cellpadding="0" cellspacing="0" style="line-height: 30px; color: #fff;
+            font-size: 13px; font-weight: bold;">
+            <tr>
+                <td width="100px">
+                </td>
+                <td width="50px">
+                    <a href="http://180.86.43.224/Login.aspx">首页</a>
+                </td>
+                <td width="100px">
+                    <a href="#" onclick="aboutLoveDay();">我的纪念日</a>
+                </td>
+                <td>
+                </td>
+                <td width="100px">
+                  <!--  <a href="http://180.86.43.224/maomi/index.aspx">我的日记</a>-->
+                </td>
+                <td width="100px">
+                    <a href="#" onclick="exitLoveDay();">退出</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="toggler" id="welcome">
+        <div id="effect" class="ui-widget-content ui-corner-all">
+            <h2 class="ui-widget-header ui-corner-all" style="font-size: 16px; text-align: center;
+                line-height: 30px;">
+                今天过得好吗？</h2>
+            <p style="font-size: 14px; font-weight: bold; line-height: 30px; margin-top: 30px;">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 生命中的每一天都是值得珍惜和纪念的，微笑面对每一天，做最好的自己！
+            </p>
+            <br />
+            <br />
+            <p style="color: Red; text-align: right;">
+                ——Danny&nbsp;&nbsp;&nbsp;&nbsp;
+            </p>
+        </div>
+    </div>
+    <div id="kuang">
+        <div id="title">
+        </div>
+        <div id="content">
+            <div class="line">
+                日期：<input id="txtdate" type="text" class="ku" disabled="disabled" value="" style="width: 150px;
+                    display: inline; margin-bottom: 0px; padding: 0;" />
+            </div>
+            <div class="line">
+                这是我们的&nbsp;
+                <input id="txtTitle" type="text" class="ku" style="width: 150px; display: inline;
+                    margin-bottom: 0px; padding: 0;" />&nbsp; 纪念日
+            </div>
+            <div class="line" style="height: 24px;">
+                今天——
+            </div>
+            <div class="line" style="height: 170px;">
+                <textarea id="txtContent" cols="20" rows="20" class="ku"></textarea>
+            </div>
+            <div id="s1" class="line">
+            </div>
+            <div id="s2" class="line">
+            </div>
+            <div id="Div1" class="line" style="text-align: center; height: 60px; line-height: 60px;
+                margin-top: 10px;">
+                <div class="demo" style="">
+                    <input type="submit" value="收藏幸福" onclick="pub();" style="height: 40px; line-height: 20px;
+                        font-size: 16px;" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="endbar">
+    </div>
+    <div id="endInfo">
+        <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+                <td width="50px">
+                    ©2011-11
+                </td>
+                <td>
+                </td>
+                <td width="50px">
+                    <a href="#" onclick="aboutMe()">关于</a>
+                </td>
+                <td width="50px">
+                    <a href="#" onclick="contactMe()">联系我们</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!--    Dialog Info-->
+    <div id="dialog-message" title="发布成功" style="display: none;">
+        <p style="margin-top: 20px; font-size: 13px;">
+            <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;">
+            </span>心愿发布成功，请珍惜这段幸福的日子
+        </p>
+    </div>
+    <div id="dialog_about_us" title="关于我们" style="display: none;">
+        <p style="margin-top: 10px; line-height: 30px; margin-left: 6px;">
+            我们是一个年轻自信的团队，没有不可能，只有不敢想。</p>
+        <p style="margin-top: 10px; line-height: 30px; margin-left: 6px; color: Red;">
+            期待你的参与和推广。</p>
+    </div>
+    <div id="dialog_contact_us" title="联系我们" style="display: none;">
+        <p style="margin-top: 10px; line-height: 30px; margin-left: 6px;">
+            Email： danny__wj@163.com</p>
+        <p style="margin-top: 10px; line-height: 30px; margin-left: 6px;">
+            QQ: 184166420</p>
+        <p style="margin-top: 10px; line-height: 30px; margin-left: 6px;">
+            期待您的宝贵意见！</p>
+    </div>
+    <div id="aboutLoveDay" title="我的纪念日" style="display: none;">
+        <p style="margin-top: 10px; line-height: 30px; margin-left: 6px; font-size: 13px;">
+            &nbsp; &nbsp; &nbsp; 我的纪念日是一个注重隐私简洁干净的重温心灵的旅程。</p>
+        <p style="margin-top: 10px; line-height: 30px; margin-left: 6px; font-size: 13px;">
+            &nbsp; &nbsp; &nbsp; 在这里你可以记录下生活的点滴，日后他将给你无尽的惊喜。</p>
+        <p style="margin-top: 10px; line-height: 30px; margin-left: 6px; font-size: 13px;">
+            &nbsp; &nbsp; &nbsp; 送给所有习惯寂寞，享受生活的人。</p>
+    </div>
+    <div id="dialog-confirm" title="确定离开？" style="display: none;">
+        <p style="margin-top: 10px; line-height: 30px; margin-left: 6px; font-size: 13px;">
+            &nbsp; &nbsp; &nbsp; 真的要离开心灵的旅程？</p>
+        <p style="margin-top: 10px; line-height: 30px; margin-left: 6px; font-size: 13px;">
+            &nbsp; &nbsp; &nbsp; 那就收拾行囊，开始行动吧！</p>
+    </div>
+    <div class="demo">
+        <div id="dialog-form" title="留下纪念" style="height: 50px;">
+            <p id="validateTips" style="margin-top: 20px;">
+                告诉我您的Email，会有小惊喜的~</p>
+            <form>
+            <fieldset style="height: 50px;">
+                <label for="email" style="margin-bottom: 10px;">
+                    Email：</label>
+                <input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all" />
+            </fieldset>
+            </form>
+        </div>
+    </div>
+    <div id="pubsuccess" title="收藏成功" style="display: none;">
+        <p style="margin-top: 10px; line-height: 30px; margin-left: 6px;">
+            谢谢你重温了一次心灵旅程，你将在不远的将来收获一份惊喜和感动~</p>
+        <p style="margin-top: 10px; line-height: 30px; margin-left: 6px;">
+            用行动来探寻生命的意义吧……</p>
+        <p style="margin-top: 10px; line-height: 30px; margin-left: 6px;">
+            期待您的再次光临！</p>
+    </div>
+    <div id="puberror" title="收藏失败" style="display: none;">
+        <p style="margin-top: 10px; line-height: 30px; margin-left: 6px;">
+            运气太差了……</p>
+    </div>
+    <div id="datanull" title="检查一下吧" style="display: none;">
+        <p style="margin-top: 10px; line-height: 30px; margin-left: 6px;">
+            信息没有填写完整……</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script>
+        window.onload = function () {
+            //alert(document.getElementById('t').innerText);
+
+            var array = document.getElementsByTagName("li");
+
+            var a = new Array();
+            a.push("test1");
+            a.push("test2");
+            a.pop();
+            var print = '';
+            for (var i = 0; i < a.length; i++) {
+                print += a[i].toString();
+            }
+            // alert(print);
+
+            document.getElementById("t").innerHTML="aaa";
+      
+        }
+    </script>
+</head>
+<body>
+
+    <div id="borrowinfo" class="gray_ad">
+
+        <h2 id="t">在哪儿借这本书?<span> test</span>
+            
+        </h2>
+
+        <ul class="bs">
+
+            <li style="border: none">
+                <a target="_blank" href="http://www.douban.com/link2?type=borrow&amp;subject=4714015&amp;library=10012&amp;url=http%3A//ipac.library.sh.cn/ipac20/ipac.jsp%3Faspect%3Dbasic_search%26profile%3Dsl%26index%3DISBN%26term%3D9787507422474">上海市中心图书馆(20)</a>
+            </li>
+
+            <li style="border: none">
+                <a target="_blank" href="http://www.douban.com/link2?type=borrow&amp;subject=4714015&amp;library=10002&amp;url=http%3A//218.62.1.221%3A8080/opac/openlink.php%3FstrText%3D9787507422474%26strSearchType%3Disbn">吉林省图书馆</a>
+            </li>
+
+            <li style="border: none">
+                <a target="_blank" href="http://www.douban.com/link2?type=borrow&amp;subject=4714015&amp;library=10006&amp;url=http%3A//ourex.lib.sjtu.edu.cn/primo_library/libweb/action/search.do%3Ffn%3Dsearch%26vl%28freeText0%29%3D978-7-5074-2247-4">上海交通大学图书馆</a>
+            </li>
+            <li style="border-bottom: none; border-top: 1px dashed #DDD; padding-top: 0">
+                <a href="http://book.douban.com/library_invitation" style="float: right; margin-right: 10px">&gt; 图书馆合作</a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+</body>
+</html>
