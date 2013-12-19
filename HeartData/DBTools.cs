@@ -9,59 +9,10 @@ namespace HeartData
 {
     public class DBTools
     {
-        public static bool writeLoveDay(string dayTitle, string content, string customerEmail)
-        {
-            string sql = string.Format("insert into DailyInfo(title,content,writer,status) values('{0}','{1}','{2}',99)", dayTitle, content, customerEmail);
-            try
-            {
-                object obj = SqlHelper.ExecuteScalar(ConnString.GetConString, CommandType.Text, sql.ToString());
-            }
-            catch
-            {
-                return false;
-            }
-            return true;
-        }
-
-        public static bool pubHeart(string title, string writer, string joiner, string contact, string bgimage, DateTime beginDate, DateTime endDate, string content)
-        {
-            string sql = string.Format(@"INSERT INTO [heart]
-           ([title]
-           ,[pubID]
-           ,[pubName]
-           ,[participator]
-           ,[contact]
-           ,[bgImage]
-           ,[content]
-           ,[beginDate]
-           ,[endDate]
-           )
-     VALUES
-           ('{0}'
-           ,0
-           ,'{1}'
-           ,'{2}'
-           ,'{3}'
-           ,'{4}'
-           ,'{7}'
-           ,'{5}'
-           ,'{6}'
-         )", title, writer, joiner, contact, bgimage, beginDate, endDate, content);
-            try
-            {
-                object obj = SqlHelper.ExecuteScalar(ConnString.GetConString, CommandType.Text, sql.ToString());
-            }
-            catch
-            {
-                return false;
-            }
-            return true;
-        }
-
         public static DataTable getAllHeart()
         {
             DataTable dt = null;
-            string sql = " select top 24 *, NewID() as random from heart order by random";
+            string sql = " select top 24 *, NewID() as random from ht_heartInfo order by random";
             try
             {
                 dt = SqlHelper.ExecuteDataset(ConnString.GetConString, CommandType.Text, sql.ToString()).Tables[0];
@@ -156,7 +107,7 @@ namespace HeartData
         {
             try
             {
-                string sql = string.Format(@"INSERT INTO [heart]
+                string sql = string.Format(@"INSERT INTO ht_heartInfo
                        ([title]
                        ,[pubID]
                        ,[pubName]

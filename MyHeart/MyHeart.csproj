@@ -23,7 +23,9 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
-    <UpgradeBackupLocation />
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -199,6 +201,7 @@
     <Content Include="Content\img\title.png" />
     <Content Include="Content\img\wall.png" />
     <Content Include="Content\img\walltitle.png" />
+    <Content Include="DBScripts\ht.createTable.sql" />
     <Content Include="DLL\GotDotNet.ApplicationBlocks.Data.dll" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -1124,8 +1127,6 @@
     <Content Include="Scripts\Plugin\JQueryUI\jquery-ui-1.8.18.custom.min.js" />
     <Content Include="Scripts\Plugin\login.js" />
     <Content Include="Scripts\pubheart.js" />
-    <Content Include="Test\HtmlPage1.html" />
-    <Content Include="Test\test.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

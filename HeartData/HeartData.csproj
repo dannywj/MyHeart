@@ -31,7 +31,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GotDotNet.ApplicationBlocks.Data">
-      <HintPath>..\..\Heart\WebUI\OtherDLL\GotDotNet.ApplicationBlocks.Data.dll</HintPath>
+      <HintPath>..\MyHeart\DLL\GotDotNet.ApplicationBlocks.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="NetDimension.Weibo">
+      <HintPath>..\MyHeart\DLL\NetDimension.Weibo.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />

@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 11
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyHeart", "MyHeart\MyHeart.csproj", "{8A57FF44-DE72-42EF-B435-9E53854B86F8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeartData", "HeartData\HeartData.csproj", "{C0C800D5-E481-4872-97C2-5E96A7AEF14F}"

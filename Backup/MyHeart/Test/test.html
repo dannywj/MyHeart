@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>test</title>
+    <script type="text/javascript">
+        function Person(name, age) {
+            this.name = name;
+            this.age = age;
+            this.getName = function () {
+                return this.name;
+            }
+            this.setName = function (name) {
+                this.name = name;
+            }
+        }
+        function Teacher() {
+            this.sub = 'PC';
+            this.print = function () {
+                alert(this.age + '  ' + this.sub + '  ' + this.getName());
+            }
+        }
+        Teacher.prototype = new Person("www", 12);//Teacher 继承了Person的一切！！
+        var t = new Teacher();
+        //t.setName("wj");
+        t.print();
+
+    </script>
+</head>
+<body>
+
+
+
+</body>
+</html>
