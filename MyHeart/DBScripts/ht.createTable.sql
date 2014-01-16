@@ -19,3 +19,15 @@ CREATE TABLE [dbo].[ht_heartInfo]
 GO
 ALTER TABLE [dbo].[ht_heartInfo] ADD CONSTRAINT [PK_ht_heartInfo] PRIMARY KEY CLUSTERED  ([heartId]) ON [PRIMARY]
 GO
+
+--悄悄话信息表
+CREATE TABLE [dbo].[ht_message]
+(
+[id] [int] NOT NULL IDENTITY(1, 1),
+[writer] [nvarchar] (50) COLLATE Chinese_PRC_CI_AS NULL,
+[content] [nvarchar] (4000) COLLATE Chinese_PRC_CI_AS NULL,
+[pub_date] [datetime] NULL
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[ht_message] ADD CONSTRAINT [PK_ht_message] PRIMARY KEY CLUSTERED  ([id]) ON [PRIMARY]
+GO
