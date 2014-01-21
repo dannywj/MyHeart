@@ -161,5 +161,36 @@ namespace HeartData
             }
             return true;
         }
+
+        //pub tools
+        public static bool PubNewMessage(string date, string content, string writer)
+        {
+            try
+            {
+                string sql = string.Format(@"INSERT INTO ht_message ( writer, content, pub_date )
+                VALUES  ( '{0}', N'{1}',  '{2}')", writer, content, date);
+
+                object o = SqlHelper.ExecuteNonQuery(ConnString.GetConString, CommandType.Text, sql);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static int GetMessageCount()
+        {
+            try
+            {
+                string sql = string.Format(@"select count(*) from ht_message");
+                object o = SqlHelper.ExecuteScalar(ConnString.GetConString, CommandType.Text, sql);
+                return Convert.ToInt32(o);
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
     }
 }

@@ -31,3 +31,5 @@ CREATE TABLE [dbo].[ht_message]
 GO
 ALTER TABLE [dbo].[ht_message] ADD CONSTRAINT [PK_ht_message] PRIMARY KEY CLUSTERED  ([id]) ON [PRIMARY]
 GO
+
+select * from [ht_message]

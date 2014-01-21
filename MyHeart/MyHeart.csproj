@@ -118,6 +118,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Heart\MessagePub.aspx.cs">
+      <DependentUpon>MessagePub.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Heart\MessagePub.aspx.designer.cs">
+      <DependentUpon>MessagePub.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -234,6 +241,7 @@
     <Content Include="Content\login_panel\js\pngfix\x.gif" />
     <Content Include="Content\login_panel\js\slide.js" />
     <Content Include="Heart\loveday.htm" />
+    <Content Include="Heart\MessagePub.aspx" />
     <Content Include="Scripts\AutoPlugin\jquery-1.6.2-vsdoc.js" />
     <Content Include="Scripts\AutoPlugin\jquery-1.6.2.js" />
     <Content Include="Scripts\AutoPlugin\jquery-1.6.2.min.js" />
