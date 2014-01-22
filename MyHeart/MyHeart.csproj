@@ -1170,6 +1170,7 @@
     <None Include="Content\css\ui-lightness\images\Thumbs.db" />
     <None Include="Content\img\font.psd" />
     <None Include="Content\img\许愿墙标题.psd" />
+    <Content Include="DBScripts\GeGe悄悄话备份20140121.zip" />
     <None Include="Properties\PublishProfiles\HeartWall.pubxml" />
     <None Include="Scripts\Plugin\EXTJS\resources\images\access\form\clear-trigger.psd" />
     <None Include="Scripts\Plugin\EXTJS\resources\images\access\form\date-trigger.psd" />
