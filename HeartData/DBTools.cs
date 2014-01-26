@@ -26,7 +26,7 @@ namespace HeartData
 
         public static bool CheckNewUser(string userName)
         {
-            string sql = "  select count(*) from heart_user where login_name=@userName";
+            string sql = "  select count(*) from ht_userInfo where loginName=@userName";
             SqlParameter[] parameters = {
 					new SqlParameter("@userName", SqlDbType.NVarChar)
                                         };
@@ -48,7 +48,7 @@ namespace HeartData
 
         public static bool RegisterNewUser(string userName, string password, bool useEmail)
         {
-            string sql = "  insert into heart_user(login_name,use_email,password)values(@userName,@use_email,@password)";
+            string sql = "  insert into ht_userInfo(loginName,useEmail,password)values(@userName,@use_email,@password)";
             SqlParameter[] parameters = {
 					new SqlParameter("@userName", SqlDbType.NVarChar),
                     new SqlParameter("@password", SqlDbType.NVarChar),
@@ -80,7 +80,7 @@ namespace HeartData
         {
             try
             {
-                string sql = " select count(*) from  heart_user where login_name=@userName and password=@password ";
+                string sql = " select count(*) from  ht_userInfo where loginName=@userName and password=@password ";
                 SqlParameter[] parameters = {
 					new SqlParameter("@userName", SqlDbType.NVarChar),
                     new SqlParameter("@password", SqlDbType.NVarChar)

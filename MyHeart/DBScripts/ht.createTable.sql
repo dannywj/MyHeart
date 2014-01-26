@@ -32,6 +32,21 @@ GO
 ALTER TABLE [dbo].[ht_message] ADD CONSTRAINT [PK_ht_message] PRIMARY KEY CLUSTERED  ([id]) ON [PRIMARY]
 GO
 
+--用户信息表
+CREATE TABLE [dbo].[ht_userInfo]
+(
+[id] [int] NOT NULL IDENTITY(1, 1),
+[loginName] [varchar] (50) COLLATE Chinese_PRC_CI_AS NULL,
+[password] [varchar] (50) COLLATE Chinese_PRC_CI_AS NULL,
+[useEmail] [int] NULL,
+[addDate] [datetime] NULL CONSTRAINT [DF_ht_user_info_add_date] DEFAULT (getdate()),
+[status] [int] NULL CONSTRAINT [DF_ht_user_info_status] DEFAULT ((0))
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[ht_userInfo] ADD CONSTRAINT [PK_ht_user_info] PRIMARY KEY CLUSTERED  ([id]) ON [PRIMARY]
+GO
+
+
 SELECT Convert(varchar(10),[pub_date],120),[writer],[content]
 FROM [heart].[dbo].[ht_message]
 ORDER BY id desc

@@ -232,8 +232,10 @@ $(function () {
                 //自动收起
                 $("#WelcomeName").text("欢迎你：" + userName + "~");
                 $(".pubHeart").css("display", "inline-block");
-                setTimeout('$("#close").click();', 2000);
+                //setTimeout('$("#close").click();', 2000);
                 CurrentUser = userName;
+                $("#P_UserHeartInfo").show();
+                $("#P_UserRegisterInfo").hide();
             }
             else {
                 $("#LoginMessage").text('用户名或密码错误!');
