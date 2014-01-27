@@ -200,11 +200,14 @@
     <Content Include="Content\img\BG\it7.jpg" />
     <Content Include="Content\img\BG\it8.jpg" />
     <Content Include="Content\img\BG\it9.jpg" />
+    <Content Include="Content\img\check.png" />
+    <Content Include="Content\img\heart_ok.png" />
     <Content Include="Content\img\it.png" />
     <Content Include="Content\img\pubbg.png" />
     <Content Include="Content\img\pubtitle.png" />
     <Content Include="Content\img\s1.png" />
     <Content Include="Content\img\s2.png" />
+    <Content Include="Content\img\heart_done.png" />
     <Content Include="Content\img\title.png" />
     <Content Include="Content\img\wall.png" />
     <Content Include="Content\img\walltitle.png" />
@@ -242,6 +245,7 @@
     <Content Include="Content\login_panel\js\slide.js" />
     <Content Include="Heart\loveday.htm" />
     <Content Include="Heart\MessagePub.aspx" />
+    <Content Include="Heart\testHeart.html" />
     <Content Include="Scripts\AutoPlugin\jquery-1.6.2-vsdoc.js" />
     <Content Include="Scripts\AutoPlugin\jquery-1.6.2.js" />
     <Content Include="Scripts\AutoPlugin\jquery-1.6.2.min.js" />
@@ -1133,6 +1137,14 @@
     <Content Include="Scripts\Plugin\jquery.colorbox-min.js" />
     <Content Include="Scripts\Plugin\jquery.tmpl.js" />
     <Content Include="Scripts\Plugin\JQueryUI\jquery-ui-1.8.18.custom.min.js" />
+    <Content Include="Scripts\Plugin\ratyStar\img\cancel-off.png" />
+    <Content Include="Scripts\Plugin\ratyStar\img\cancel-on.png" />
+    <Content Include="Scripts\Plugin\ratyStar\img\star-half.png" />
+    <Content Include="Scripts\Plugin\ratyStar\img\star-off-big.png" />
+    <Content Include="Scripts\Plugin\ratyStar\img\star-off.png" />
+    <Content Include="Scripts\Plugin\ratyStar\img\star-on-big.png" />
+    <Content Include="Scripts\Plugin\ratyStar\img\star-on.png" />
+    <Content Include="Scripts\Plugin\ratyStar\jquery.raty.js" />
     <Content Include="Scripts\Plugin\login.js" />
     <Content Include="Scripts\pubheart.js" />
     <Content Include="Web.config" />

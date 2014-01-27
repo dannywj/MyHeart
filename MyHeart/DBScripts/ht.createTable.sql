@@ -20,6 +20,9 @@ GO
 ALTER TABLE [dbo].[ht_heartInfo] ADD CONSTRAINT [PK_ht_heartInfo] PRIMARY KEY CLUSTERED  ([heartId]) ON [PRIMARY]
 GO
 
+alter table [dbo].[ht_heartInfo] add heartLevel int default((0));
+GO
+
 --悄悄话信息表
 CREATE TABLE [dbo].[ht_message]
 (
@@ -50,3 +53,7 @@ GO
 SELECT Convert(varchar(10),[pub_date],120),[writer],[content]
 FROM [heart].[dbo].[ht_message]
 ORDER BY id desc
+
+select * from ht_heartInfo
+
+update ht_heartInfo set heartLevel=1;

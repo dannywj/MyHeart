@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Rate Things!</title>
+    <!-- Make sure you change these to point to your actual files. --> 
+    <script src="../Scripts/Plugin/jquery-1.6.2.min.js"></script>
+    <script src="../Scripts/Plugin/lib/jquery.raty.js"></script>
+  
+</head>
+<body>
+    <div id="star">
+    </div>
+    <div id="result">
+    </div>
+    <script type="text/javascript">
+        $("#result").hide();//将结果DIV隐藏
+        $('#star').raty({
+            hints: ['1', '2', '3', '4', '5'],
+            path: "../Scripts/Plugin/lib/img",
+            starOff: 'star-off-big.png',
+            starOn: 'star-on-big.png',
+            size: 30,
+            target: '#result',
+            targetKeep: true
+        });
+
+        //弹出结果
+        var text = $('#result').text();
+        $('img').click(function () {
+            if ($('#result').text() != text) {
+                alert($('#result').text());
+                return;
+            }
+        });
+    </script>
+  
+</body>
+</html>

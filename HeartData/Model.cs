@@ -41,5 +41,6 @@ namespace HeartData
         public string Contact { set; get; }
         public string FinishDate { set; get; }
         public string HeartContent { set; get; }
+        public int HeartLevel { set; get; }
     }
 }

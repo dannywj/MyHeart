@@ -117,7 +117,7 @@ namespace HeartData
                        ,[content]
                        ,[beginDate]
                        ,[endDate]
-          
+                       ,[heartLevel]
                        ,[station])
                  VALUES
                        (@title
@@ -129,6 +129,7 @@ namespace HeartData
                        ,@content 
                        ,@beginDate 
                        ,@endDate 
+                       ,@heartLevel 
                        ,@station)");
                 SqlParameter[] parameters = {
 					new SqlParameter("@title", SqlDbType.NVarChar),
@@ -140,6 +141,7 @@ namespace HeartData
                     new SqlParameter("@content", SqlDbType.NVarChar),
                     new SqlParameter("@beginDate", SqlDbType.DateTime),
                     new SqlParameter("@endDate", SqlDbType.DateTime),
+                    new SqlParameter("@heartLevel", SqlDbType.Int),
                     new SqlParameter("@station", SqlDbType.Int) 
                                         };
                 parameters[0].Value = newHeart.Title;
@@ -151,7 +153,8 @@ namespace HeartData
                 parameters[6].Value = newHeart.HeartContent;
                 parameters[7].Value = DateTime.Now;
                 parameters[8].Value = newHeart.FinishDate;
-                parameters[9].Value = 0;//newHeart.station;
+                parameters[9].Value = newHeart.HeartLevel;
+                parameters[10].Value = 0;//newHeart.station;
                 object o = SqlHelper.ExecuteNonQuery(ConnString.GetConString, CommandType.Text, sql, parameters);
             }
             catch (Exception)

@@ -17,6 +17,8 @@
     <link href="../Content/login_panel/css/loginAll.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="../Content/login_panel/js/slide.js"></script>
     <script type="text/javascript" src="../Scripts/Plugin/login.js"></script>
+    <!--心愿等级插件-->
+    <script src="../Scripts/Plugin/ratyStar/jquery.raty.js"></script>
     <!--许愿墙部分-->
     <link rel="stylesheet" type="text/css" href="../Content/css/type.css" />
     <link rel="stylesheet" type="text/css" href="../Content/css/happywallNew.css" />
@@ -25,11 +27,14 @@
     <!--网站图标-->
     <link rel="icon" href="/favicon.ico" type="image/x-icon" media="screen" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" media="screen" />
+
     <!--日期控件 和自定义CS有冲突，放在最下！-->
     <link rel="stylesheet" type="text/css" href="../Content/css/JQuertUI/cupertino/jquery-ui-1.8.18.custom.css" />
     <script type="text/javascript" src="../Scripts/Plugin/JQueryUI/jquery-ui-1.8.18.custom.min.js"></script>
     <script src="http://jquery-ui.googlecode.com/svn/trunk/ui/i18n/jquery.ui.datepicker-zh-CN.js"
         type="text/javascript"></script>
+
+
 </head>
 <body>
     <!-- Panel -->
@@ -47,46 +52,46 @@
                     </p>
                     <h2>未来的路</h2>
                     <p class="grey">
-                        将愿望作为自己的动力，不断前行，缘分的天空下，你将会收获到多彩的，人生。
+                        将愿望作为自己的动力，不断前行，缘分的天空下，你将会收获到多彩的人生。
                     </p>
                 </div>
                 <div class="left">
                     <!-- Login Form -->
                     <form class="clearfix" action="" method="post" id="LoginForm">
-                    <h1>用户登陆</h1>
-                    <label class="LoginError" style="display: none;" id="LoginMessage">
-                        Error Message!!!
-                    </label>
-                    <label class="grey" for="loginusername">
-                        Email Or Username:
-                    </label>
-                    <input class="field" type="text" name="loginusername" id="loginusername" value=""
-                        maxlength="30" size="23" />
-                    <label class="grey" for="password">
-                        Password:
-                    </label>
-                    <input class="field" type="password" name="password" id="loginpassword" size="23"
-                        maxlength="16" />
-                    <label>
-                        <input name="rememberMe" id="rememberMe" type="checkbox" checked="checked" value="1" />
-                        &nbsp;记住我
-                    </label>
-                    <div class="clear">
-                    </div>
-                    <input type="button" value="登 陆" class="bt_login" id="btnLogin" />
-                    <span class="lost-pwd">忘记密码？</span> <span class="lost-pwd" id="login_sina_weibo"></span>
+                        <h1>用户登陆</h1>
+                        <label class="LoginError" style="display: none;" id="LoginMessage">
+                            Error Message!!!
+                        </label>
+                        <label class="grey" for="loginusername">
+                            Email Or Username:
+                        </label>
+                        <input class="field" type="text" name="loginusername" id="loginusername" value=""
+                            maxlength="30" size="23" />
+                        <label class="grey" for="password">
+                            Password:
+                        </label>
+                        <input class="field" type="password" name="password" id="loginpassword" size="23"
+                            maxlength="16" />
+                        <label>
+                            <input name="rememberMe" id="rememberMe" type="checkbox" checked="checked" value="1" />
+                            &nbsp;记住我
+                        </label>
+                        <div class="clear">
+                        </div>
+                        <input type="button" value="登 陆" class="bt_login" id="btnLogin" />
+                        <span class="lost-pwd">忘记密码？</span> <span class="lost-pwd" id="login_sina_weibo"></span>
                     </form>
                     <!--用户信息-->
                     <form class="clearfix" action="" method="post" id="UserInfo" style="display: none;">
-                    <h1>用户信息</h1>
-                    <h2>已注册的邮箱或用户名:</h2>
-                    <label class="grey">
-                        <span id="info_userLoginName"></span>
-                    </label>
-                    <label class="grey"><a href="#">修改密码</a></label>
-                    <br />
-                    <input type="button" value="退  出" class="bt_logout" id="btnExit" />
-                    <!--  <label class="grey" for="password">
+                        <h1>用户信息</h1>
+                        <h2>当前用户:</h2>
+                        <label class="grey">
+                            <span id="info_userLoginName"></span>
+                        </label>
+                        <label class="grey"><a href="#">修改密码</a></label>
+                        <br />
+                        <input type="button" value="退  出" class="bt_login" id="btnExit" />
+                        <!--  <label class="grey" for="password">
                         Password:</label>
                     <input class="field" type="password" name="password" id="Password1" size="23" maxlength="16"/>
                     <label>
@@ -102,35 +107,36 @@
                 <div class="left right" id="P_UserRegisterInfo">
                     <!-- Register Form -->
                     <form action="" method="post">
-                    <h1>感兴趣？赶快加入！</h1>
-                    <label class="LoginError" style="display: none;" id="RegisterErrorMsg">
-                    </label>
-                    <label class="grey" for="reg_username">
-                        Email Or Username:
-                    </label>
-                    <input class="field" type="text" name="reg_username" id="reg_username" value="" size="23"
-                        maxlength="30" />
-                    <label class="grey" for="reg_password">
-                        Password:
-                    </label>
-                    <input class="field" type="password" name="reg_password" id="reg_password" size="23"
-                        maxlength="16" />
-                    <label class="grey" for="reg_password_confirm">
-                        Confirm Password:
-                    </label>
-                    <input class="field" type="password" name="reg_password_confirm" id="reg_password_confirm"
-                        maxlength="16" size="23" />
-                    <!--  <label>
+                        <h1>感兴趣？赶快加入！</h1>
+                        <label class="LoginError" style="display: none;" id="RegisterErrorMsg">
+                        </label>
+                        <label class="grey" for="reg_username">
+                            Email Or Username:
+                        </label>
+                        <input class="field" type="text" name="reg_username" id="reg_username" value="" size="23"
+                            maxlength="30" />
+                        <label class="grey" for="reg_password">
+                            Password:
+                        </label>
+                        <input class="field" type="password" name="reg_password" id="reg_password" size="23"
+                            maxlength="16" />
+                        <label class="grey" for="reg_password_confirm">
+                            Confirm Password:
+                        </label>
+                        <input class="field" type="password" name="reg_password_confirm" id="reg_password_confirm"
+                            maxlength="16" size="23" />
+                        <!--  <label>
                         A password will be e-mailed to you.</label>-->
-                    <input type="button" value="立即注册" class="bt_register" id="btnRegister" />
+                        <input type="button" value="立即注册" class="bt_register" id="btnRegister" />
                     </form>
                 </div>
 
-                   <div class="left right" id="P_UserHeartInfo" style="display:none;">
+                <div class="left right" id="P_UserHeartInfo" style="display: none;">
                     <!-- Register Form -->
                     <h1>我的足迹</h1>
                     <h2>我许过的愿望：3个</h2>
                     <h2>我实现的愿望：5个</h2>
+                    <a class="btnManageHeart" href="#P_ManageHeart">查看我的心愿</a>
                 </div>
 
             </div>
@@ -141,10 +147,11 @@
             <ul class="login">
                 <li class="left">&nbsp;</li>
                 <li><span id="WelcomeName">欢迎来到许愿墙~</span><a class="pubHeart" href="#PubNewHeart">发布心愿
+                    <!--必须同时指定class和href-->
                 </a></li>
                 <li class="sep">|</li>
-                <li id="toggle"><a id="open" class="open" href="#">登陆 | 注册</a><a id="close" style="display: none;"
-                    class="close" href="#">收起面板</a></li>
+                <li id="toggle"><a id="open" class="open" href="javascript:void(0)">登陆 | 注册</a><a id="close" style="display: none;"
+                    class="close" href="javascript:void(0)">收起面板</a></li>
                 <li class="right">&nbsp;</li>
             </ul>
         </div>
@@ -174,7 +181,7 @@
             </div>
             <div class="container tutorial-info">
                 <div id="footer_font">
-                    © 2011-2012 By Danny
+                    © 2014 By DannyWang
                 </div>
                 <div id="footer_desp">
                     沉淀心灵，享受生活，憧憬美好，回味人生！
@@ -201,15 +208,12 @@
     </div>
     <div id='heartInfo_content' style='padding: 10px; background: #fff; display: none'>
         <div id="heartInfo">
-            <div class="heartInfoLine" style="font-size: 20px; height: 60px; line-height: 60px;
-                color: #cc0000">
+            <div class="heartInfoLine" style="font-size: 20px; height: 60px; line-height: 60px; color: #cc0000">
                 <img src="../Content/images/heart_email.png" />
-                <span id="heart_title" style="font-size: 20px; height: 60px; line-height: 60px; margin-left: 10px;">
-                </span>
+                <span id="heart_title" style="font-size: 20px; height: 60px; line-height: 60px; margin-left: 10px;"></span>
                 <img style="margin-left: 12px;" src="../Content/images/heart_zip.png" />
             </div>
-            <div id="heart_content" class="heartInfoLine" style="height: 200px; border-top: dashed  2px #dedede;
-                font-size: 14px; line-height: 26px; padding-top: 10px;">
+            <div id="heart_content" class="heartInfoLine" style="height: 200px; border-top: dashed  2px #dedede; font-size: 14px; line-height: 26px; padding-top: 10px;">
             </div>
             <div class="heartInfoLine" style="font-size: 13px; height: 28px; line-height: 28px;">
                 <img src="../Content/images/love.gif" />
@@ -217,17 +221,14 @@
             </div>
             <div class="heartInfoLine" style="font-size: 13px; height: 28px; line-height: 28px;">
                 <img src="../Content/images/calendar.png" />
-                <span id="heart_date" style="font-size: 13px; height: 28px; line-height: 28px;">
-                </span>
+                <span id="heart_date" style="font-size: 13px; height: 28px; line-height: 28px;"></span>
             </div>
-            <div class="heartInfoLine" style="font-size: 13px; height: 28px; line-height: 28px;
-                color: #fba62c">
+            <div class="heartInfoLine" style="font-size: 13px; height: 28px; line-height: 28px; color: #fba62c">
                 <img src="../Content/images/contact.png" />
-                <span id="heart_contact" style="font-size: 13px; height: 28px; line-height: 28px;">
-                </span>
+                <span id="heart_contact" style="font-size: 13px; height: 28px; line-height: 28px;"></span>
             </div>
-            <div class="heartInfoLine" style="font-size: 14px; height: 28px; line-height: 28px;
-                text-align: right; color: #04c588" id="heatr_puber">
+            <div class="heartInfoLine" style="font-size: 14px; height: 28px; line-height: 28px; text-align: right; color: #04c588"
+                id="heatr_puber">
             </div>
         </div>
     </div>
@@ -267,6 +268,12 @@
                         <li class="pubright">
                             <input type="text" class="inputText" id="hDate" readonly="readonly" /></li>
                     </ul>
+                     <ul class="pubLine">
+                        <li class="publeft">心愿等级:</li>
+                        <li class="pubright">
+                           <div id="star"></div>
+                        </li>
+                    </ul>
                     <ul class="pubLine" style="height: 110px;">
                         <li class="publeft">心愿内容:</li>
                         <li class="pubright">
@@ -287,5 +294,66 @@
         </div>
     </section>
     <!--Pub New Heart Panel End-->
+
+    <!--Manage Heart Panel-->
+    <section id="P_ManageHeartPanel">
+        <div class="P_ManageHeart" id="P_ManageHeart">
+            <header id="PubTitle">
+                <h2 class="PubTitleText">我的心愿</h2>
+            </header>
+            <article id="NewHeartPost">
+                <div class="pubContent">
+                    <ul class="htManageTable">
+                        <li class="hItem_b">心愿等级</li>
+                        <li class="hItem_b">心愿名称</li>
+                        <li class="hItem_b">实现日期</li>
+                        <li class="hItem_b">心愿状态</li>
+                    </ul>
+                    <ul class="htManageTable">
+                        <li class="hItem hItemStar">
+                            <img class="ht_level" src="../Scripts/Plugin/ratyStar/img/star-on.png" />
+                            <img class="ht_level" src="../Scripts/Plugin/ratyStar/img/star-on.png" />
+                        </li>
+                        <li class="hItem">和GG一起去动物园</li>
+                        <li class="hItem">2013-01-01</li>
+                        <li class="hItem">已实现
+                             <input type="button" class="ht_btn_done" id="btnDone" />
+                        </li>
+                    </ul>
+                     <ul class="htManageTable">
+                        <li class="hItem hItemStar">        
+                             <img class="ht_level" src="../Scripts/Plugin/ratyStar/img/star-on.png" />
+                            <img class="ht_level" src="../Scripts/Plugin/ratyStar/img/star-on.png" /> 
+                            <img class="ht_level" src="../Scripts/Plugin/ratyStar/img/star-on.png" />
+                            <img class="ht_level" src="../Scripts/Plugin/ratyStar/img/star-on.png" /> 
+                             <img class="ht_level" src="../Scripts/Plugin/ratyStar/img/star-on.png" /></li>
+                        <li class="hItem">
+                            <a title="一起去吃好吃的油泼面一起去吃好吃的油泼面" target="#">一起去吃好吃的油泼面</a>
+
+                        </li>
+                        <li class="hItem">2014-06-23</li>
+                        <li class="hItem">未实现
+                            <input type="button" class="ht_btn_do" id="btnDone" />
+                             
+                        </li>
+                    </ul>
+                     <ul class="htManageTable">
+                        <li class="hItem hItemStar">         
+                            <img class="ht_level" src="../Scripts/Plugin/ratyStar/img/star-on.png" />
+
+                        </li>
+                        <li class="hItem">心愿等级</li>
+                        <li class="hItem">心愿等级</li>
+                        <li class="hItem">心愿等级</li>
+                    </ul>
+                       
+                </div>
+            </article>
+            <footer>
+            </footer>
+        </div>
+    </section>
+    <!--Manage Heart Panel End-->
+
 </body>
 </html>

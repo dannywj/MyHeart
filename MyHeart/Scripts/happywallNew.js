@@ -2,9 +2,10 @@
 /// <reference path="AutoPlugin/jquery-1.6.2.js" />
 /// <reference path="AutoPlugin/jquery-1.6.2-vsdoc.js" />
 
-//全局函数
+//全局变量
 var ControllerPath = "../";
-var CurrentUser = ''; //UserLoginName
+var gCurrentUser = ''; //UserLoginName
+var gHeartLevel = 1;
 
 (function ($) {
     $.extend({
@@ -121,6 +122,24 @@ function GetData() {
             });
         });
     });
+
+    //获取用户登录状态
+    $.get(ControllerPath + "User/GetUserLoginStatus", {}, function (data) {
+        //var jsonData = eval("(" + data + ")");
+        if (data.isSuccess) {
+            gCurrentUser = data.CurrentUser;
+            showLoginInfo(data.CurrentUser);
+        }
+    });
+
+    //填充默认用户名密码
+    var cookie_loginname = $.cookie('loginname');
+    var cookie_password = $.cookie('password');
+
+    if (cookie_loginname != '') {
+        $("#loginusername").val(cookie_loginname);
+        $("#loginpassword").val(cookie_password);
+    }
 }
 
 function InitSinaLogin() {
@@ -144,10 +163,42 @@ function GetSinaUserData(code) {
         }
     });
 }
+
+//登录成功后的显示
+function showLoginInfo(userName) {
+    $("#LoginForm").hide();
+    $("#UserInfo").show();
+    $("#open").text("我的信息");
+    $("#info_userLoginName").text(userName);
+    //自动收起
+    $("#WelcomeName").text("欢迎你：" + userName + "~");
+    $(".pubHeart").css("display", "inline-block");
+    //setTimeout('$("#close").click();', 2000);
+    gCurrentUser = userName;
+    $("#P_UserHeartInfo").show();
+    $("#P_UserRegisterInfo").hide();
+}
 //页面加载
 $(function () {
     //$("#content").jqmShow();
     $("#dialog:ui-dialog").dialog("destroy");
+
+    //初始化心愿等级
+    $("#result").hide();//将结果DIV隐藏
+    $('#star').raty({
+        hints: ['小心愿', '惊喜', '大大的梦想', '长久的执著', '一生的梦想'],
+        path: "../Scripts/Plugin/ratyStar/img",
+        starOff: 'star-off-big.png',
+        starOn: 'star-on-big.png',
+        size: 30,
+        score: 1,
+        //target: '#result',
+        targetKeep: true,
+        click: function (score, evt) {
+            gHeartLevel = score;
+            //alert('u selected '+score);
+        }
+    });
 
 
     //获取许愿墙数据
@@ -160,6 +211,7 @@ $(function () {
     else {
         GetSinaUserData(sinacode);
     }
+
     GetData();
 
 
@@ -204,7 +256,7 @@ $(function () {
                 setTimeout("FinishSignup()", 2000);
                 $(".pubHeart").css("display", "inline-block");
                 $("#open").text("我的信息");
-                CurrentUser = userName;
+                gCurrentUser = userName;
             }
             else {
                 $("#RegisterErrorMsg").text('注册失败!');
@@ -225,17 +277,14 @@ $(function () {
         //Login
         $.get(ControllerPath + "User/UserLogin", { userName: userName, password: password }, function (data) {
             if (data.isSuccess === true) {
-                $("#LoginForm").hide();
-                $("#UserInfo").show();
-                $("#open").text("我的信息");
-                $("#info_userLoginName").text(userName);
-                //自动收起
-                $("#WelcomeName").text("欢迎你：" + userName + "~");
-                $(".pubHeart").css("display", "inline-block");
-                //setTimeout('$("#close").click();', 2000);
-                CurrentUser = userName;
-                $("#P_UserHeartInfo").show();
-                $("#P_UserRegisterInfo").hide();
+                showLoginInfo(userName);
+                if ($("#rememberMe").attr("checked") == "checked") {
+                    $.cookie('loginname', userName, { expires: 7 });
+                    $.cookie('password', password, { expires: 7 });
+                } else {
+                    $.cookie('loginname', null);
+                    $.cookie('password', null);
+                }
             }
             else {
                 $("#LoginMessage").text('用户名或密码错误!');
@@ -244,30 +293,39 @@ $(function () {
                 $("#loginusername").focus();
             }
         });
-
-
     });
+
+
     //用户退出
     $("#btnExit").click(function () {
-        $("#LoginForm").show();
-        $("#UserInfo").hide();
-        $("#WelcomeName").text("欢迎来到许愿墙~");
-        $(".pubHeart").css("display", "none");
-        $("#loginusername").val('');
-        $("#loginpassword").val('');
+        //获取用户登录状态
+        $.get(ControllerPath + "User/UserLogout", {}, function (data) {
+            if (data.isSuccess) {
+                $("#LoginForm").show();
+                $("#UserInfo").hide();
+                $("#P_UserHeartInfo").hide();
+                $("#P_UserRegisterInfo").show();
+                $("#WelcomeName").text("欢迎来到许愿墙~");
+                $(".pubHeart").css("display", "none");
+                //$("#loginusername").val('');
+                //$("#loginpassword").val('');
+            }
+        });
     });
 
 
     //显示发布愿望弹出层
     $(".pubHeart").colorbox({
         inline: true, width: "50%", scrolling: false, width: "480px", height: "450px",
-        onOpen: function () { $(".PubNewHeart").show(); $("#hDate").val(''); },
+        onOpen: function () { $(".PubNewHeart").show(); $("#hDate").val(''); $("#hPuber").val(gCurrentUser); },
         onClosed: function () { $(".PubNewHeart").hide(); }
     });
 
     //绑定日期控件
     $.datepicker.setDefaults($.datepicker.regional[""]);
-    $("#hDate").datepicker($.datepicker.regional["zh-CN"]);
+    //$("#hDate").datepicker($.datepicker.regional["zh-CN"]);
+    $("#hDate").datepicker({ minDate: 0 });
+
     //绑定发布心愿按钮事件
 
     $("#btnPubNewHeart").click(function () {
@@ -285,7 +343,8 @@ $(function () {
             "Joiner": hJoiner,
             "Contact": hContact,
             "FinishDate": hDate,
-            "HeartContent": hContent
+            "HeartContent": hContent,
+            "HeartLevel": gHeartLevel
         };
 
         //  alert(hTitle + hPuber + hJoiner + hContact + hDate + hContent);
@@ -303,6 +362,13 @@ $(function () {
             }
         });
 
+    });
+
+    //显示管理愿望弹出层
+    $(".btnManageHeart").colorbox({
+        inline: true, width: "50%", scrolling: false, width: "680px", height: "450px",
+        onOpen: function () { $(".P_ManageHeart").show(); },
+        onClosed: function () { $(".P_ManageHeart").hide(); }
     });
 });
 

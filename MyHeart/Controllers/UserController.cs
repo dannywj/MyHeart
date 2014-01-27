@@ -65,6 +65,7 @@ namespace MyHeart.Controllers
 
             if (DBTools.UserLogin(userName, password))
             {
+                Session["CurrentUser"] = userName;
                 jr.Data = new { isSuccess = true };
             }
             else
@@ -145,5 +146,30 @@ namespace MyHeart.Controllers
             }
         }
 
+        public JsonResult GetUserLoginStatus() {
+            JsonResult jr = new JsonResult();
+            jr.ContentType = "text/json";
+            jr.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
+            if (Session["CurrentUser"]!=null)
+            {
+                jr.Data = new { isSuccess = true, CurrentUser = Session["CurrentUser"].ToString() };
+            }
+            else
+            {
+                jr.Data = new { isSuccess = false, errorMessage = "User not Login" };
+            }
+            return jr;
+        }
+
+        public JsonResult UserLogout()
+        {
+            JsonResult jr = new JsonResult();
+            jr.ContentType = "text/json";
+            jr.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            Session["CurrentUser"] = null;
+            jr.Data = new { isSuccess = true};
+            return jr;
+        }
     }
 }
