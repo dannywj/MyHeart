@@ -35,7 +35,7 @@ namespace MyHeart.Controllers
             return jr;
         }
 
-        public JsonResult RegisterNewUser(string userName, string password)
+        public JsonResult RegisterNewUser(string userName, string password, string userNickName)
         {
             JsonResult jr = new JsonResult();
             jr.ContentType = "text/json";
@@ -46,8 +46,9 @@ namespace MyHeart.Controllers
             {
                 isEmail = true;
             }
-            if (DBTools.RegisterNewUser(userName, password, isEmail))
+            if (DBTools.RegisterNewUser(userName, password, isEmail, userNickName))
             {
+                Session["CurrentUser"] = userName;
                 jr.Data = new { isSuccess = true };
             }
             else
@@ -66,7 +67,8 @@ namespace MyHeart.Controllers
             if (DBTools.UserLogin(userName, password))
             {
                 Session["CurrentUser"] = userName;
-                jr.Data = new { isSuccess = true };
+                var userinfo = DBTools.GetUserInfoByLoginName(userName);
+                jr.Data = new { isSuccess = true, nickName = userinfo.NickName };
             }
             else
             {
@@ -146,14 +148,16 @@ namespace MyHeart.Controllers
             }
         }
 
-        public JsonResult GetUserLoginStatus() {
+        public JsonResult GetUserLoginStatus()
+        {
             JsonResult jr = new JsonResult();
             jr.ContentType = "text/json";
             jr.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
 
-            if (Session["CurrentUser"]!=null)
+            if (Session["CurrentUser"] != null)
             {
-                jr.Data = new { isSuccess = true, CurrentUser = Session["CurrentUser"].ToString() };
+                var user = DBTools.GetUserInfoByLoginName(Session["CurrentUser"].ToString());
+                jr.Data = new { isSuccess = true, CurrentUser = Session["CurrentUser"].ToString(), NickName = user.NickName };
             }
             else
             {
@@ -168,7 +172,7 @@ namespace MyHeart.Controllers
             jr.ContentType = "text/json";
             jr.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             Session["CurrentUser"] = null;
-            jr.Data = new { isSuccess = true};
+            jr.Data = new { isSuccess = true };
             return jr;
         }
     }

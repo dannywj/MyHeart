@@ -53,6 +53,38 @@ namespace MyHeart.Controllers
             }
             return jr;
         }
-        
+
+        public JsonResult GetHeartsByLoginName(string loginName)
+        {
+            JsonResult jr = new JsonResult();
+            jr.ContentType = "text/json";
+            jr.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
+            var list = DBTools.GetHeartsByLoginName(loginName);
+            jr.Data = new { isSuccess = true, heartList = list };
+            return jr;
+        }
+
+        public JsonResult UpdateHeartStation(int station, int heartId)
+        {
+            JsonResult jr = new JsonResult();
+            jr.ContentType = "text/json";
+            jr.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
+            bool result = DBTools.UpdateHeartStation(station, heartId);
+            jr.Data = new { isSuccess = result };
+            return jr;
+        }
+
+        public JsonResult GetHeartsCount(string loginName)
+        {
+            JsonResult jr = new JsonResult();
+            jr.ContentType = "text/json";
+            jr.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
+            var resultstr = DBTools.GetHeartsCount(loginName);
+            jr.Data = new { isSuccess = true, allcount = resultstr.Split('_')[0].ToString(), okcount = resultstr.Split('_')[1].ToString() };
+            return jr;
+        }
     }
 }

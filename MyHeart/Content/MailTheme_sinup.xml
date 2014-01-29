@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<AllMail>
+<mail>
+  <themeId></themeId>
+  <themeName>HeartNewSignup</themeName>
+  <subject>欢迎来到许愿墙的世界</subject>
+  <content>欢迎来到许愿墙的世界，这里将是梦想开始的地方！{br}请牢记您的登录密码：{password}{br}期待我们与您一起实现一个又一个大大小小的愿望！ </content>
+</mail>
+
+<mail>
+  <themeId></themeId>
+  <themeName>ChangePassword</themeName>
+  <subject>更改密码</subject>
+  <content>更改密码更改密码更改密码更改密码更改密码</content>
+</mail>
+</AllMail>

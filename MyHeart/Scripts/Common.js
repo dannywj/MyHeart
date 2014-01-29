@@ -62,6 +62,15 @@ CommonJS.FormatString = function (str) {
     return str.replace(re, function () { return args[i++] });
 }
 
+//获取指定范围随机数
+CommonJS.RandomBy=function (under, over) {
+    switch (arguments.length) {
+        case 1: return parseInt(Math.random() * under + 1);
+        case 2: return parseInt(Math.random() * (over - under + 1) + under);
+        default: return 0;
+    }
+}
+
 //写cookies
 CommonJS.SetCookie = function (name, value) {
     var Days = 1;
@@ -140,3 +149,26 @@ jQuery.cookie = function (name, value, options) {
         return cookieValue;
     }
 };
+
+//许愿墙背景，标题配色方案
+var HeartBGConfig = [
+    { "BGImage": "it1.jpg", "TitleColor": "#ffffff" },
+    { "BGImage": "it2.jpg", "TitleColor": "#463218" },
+    { "BGImage": "it3.jpg", "TitleColor": "#27864E" },
+    { "BGImage": "it4.jpg", "TitleColor": "#41176E" },
+    { "BGImage": "it5.jpg", "TitleColor": "#A54D3B" },
+    { "BGImage": "it6.jpg", "TitleColor": "#000000" },
+    { "BGImage": "it7.jpg", "TitleColor": "#C61912" },
+    { "BGImage": "it8.jpg", "TitleColor": "#CB88CE" },
+    { "BGImage": "it9.jpg", "TitleColor": "#ffffff" },
+    { "BGImage": "it10.jpg", "TitleColor": "#E10DAD" },
+    { "BGImage": "it11.jpg", "TitleColor": "#072A95" },
+    { "BGImage": "it12.jpg", "TitleColor": "#704F8C" },
+    { "BGImage": "it13.jpg", "TitleColor": "#F0195D" },
+    { "BGImage": "it14.jpg", "TitleColor": "#294A4F" },
+    { "BGImage": "it15.jpg", "TitleColor": "#3D77A8" },
+    { "BGImage": "it16.jpg", "TitleColor": "#D18E0B" },
+    { "BGImage": "it17.jpg", "TitleColor": "#ffffff" },
+    { "BGImage": "it18.jpg", "TitleColor": "#dedede" },
+    { "BGImage": "it19.jpg", "TitleColor": "#DB0F56" }
+];

@@ -202,15 +202,17 @@
     <Content Include="Content\img\BG\it9.jpg" />
     <Content Include="Content\img\check.png" />
     <Content Include="Content\img\heart_ok.png" />
+    <Content Include="Content\img\ht_finish.png" />
     <Content Include="Content\img\it.png" />
     <Content Include="Content\img\pubbg.png" />
     <Content Include="Content\img\pubtitle.png" />
     <Content Include="Content\img\s1.png" />
     <Content Include="Content\img\s2.png" />
-    <Content Include="Content\img\heart_done.png" />
+    <Content Include="Content\img\heart_do.png" />
     <Content Include="Content\img\title.png" />
     <Content Include="Content\img\wall.png" />
     <Content Include="Content\img\walltitle.png" />
+    <Content Include="Content\MailTheme_sinup.xml" />
     <Content Include="DBScripts\ht.createTable.sql" />
     <Content Include="DLL\GotDotNet.ApplicationBlocks.Data.dll" />
     <Content Include="favicon.ico" />
@@ -1136,6 +1138,7 @@
     <Content Include="Scripts\Plugin\jquery-ui-1.8.16.custom.min.js" />
     <Content Include="Scripts\Plugin\jquery.colorbox-min.js" />
     <Content Include="Scripts\Plugin\jquery.tmpl.js" />
+    <Content Include="Scripts\Plugin\jquery.ui.datepicker-zh-CN.js" />
     <Content Include="Scripts\Plugin\JQueryUI\jquery-ui-1.8.18.custom.min.js" />
     <Content Include="Scripts\Plugin\ratyStar\img\cancel-off.png" />
     <Content Include="Scripts\Plugin\ratyStar\img\cancel-on.png" />
@@ -1170,8 +1173,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\img_heartBG\" />
-    <Folder Include="Models\" />
     <Folder Include="Scripts\Plugin\EXTJS\resources\images\vista\dd\" />
     <Folder Include="Scripts\Plugin\EXTJS\resources\images\vista\tree\" />
   </ItemGroup>
@@ -1180,8 +1181,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\css\ui-lightness\images\Thumbs.db" />
-    <None Include="Content\img\font.psd" />
-    <None Include="Content\img\许愿墙标题.psd" />
     <Content Include="DBScripts\GeGe悄悄话备份20140121.zip" />
     <None Include="Properties\PublishProfiles\HeartWall.pubxml" />
     <None Include="Scripts\Plugin\EXTJS\resources\images\access\form\clear-trigger.psd" />

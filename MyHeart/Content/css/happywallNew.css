@@ -266,56 +266,58 @@ p {
 /*管理心愿*/
 .P_ManageHeart {
     width: 620px;
-    height: 380px;
+    height: 476px;
     text-align: center;
     display: none;
-    overflow-y:auto;
-    overflow-x:hidden;
-}
-
-.htManageTable {
-    width: 650px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .hItem_b {
-    float: left;
     width: 150px;
     font-weight: bold;
-    height:22px;
-    line-height:22px;
-    margin-bottom:4px;
+    height: 22px;
+    line-height: 22px;
+    margin-bottom: 4px;
 }
 
 .hItem {
-    float: left;
     width: 150px;
-    line-height:25px;
+    line-height: 25px;
 }
-.hItemStar {
-padding-left:40px;
-width: 110px;
+
+.hItemContent {
+    width: 230px;
 }
+.ht_a_done img {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+}
+
 .ht_level {
-    display:inline-block;
-    float:left;
-}
-.ht_btn_done {
-    background-image:url('../../Content/img/heart_ok.png');
-    width:24px;
-    height:24px;
-    border:none;
-}
-.ht_btn_do {
-    background-image:url('../../Content/img/check.png');
-    width:24px;
-    height:24px;
-    border:none;
+    vertical-align: middle;
 }
 
 .hItem a {
-    color: #000000;
+    color: #555555;
 }
-.hItem a:hover {
-    color: #000000;
-    text-decoration:none;
+
+    .hItem a:hover {
+        color: #555555;
+        text-decoration: none;
+    }
+
+/*作者链接*/
+.writerLink {
+    color: #cc0000;
 }
+
+    .writerLink:hover {
+        color: #555555;
+        text-decoration: underline;
+    }
+     .writerLink:visited {
+        color: #cc0000;
+        text-decoration: underline;
+    }

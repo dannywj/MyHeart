@@ -41,6 +41,7 @@ CREATE TABLE [dbo].[ht_userInfo]
 [id] [int] NOT NULL IDENTITY(1, 1),
 [loginName] [varchar] (50) COLLATE Chinese_PRC_CI_AS NULL,
 [password] [varchar] (50) COLLATE Chinese_PRC_CI_AS NULL,
+[nickName] [nvarchar] (50) COLLATE Chinese_PRC_CI_AS NULL,
 [useEmail] [int] NULL,
 [addDate] [datetime] NULL CONSTRAINT [DF_ht_user_info_add_date] DEFAULT (getdate()),
 [status] [int] NULL CONSTRAINT [DF_ht_user_info_status] DEFAULT ((0))
@@ -50,10 +51,20 @@ ALTER TABLE [dbo].[ht_userInfo] ADD CONSTRAINT [PK_ht_user_info] PRIMARY KEY CLU
 GO
 
 
+
 SELECT Convert(varchar(10),[pub_date],120),[writer],[content]
 FROM [heart].[dbo].[ht_message]
 ORDER BY id desc
 
 select * from ht_heartInfo
+where pubName='w'
+ order by heartId desc
 
-update ht_heartInfo set heartLevel=1;
+select (
+	select count(*) from ht_heartInfo
+	where pubName='w'
+) as allcount,
+(
+	select count(*) from ht_heartInfo
+	where pubName='w' and station=1
+) as okcount

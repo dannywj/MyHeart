@@ -46,17 +46,19 @@ namespace HeartData
             return false;
         }
 
-        public static bool RegisterNewUser(string userName, string password, bool useEmail)
+        public static bool RegisterNewUser(string userName, string password, bool useEmail, string userNickName)
         {
-            string sql = "  insert into ht_userInfo(loginName,useEmail,password)values(@userName,@use_email,@password)";
+            string sql = "  insert into ht_userInfo(loginName,useEmail,password,nickName)values(@userName,@use_email,@password,@nickName)";
             SqlParameter[] parameters = {
 					new SqlParameter("@userName", SqlDbType.NVarChar),
                     new SqlParameter("@password", SqlDbType.NVarChar),
-                    new SqlParameter("@use_email", SqlDbType.Int)
+                    new SqlParameter("@use_email", SqlDbType.Int),
+                    new SqlParameter("@nickName", SqlDbType.NVarChar),
                                         };
             parameters[0].Value = userName;
             parameters[1].Value = password;
             parameters[2].Value = useEmail ? "1" : "0";
+            parameters[3].Value = userNickName;
 
             object o = SqlHelper.ExecuteNonQuery(ConnString.GetConString, CommandType.Text, sql, parameters);
 
@@ -64,7 +66,8 @@ namespace HeartData
             {
                 if (HeartData.Common.CheckEmail(userName))
                 {
-                    HeartData.Common.SendMailWithTheme(userName, HeartData.MailTheme.HeartNewSignup);
+                    string[] ParamList = { userNickName, password };
+                    HeartData.Common.SendMailWithTheme(userName, HeartData.MailTheme.HeartNewSignup, ParamList);
                 }
                 return true;
             }
@@ -80,7 +83,7 @@ namespace HeartData
         {
             try
             {
-                string sql = " select count(*) from  ht_userInfo where loginName=@userName and password=@password ";
+                string sql = " select * from  ht_userInfo where loginName=@userName and password=@password ";
                 SqlParameter[] parameters = {
 					new SqlParameter("@userName", SqlDbType.NVarChar),
                     new SqlParameter("@password", SqlDbType.NVarChar)
@@ -165,6 +168,97 @@ namespace HeartData
             return true;
         }
 
+        public static List<NewHeart> GetHeartsByLoginName(string loginName)
+        {
+            DataTable dt = null;
+            List<NewHeart> list = new List<NewHeart>();
+
+            string sql = " select * from ht_heartInfo where pubName='" + loginName + "' order by heartId desc";
+            try
+            {
+                dt = SqlHelper.ExecuteDataset(ConnString.GetConString, CommandType.Text, sql.ToString()).Tables[0];
+                if (dt.Rows.Count > 0)
+                {
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        NewHeart nh = new NewHeart();
+                        nh.Contact = dt.Rows[i]["contact"].ToString();
+                        nh.FinishDate = Convert.ToDateTime(dt.Rows[i]["endDate"].ToString()).ToString("yyyy-MM-dd");
+                        nh.HeartContent = dt.Rows[i]["content"].ToString();
+                        nh.HeartLevel = int.Parse(dt.Rows[i]["heartLevel"].ToString());
+                        nh.Joiner = dt.Rows[i]["participator"].ToString();
+                        nh.Puber = dt.Rows[i]["pubName"].ToString();
+                        nh.Title = dt.Rows[i]["title"].ToString();
+                        nh.Station = int.Parse(dt.Rows[i]["station"].ToString());
+                        nh.HeartId = int.Parse(dt.Rows[i]["heartId"].ToString());
+                        list.Add(nh);
+                    }
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            return list;
+        }
+
+
+        public static bool UpdateHeartStation(int station, int heartid)
+        {
+            try
+            {
+                string sql = string.Format(@"update ht_heartInfo set station={0} where heartId={1}", station, heartid);
+
+                object o = SqlHelper.ExecuteNonQuery(ConnString.GetConString, CommandType.Text, sql);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static string GetHeartsCount(string loginName)
+        {
+            DataTable dt = new DataTable();
+            string sql = string.Format(@"
+            select (
+	            select count(*) from ht_heartInfo
+	            where pubName='{0}'
+            ) as allcount,
+            (
+	            select count(*) from ht_heartInfo
+	            where pubName='{0}' and station=1
+            ) as okcount", loginName);
+            string allcount = string.Empty;
+            string okcount = string.Empty;
+            try
+            {
+                dt = SqlHelper.ExecuteDataset(ConnString.GetConString, CommandType.Text, sql.ToString()).Tables[0];
+                if (dt.Rows.Count > 0)
+                {
+                    allcount = dt.Rows[0]["allcount"].ToString();
+                    okcount = dt.Rows[0]["okcount"].ToString();
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            return allcount + "_" + okcount;
+        }
+
+        public static User GetUserInfoByLoginName(string loginName)
+        {
+            User u = new User();
+            string sql = " select * from  ht_userInfo where loginName='" + loginName + "'";
+            DataSet ds = SqlHelper.ExecuteDataset(ConnString.GetConString, CommandType.Text, sql);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                u.NickName = ds.Tables[0].Rows[0]["nickName"].ToString();
+            }
+            return u;
+        }
         //pub tools
         public static bool PubNewMessage(string date, string content, string writer)
         {

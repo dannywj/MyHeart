@@ -31,10 +31,13 @@ namespace HeartData
         public DateTime SignupDate { get; set; }
         public bool UseEmail { get; set; }
         public int Status { get; set; }
+
+        public string NickName { get; set; }
     }
 
     public class NewHeart
     {
+        public int HeartId { set; get; }
         public string Title { set; get; }
         public string Puber { set; get; }
         public string Joiner { set; get; }
@@ -42,5 +45,6 @@ namespace HeartData
         public string FinishDate { set; get; }
         public string HeartContent { set; get; }
         public int HeartLevel { set; get; }
+        public int Station { set; get; }
     }
 }
