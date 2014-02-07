@@ -136,7 +136,7 @@ namespace HeartData
                        ,@station)");
                 SqlParameter[] parameters = {
 					new SqlParameter("@title", SqlDbType.NVarChar),
-                    new SqlParameter("@pubID", SqlDbType.Int),
+                    new SqlParameter("@pubID", SqlDbType.NVarChar),
                     new SqlParameter("@pubName", SqlDbType.NVarChar),
                     new SqlParameter("@participator", SqlDbType.NVarChar),
                     new SqlParameter("@contact", SqlDbType.NVarChar),
@@ -148,14 +148,14 @@ namespace HeartData
                     new SqlParameter("@station", SqlDbType.Int) 
                                         };
                 parameters[0].Value = newHeart.Title;
-                parameters[1].Value = 0;//newHeart.pubid;
+                parameters[1].Value = newHeart.PubId;
                 parameters[2].Value = newHeart.Puber;
                 parameters[3].Value = newHeart.Joiner;
                 parameters[4].Value = newHeart.Contact;
                 parameters[5].Value = 1;//newHeart.bgimage;
                 parameters[6].Value = newHeart.HeartContent;
                 parameters[7].Value = DateTime.Now;
-                parameters[8].Value = newHeart.FinishDate;
+                parameters[8].Value = newHeart.FinishDate == "" ? null : newHeart.FinishDate;
                 parameters[9].Value = newHeart.HeartLevel;
                 parameters[10].Value = 0;//newHeart.station;
                 object o = SqlHelper.ExecuteNonQuery(ConnString.GetConString, CommandType.Text, sql, parameters);
@@ -173,7 +173,7 @@ namespace HeartData
             DataTable dt = null;
             List<NewHeart> list = new List<NewHeart>();
 
-            string sql = " select * from ht_heartInfo where pubName='" + loginName + "' order by heartId desc";
+            string sql = " select * from ht_heartInfo where pubId='" + loginName + "' order by heartId desc";
             try
             {
                 dt = SqlHelper.ExecuteDataset(ConnString.GetConString, CommandType.Text, sql.ToString()).Tables[0];
@@ -183,7 +183,14 @@ namespace HeartData
                     {
                         NewHeart nh = new NewHeart();
                         nh.Contact = dt.Rows[i]["contact"].ToString();
-                        nh.FinishDate = Convert.ToDateTime(dt.Rows[i]["endDate"].ToString()).ToString("yyyy-MM-dd");
+                        if (string.IsNullOrEmpty(dt.Rows[i]["endDate"].ToString()))
+                        {
+                            nh.FinishDate = string.Empty;
+                        }
+                        else
+                        {
+                            nh.FinishDate = Convert.ToDateTime(dt.Rows[i]["endDate"].ToString()).ToString("yyyy-MM-dd");
+                        }
                         nh.HeartContent = dt.Rows[i]["content"].ToString();
                         nh.HeartLevel = int.Parse(dt.Rows[i]["heartLevel"].ToString());
                         nh.Joiner = dt.Rows[i]["participator"].ToString();
@@ -224,11 +231,11 @@ namespace HeartData
             string sql = string.Format(@"
             select (
 	            select count(*) from ht_heartInfo
-	            where pubName='{0}'
+	            where pubId='{0}'
             ) as allcount,
             (
 	            select count(*) from ht_heartInfo
-	            where pubName='{0}' and station=1
+	            where pubId='{0}' and station=1
             ) as okcount", loginName);
             string allcount = string.Empty;
             string okcount = string.Empty;

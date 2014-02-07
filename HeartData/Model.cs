@@ -40,6 +40,7 @@ namespace HeartData
         public int HeartId { set; get; }
         public string Title { set; get; }
         public string Puber { set; get; }
+        public string PubId { set; get; }
         public string Joiner { set; get; }
         public string Contact { set; get; }
         public string FinishDate { set; get; }

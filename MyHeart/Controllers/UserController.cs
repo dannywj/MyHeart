@@ -48,7 +48,7 @@ namespace MyHeart.Controllers
             }
             if (DBTools.RegisterNewUser(userName, password, isEmail, userNickName))
             {
-                Session["CurrentUser"] = userName;
+                //Session["CurrentUser"] = userName;
                 jr.Data = new { isSuccess = true };
             }
             else

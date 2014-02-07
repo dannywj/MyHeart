@@ -68,3 +68,8 @@ select (
 	select count(*) from ht_heartInfo
 	where pubName='w' and station=1
 ) as okcount
+
+
+select * from ht_heartInfo
+
+update ht_userInfo set nickName='格格' where id=1

@@ -45,7 +45,8 @@ namespace HeartData
             {
                 string subject = "欢迎来到许愿墙的世界";
                 string content = string.Format(@"{0} 欢迎来到许愿墙的世界，这里将是梦想开始的地方！
-                <br/>请牢记您的登录密码：{1}<br/>期待我们与您一起实现一个又一个大大小小的愿望！", ParamList[0], ParamList[1]);
+                <br/><br/>请牢记您的登录密码：<span style='color:red;'>{1}</span><br/>期待我们与您一起实现一个又一个大大小小的愿望！
+                <br/><br/>—— DannyWang", ParamList[0], ParamList[1]);
 
                 if (SendMail(ToMailAddress, subject, content))
                     return true;

@@ -119,9 +119,26 @@ function GetData() {
                 }
                 $("#heart_title").html(selectedItem.data.title);
                 $("#heart_content").html(selectedItem.data.content);
-                $("#heart_date").html(heart_date);
-                $("#heart_person").html(selectedItem.data.participator);
-                $("#heart_contact").html(selectedItem.data.contact);
+                if (selectedItem.data.endDate === '') {
+                    $("#heart_date").parent().hide();
+                } else {
+                    $("#heart_date").html(heart_date);
+                    $("#heart_date").parent().show();
+                }
+                if (selectedItem.data.participator === '') {
+                    $("#heart_person").parent().hide();
+                } else {
+                    $("#heart_person").html(selectedItem.data.participator);
+                    $("#heart_person").parent().show();
+                }
+
+                if (selectedItem.data.contact === '') {
+                    $("#heart_contact").parent().hide();
+                } else {
+                    $("#heart_contact").html(selectedItem.data.contact);
+                    $("#heart_contact").parent().show();
+                }
+
                 $("#heatr_puber").html(selectedItem.data.pubName);
                 //ShowBox
                 this.href = "#heartInfo_content";
@@ -337,17 +354,22 @@ $(function () {
         //    $("#RegisterErrorMsg").show();
         //    return false;
         //}
+        $("#RegisterErrorMsg").text('注册中，请稍候...');
+        $("#RegisterErrorMsg").show();
 
         //Register
         $.get(ControllerPath + "User/RegisterNewUser", { userName: userName, password: userPwd, userNickName: userNickName }, function (data) {
             if (data.isSuccess === true) {
                 gUserNickName = userNickName;
                 gCurrentUser = userName;
-                $("#RegisterErrorMsg").text('注册成功!');
+                $("#RegisterErrorMsg").text('注册成功! 请登录。');
                 $("#RegisterErrorMsg").show();
-                setTimeout("FinishSignup()", 2000);
-                $(".pubHeart").css("display", "inline-block");
-                $("#open").text("我的信息");
+                $("#reg_username").val('');
+                $("#reg_password").val('');
+                $("#reg_nickname").val('');
+                //setTimeout("FinishSignup()", 2000);
+                //$(".pubHeart").css("display", "inline-block");
+                //$("#open").text("我的信息");
             }
             else {
                 $("#RegisterErrorMsg").text('注册失败!');
@@ -415,13 +437,21 @@ $(function () {
     //显示发布愿望弹出层
     $(".pubHeart").colorbox({
         inline: true, width: "50%", scrolling: false, width: "480px", height: "470px",
-        onOpen: function () { $(".PubNewHeart").show(); $("#hDate").val(''); $("#hPuber").val(gUserNickName); },
+        onOpen: function () {
+            $(".PubNewHeart").show();
+            $("#hTitle").val('');
+            $("#hJoiner").val('');
+            $("#hContact").val('');
+            $("#hContent").val('');
+            $("#hDate").val('');
+            $("#hPuber").val(gUserNickName);
+        },
         onClosed: function () { $(".PubNewHeart").hide(); }
     });
 
     //绑定日期控件
     //$.datepicker.setDefaults($.datepicker.regional[""]);//default english
-    $("#hDate").datepicker($.datepicker.regional["zh-CN"]);
+    //$("#hDate").datepicker($.datepicker.regional["zh-CN"]);
     $("#hDate").datepicker({ minDate: 0 });
 
     //绑定发布心愿按钮事件
@@ -438,14 +468,8 @@ $(function () {
         if (hTitle == '') {
             errMsg += '心愿名称';
         }
-        if (hPuber == '') {
-            errMsg += ' 发布人';
-        }
         if (hContent == '') {
             errMsg += ' 心愿内容';
-        }
-        if (hDate == '') {
-            errMsg += ' 实现日期';
         }
         if (errMsg == '') {
             $("#pubErrorMessage").hide();
@@ -458,6 +482,7 @@ $(function () {
         var NewHeart = {
             "Title": hTitle,
             "Puber": hPuber,
+            "PubId": gCurrentUser,
             "Joiner": hJoiner,
             "Contact": hContact,
             "FinishDate": hDate,
@@ -467,7 +492,7 @@ $(function () {
         $.post(ControllerPath + "Heart/PublishNewHeart", { NewHeart: CommonJS.ToSerialize(NewHeart) }, function (data) {
             if (data.isSuccess === true) {
                 jQuery().colorbox.close(); //不用写id也一样可以实现关闭功能
-                $("#close").click();
+                //$("#close").click();
                 GetData();
             }
             else {

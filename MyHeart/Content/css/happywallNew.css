@@ -289,6 +289,7 @@ p {
 .hItemContent {
     width: 230px;
 }
+
 .ht_a_done img {
     width: 24px;
     height: 24px;
@@ -317,7 +318,12 @@ p {
         color: #555555;
         text-decoration: underline;
     }
-     .writerLink:visited {
+
+    .writerLink:visited {
         color: #cc0000;
         text-decoration: underline;
     }
+
+.redStar {
+    color: #ff0000;
+}
