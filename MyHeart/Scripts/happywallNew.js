@@ -489,13 +489,16 @@ $(function () {
             "HeartContent": hContent,
             "HeartLevel": gHeartLevel
         };
+        $("#spPubNote").show();
         $.post(ControllerPath + "Heart/PublishNewHeart", { NewHeart: CommonJS.ToSerialize(NewHeart) }, function (data) {
             if (data.isSuccess === true) {
+                $("#spPubNote").hide();
                 jQuery().colorbox.close(); //不用写id也一样可以实现关闭功能
                 //$("#close").click();
                 GetData();
             }
             else {
+                $("#spPubNote").hide();
             }
         });
 

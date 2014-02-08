@@ -225,6 +225,10 @@ p {
     font-weight: bold;
 }
 
+    .pubBtn:hover {
+        background-color: #fff;
+    }
+
 #pubErrorMessage {
     color: #cc0000;
     font-size: 12px;
@@ -326,4 +330,9 @@ p {
 
 .redStar {
     color: #ff0000;
+}
+
+.spPubNote {
+    color: #cc0000;
+    display: none;
 }
