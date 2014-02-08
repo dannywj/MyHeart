@@ -5,10 +5,6 @@ using System.Text;
 
 namespace HeartData
 {
-    class Model
-    {
-    }
-
     public class Heart
     {
         public string title { set; get; }
@@ -47,5 +43,12 @@ namespace HeartData
         public string HeartContent { set; get; }
         public int HeartLevel { set; get; }
         public int Station { set; get; }
+    }
+
+    //Message
+    public class MessageItem {
+        public string PubDate { set; get; }
+        public string Writer { set; get; }
+        public string Content { set; get; }
     }
 }

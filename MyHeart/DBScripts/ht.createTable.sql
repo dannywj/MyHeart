@@ -52,9 +52,10 @@ GO
 
 
 
-SELECT Convert(varchar(10),[pub_date],120),[writer],[content]
+SELECT top 6 NewID() as random, Convert(varchar(10),[pub_date],120) as pubdate,[writer],[content]
 FROM [heart].[dbo].[ht_message]
-ORDER BY id desc
+where writer='juejue'
+ORDER BY random desc
 
 select * from ht_heartInfo
 where pubName='w'

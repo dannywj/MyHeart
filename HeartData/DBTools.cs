@@ -266,6 +266,40 @@ namespace HeartData
             }
             return u;
         }
+
+        //Message
+        public static List<MessageItem> GetRandomMessage()
+        {
+            DataTable dt = null;
+            List<MessageItem> list = new List<MessageItem>();
+
+            string sql = @" SELECT top 3 NewID() as random, Convert(varchar(10),[pub_date],120) as pubdate,[writer],[content]
+                        FROM [heart].[dbo].[ht_message]
+                        where writer='juejue'
+                        ORDER BY random desc";
+            try
+            {
+                dt = SqlHelper.ExecuteDataset(ConnString.GetConString, CommandType.Text, sql.ToString()).Tables[0];
+                if (dt.Rows.Count > 0)
+                {
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        MessageItem item = new MessageItem();
+                        item.Content = dt.Rows[i]["content"].ToString().Length > 100 ? (dt.Rows[i]["content"].ToString().Substring(0, 100) + "...") : (dt.Rows[i]["content"].ToString());
+                        item.PubDate = dt.Rows[i]["PubDate"].ToString();
+                        item.Writer = dt.Rows[i]["Writer"].ToString();
+                        list.Add(item);
+                    }
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            return list;
+        }
+
+
         //pub tools
         public static bool PubNewMessage(string date, string content, string writer)
         {

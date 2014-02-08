@@ -114,6 +114,7 @@
   <ItemGroup>
     <Compile Include="Controllers\HeartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -145,6 +146,7 @@
     <Content Include="Content\css\JQuertUI\cupertino\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\css\JQuertUI\cupertino\jquery-ui-1.8.18.custom.css" />
     <Content Include="Content\css\loveday.css" />
+    <Content Include="Content\css\Messages.css" />
     <Content Include="Content\css\pubheart.css" />
     <Content Include="Content\css\titleBar.css" />
     <Content Include="Content\css\type.css" />
@@ -181,6 +183,7 @@
     <Content Include="Content\images\pix.gif" />
     <Content Include="Content\images\pubheart.png" />
     <Content Include="Content\images\subitem.png" />
+    <Content Include="Content\images\title_qqh.png" />
     <Content Include="Content\img\BG\it1.jpg" />
     <Content Include="Content\img\BG\it10.jpg" />
     <Content Include="Content\img\BG\it11.jpg" />
@@ -248,6 +251,7 @@
     <Content Include="Heart\loveday.htm" />
     <Content Include="Heart\MessagePub.aspx" />
     <Content Include="Heart\testHeart.html" />
+    <Content Include="Message\MyMessages.html" />
     <Content Include="Scripts\AutoPlugin\jquery-1.6.2-vsdoc.js" />
     <Content Include="Scripts\AutoPlugin\jquery-1.6.2.js" />
     <Content Include="Scripts\AutoPlugin\jquery-1.6.2.min.js" />
@@ -260,6 +264,15 @@
     <Content Include="Scripts\Common.js" />
     <Content Include="Scripts\happywallNew.js" />
     <Content Include="Scripts\loveday.js" />
+    <Content Include="Scripts\Messages.js" />
+    <Content Include="Scripts\Plugin\ArtTemplte\template.js" />
+    <Content Include="Scripts\Plugin\bootstrap-3.0.3\css\bootstrap-theme.css" />
+    <Content Include="Scripts\Plugin\bootstrap-3.0.3\css\bootstrap-theme.min.css" />
+    <Content Include="Scripts\Plugin\bootstrap-3.0.3\css\bootstrap.css" />
+    <Content Include="Scripts\Plugin\bootstrap-3.0.3\css\bootstrap.min.css" />
+    <Content Include="Scripts\Plugin\bootstrap-3.0.3\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Scripts\Plugin\bootstrap-3.0.3\js\bootstrap.js" />
+    <Content Include="Scripts\Plugin\bootstrap-3.0.3\js\bootstrap.min.js" />
     <Content Include="Scripts\Plugin\EXTJS\ext-all.js" />
     <Content Include="Scripts\Plugin\EXTJS\ext-base.js" />
     <Content Include="Scripts\Plugin\EXTJS\ext-lang-zh_CN.js" />
@@ -1183,6 +1196,9 @@
     <None Include="Content\css\ui-lightness\images\Thumbs.db" />
     <Content Include="DBScripts\GeGe悄悄话备份20140121.zip" />
     <None Include="Properties\PublishProfiles\HeartWall.pubxml" />
+    <Content Include="Scripts\Plugin\bootstrap-3.0.3\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\Plugin\bootstrap-3.0.3\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Scripts\Plugin\bootstrap-3.0.3\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Scripts\Plugin\EXTJS\resources\images\access\form\clear-trigger.psd" />
     <None Include="Scripts\Plugin\EXTJS\resources\images\access\form\date-trigger.psd" />
     <None Include="Scripts\Plugin\EXTJS\resources\images\access\form\search-trigger.psd" />
