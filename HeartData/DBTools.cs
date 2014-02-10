@@ -274,7 +274,7 @@ namespace HeartData
             List<MessageItem> list = new List<MessageItem>();
 
             string sql = @" SELECT top 3 NewID() as random, Convert(varchar(10),[pub_date],120) as pubdate,[writer],[content]
-                        FROM [heart].[dbo].[ht_message]
+                        FROM [ht_message]
                         where writer='juejue'
                         ORDER BY random desc";
             try

@@ -251,6 +251,7 @@
     <Content Include="Heart\loveday.htm" />
     <Content Include="Heart\MessagePub.aspx" />
     <Content Include="Heart\testHeart.html" />
+    <Content Include="index.html" />
     <Content Include="Message\MyMessages.html" />
     <Content Include="Scripts\AutoPlugin\jquery-1.6.2-vsdoc.js" />
     <Content Include="Scripts\AutoPlugin\jquery-1.6.2.js" />
