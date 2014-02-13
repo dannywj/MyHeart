@@ -63,7 +63,7 @@ function FinishSignup() {
 function GetData() {
 
     //获取许愿墙数据
-    $.get(ControllerPath + "Heart/GetAllHeart", {}, function (data) {
+    $.get(ControllerPath + "Heart/GetAllHeart?date=" + new Date(), { date: new Date() }, function (data) {
         $("#content_loading").hide();//fadeOut(100);
 
         var jsonData = eval("(" + data + ")");
@@ -150,7 +150,7 @@ function GetData() {
     });
 
     //获取用户登录状态
-    $.get(ControllerPath + "User/GetUserLoginStatus", {}, function (data) {
+    $.get(ControllerPath + "User/GetUserLoginStatus?date=" + new Date(), {}, function (data) {
         //var jsonData = eval("(" + data + ")");
         if (data.isSuccess) {
             gCurrentUser = data.CurrentUser;
@@ -209,7 +209,7 @@ function showLoginInfo(userName) {
 
 //获取个人心愿列表
 function GetHeartListByLoginName(loginName) {
-    $.get(ControllerPath + "Heart/GetHeartsByLoginName", { loginName: loginName }, function (data) {
+    $.get(ControllerPath + "Heart/GetHeartsByLoginName?date=" + new Date(), { loginName: loginName }, function (data) {
         if (data.isSuccess) {
             var html = GetHeartListHTML(data.heartList);
             $("#pMyHeartList").empty();
@@ -245,7 +245,7 @@ function GetHeartListHTML(json) {
 }
 
 function ChangeHeartStationOK(id) {
-    $.get(ControllerPath + "Heart/UpdateHeartStation", { station: 1, heartId: id }, function (data) {
+    $.get(ControllerPath + "Heart/UpdateHeartStation?date=" + new Date(), { station: 1, heartId: id }, function (data) {
         if (data.isSuccess) {
             alert('真好，又实现了一个愿望！加油！！^_^');
             GetHeartListByLoginName(gCurrentUser);
@@ -255,7 +255,7 @@ function ChangeHeartStationOK(id) {
 }
 
 function GetHeartsCount(userName) {
-    $.get(ControllerPath + "Heart/GetHeartsCount", { loginName: userName }, function (data) {
+    $.get(ControllerPath + "Heart/GetHeartsCount?date=" + new Date(), { loginName: userName }, function (data) {
         if (data.isSuccess) {
             $("#txtAllCount").html(data.allcount);
             $("#txtOKCount").html(data.okcount);
