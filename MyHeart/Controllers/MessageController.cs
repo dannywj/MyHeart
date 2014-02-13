@@ -23,5 +23,16 @@ namespace MyHeart.Controllers
             jr.Data = new { isSuccess = true, messageList = list };
             return jr;
         }
+
+        public JsonResult GetMessageByDate(string date)
+        {
+            JsonResult jr = new JsonResult();
+            jr.ContentType = "text/json";
+            jr.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
+            var list = DBTools.GetMessageByDate(date);
+            jr.Data = new { isSuccess = true, messageList = list };
+            return jr;
+        }
     }
 }

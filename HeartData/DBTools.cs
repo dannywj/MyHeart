@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading;
 
 namespace HeartData
 {
@@ -64,11 +65,19 @@ namespace HeartData
 
             if (Convert.ToInt32(o) > 0)
             {
+                //if (HeartData.Common.CheckEmail(userName))
+                //{
+                //    string[] ParamList = { userNickName, password };
+                   //HeartData.Common.SendMailWithTheme(userName, HeartData.MailTheme.HeartNewSignup, ParamList);
+                // 在新线程中运行
                 if (HeartData.Common.CheckEmail(userName))
                 {
                     string[] ParamList = { userNickName, password };
-                    HeartData.Common.SendMailWithTheme(userName, HeartData.MailTheme.HeartNewSignup, ParamList);
+                    ThreadStart starter = delegate { SendMailWithTheme(userName, ParamList); };
+                    Thread t = new Thread(starter);
+                    t.Start();
                 }
+                //}
                 return true;
             }
             else
@@ -77,6 +86,11 @@ namespace HeartData
             }
 
 
+        }
+
+        public static void SendMailWithTheme(string userName,  string[] ParamList)
+        {
+            HeartData.Common.SendMailWithTheme(userName, HeartData.MailTheme.HeartNewSignup, ParamList);
         }
 
         public static bool UserLogin(string userName, string password)
@@ -299,6 +313,35 @@ namespace HeartData
             return list;
         }
 
+        public static List<MessageItem> GetMessageByDate(string date)
+        {
+            DataTable dt = null;
+            List<MessageItem> list = new List<MessageItem>();
+
+            string sql = @"SELECT [writer],[content],Convert(varchar(10),[pub_date],120) as pubdate FROM ht_message WHERE pub_date='" + date + "' order by writer desc";
+            try
+            {
+                dt = SqlHelper.ExecuteDataset(ConnString.GetConString, CommandType.Text, sql.ToString()).Tables[0];
+                if (dt.Rows.Count > 0)
+                {
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        MessageItem item = new MessageItem();
+                        item.Content =Common.ChangeTxtFace(dt.Rows[i]["content"].ToString());
+                        item.PubDate = dt.Rows[i]["PubDate"].ToString();
+                        item.Writer = dt.Rows[i]["Writer"].ToString();
+                        list.Add(item);
+                    }
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            return list;
+        }
+
+        
 
         //pub tools
         public static bool PubNewMessage(string date, string content, string writer)

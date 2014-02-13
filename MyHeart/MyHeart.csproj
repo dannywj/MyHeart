@@ -176,12 +176,25 @@
     <Content Include="Content\images\heart_zip.png" />
     <Content Include="Content\images\item.png" />
     <Content Include="Content\images\loading.gif" />
+    <Content Include="Content\images\loadingSmall.gif" />
     <Content Include="Content\images\loginArrow.png" />
     <Content Include="Content\images\loginbuttonbg.png" />
     <Content Include="Content\images\love.gif" />
     <Content Include="Content\images\menu.png" />
     <Content Include="Content\images\pix.gif" />
     <Content Include="Content\images\pubheart.png" />
+    <Content Include="Content\images\qqface\13.gif" />
+    <Content Include="Content\images\qqface\38.gif" />
+    <Content Include="Content\images\qqface\guzhang.gif" />
+    <Content Include="Content\images\qqface\taiyang.gif" />
+    <Content Include="Content\images\qqface\yueliang.gif" />
+    <Content Include="Content\images\qqface\57.gif" />
+    <Content Include="Content\images\qqface\haixiu.gif" />
+    <Content Include="Content\images\qqface\baobao.gif" />
+    <Content Include="Content\images\qqface\aixin.gif" />
+    <Content Include="Content\images\qqface\qinqin.gif" />
+    <Content Include="Content\images\qqface\touxiao.gif" />
+    <Content Include="Content\images\qqface\yukuai.gif" />
     <Content Include="Content\images\subitem.png" />
     <Content Include="Content\images\title_qqh.png" />
     <Content Include="Content\img\BG\it1.jpg" />
@@ -1164,7 +1177,9 @@
     <Content Include="Scripts\Plugin\ratyStar\jquery.raty.js" />
     <Content Include="Scripts\Plugin\login.js" />
     <Content Include="Scripts\pubheart.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1200,6 +1215,7 @@
     <Content Include="Scripts\Plugin\bootstrap-3.0.3\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\Plugin\bootstrap-3.0.3\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Scripts\Plugin\bootstrap-3.0.3\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Properties\PublishProfiles\newPub.pubxml" />
     <None Include="Scripts\Plugin\EXTJS\resources\images\access\form\clear-trigger.psd" />
     <None Include="Scripts\Plugin\EXTJS\resources\images\access\form\date-trigger.psd" />
     <None Include="Scripts\Plugin\EXTJS\resources\images\access\form\search-trigger.psd" />

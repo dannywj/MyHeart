@@ -148,6 +148,19 @@ namespace HeartData
             }
         }
         #endregion dataTable转换成Json格式
+
+        public static string ChangeTxtFace(string str)
+        {
+            str = str.Replace("[亲亲]", "<img src='../Content/images/qqface/qinqin.gif' />");
+            str = str.Replace("[愉快]", "<img src='../Content/images/qqface/yukuai.gif' />");
+            str = str.Replace("[太阳]", "<img src='../Content/images/qqface/taiyang.gif' />");
+            str = str.Replace("[爱心]", "<img src='../Content/images/qqface/aixin.gif' />");
+            str = str.Replace("[拥抱]", "<img src='../Content/images/qqface/baobao.gif' />");
+            str = str.Replace("[鼓掌]", "<img src='../Content/images/qqface/guzhang.gif' />");
+            str = str.Replace("[月亮]", "<img src='../Content/images/qqface/yueliang.gif' />");
+            str = str.Replace("[害羞]", "<img src='../Content/images/qqface/haixiu.gif' />");
+            return str;
+        }
     }
 
     //public class JSONModelBinder<T> : IModelBinder

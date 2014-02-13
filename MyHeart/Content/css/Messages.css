@@ -72,7 +72,8 @@ footer {
     margin-top: 30px;
     height: 350px;
     /*border: solid 1px red;*/
-    overflow-y: auto;
+    overflow-y: auto !important;
+    display:none;
 }
 
 #content_date {
