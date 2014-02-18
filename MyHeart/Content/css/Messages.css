@@ -73,7 +73,7 @@ footer {
     height: 350px;
     /*border: solid 1px red;*/
     overflow-y: auto !important;
-    display:none;
+    display: none;
 }
 
 #content_date {
@@ -97,4 +97,35 @@ footer {
     color: #b200ff;
     font-weight: bold;
     margin-bottom: 10px;
+}
+
+.hide_bg {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    opacity: 0.96;
+}
+
+.hide_content {
+    display: none;
+    width: 300px;
+    height: 100px;
+    position: fixed;
+    top: 50%;
+    margin-top: -50px;
+    background: #fff;
+    z-index: 3;
+    left: 50%;
+    margin-left: -150px;
+}
+
+#txtPwd {
+    margin: 0 auto;
+    margin-left: 20px;
+    margin-top: 30px;
 }

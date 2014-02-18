@@ -68,7 +68,7 @@ namespace HeartData
                 //if (HeartData.Common.CheckEmail(userName))
                 //{
                 //    string[] ParamList = { userNickName, password };
-                   //HeartData.Common.SendMailWithTheme(userName, HeartData.MailTheme.HeartNewSignup, ParamList);
+                //HeartData.Common.SendMailWithTheme(userName, HeartData.MailTheme.HeartNewSignup, ParamList);
                 // 在新线程中运行
                 if (HeartData.Common.CheckEmail(userName))
                 {
@@ -88,7 +88,7 @@ namespace HeartData
 
         }
 
-        public static void SendMailWithTheme(string userName,  string[] ParamList)
+        public static void SendMailWithTheme(string userName, string[] ParamList)
         {
             HeartData.Common.SendMailWithTheme(userName, HeartData.MailTheme.HeartNewSignup, ParamList);
         }
@@ -327,7 +327,7 @@ namespace HeartData
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
                         MessageItem item = new MessageItem();
-                        item.Content =Common.ChangeTxtFace(dt.Rows[i]["content"].ToString());
+                        item.Content = Common.ChangeTxtFace(dt.Rows[i]["content"].ToString());
                         item.PubDate = dt.Rows[i]["PubDate"].ToString();
                         item.Writer = dt.Rows[i]["Writer"].ToString();
                         list.Add(item);
@@ -341,9 +341,9 @@ namespace HeartData
             return list;
         }
 
-        
 
-        //pub tools
+
+        #region Message Pub Tools
         public static bool PubNewMessage(string date, string content, string writer)
         {
             try
@@ -373,5 +373,21 @@ namespace HeartData
                 return 0;
             }
         }
+
+        public static string GetLastMessageDate()
+        {
+            try
+            {
+                string sql = string.Format(@"SELECT TOP 1 Convert(varchar(10),[pub_date],120) AS pub_date from ht_message ORDER BY pub_date desc");
+                object o = SqlHelper.ExecuteScalar(ConnString.GetConString, CommandType.Text, sql);
+                return o.ToString();
+            }
+            catch (Exception)
+            {
+                return "";
+            }
+
+        }
+        #endregion
     }
 }

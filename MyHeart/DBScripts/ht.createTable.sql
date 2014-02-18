@@ -71,6 +71,8 @@ select (
 ) as okcount
 
 
-select * from ht_heartInfo
+select * from ht_message where pub_date='2014-01-01'
 
 update ht_userInfo set nickName='格格' where id=1
+
+se

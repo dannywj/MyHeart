@@ -129,7 +129,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\css\happywallNew.css" />
+    <Content Include="Content\css\happywall.css" />
     <Content Include="Content\css\JQuertUI\cupertino\images\ui-bg_diagonals-thick_90_eeeeee_40x40.png" />
     <Content Include="Content\css\JQuertUI\cupertino\images\ui-bg_flat_15_cd0a0a_40x100.png" />
     <Content Include="Content\css\JQuertUI\cupertino\images\ui-bg_glass_100_e4f1fb_1x400.png" />
@@ -233,7 +233,7 @@
     <Content Include="DLL\GotDotNet.ApplicationBlocks.Data.dll" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Heart\happywallnew.html" />
+    <Content Include="Heart\happywall.html" />
     <Content Include="Content\login_panel\css\colorBox\colorbox.css" />
     <Content Include="Content\login_panel\css\colorBox\images\border1.png" />
     <Content Include="Content\login_panel\css\colorBox\images\border2.png" />
@@ -276,7 +276,7 @@
     <Content Include="Scripts\AutoPlugin\jquery.validate.min.js" />
     <Content Include="Scripts\AutoPlugin\modernizr-2.0.6-development-only.js" />
     <Content Include="Scripts\Common.js" />
-    <Content Include="Scripts\happywallNew.js" />
+    <Content Include="Scripts\happywall.js" />
     <Content Include="Scripts\loveday.js" />
     <Content Include="Scripts\Messages.js" />
     <Content Include="Scripts\Plugin\ArtTemplte\template.js" />
@@ -1167,6 +1167,7 @@
     <Content Include="Scripts\Plugin\jquery.tmpl.js" />
     <Content Include="Scripts\Plugin\jquery.ui.datepicker-zh-CN.js" />
     <Content Include="Scripts\Plugin\JQueryUI\jquery-ui-1.8.18.custom.min.js" />
+    <Content Include="Scripts\Plugin\md5.js" />
     <Content Include="Scripts\Plugin\ratyStar\img\cancel-off.png" />
     <Content Include="Scripts\Plugin\ratyStar\img\cancel-on.png" />
     <Content Include="Scripts\Plugin\ratyStar\img\star-half.png" />

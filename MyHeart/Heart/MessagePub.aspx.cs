@@ -12,7 +12,8 @@ namespace MyHeart.Heart
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            string lastdate = DBTools.GetLastMessageDate();
+            lblLastDate.Text = lastdate;
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)

@@ -57,6 +57,7 @@ $(function () {
 
     //初始化
     function initPage() {
+        checkLogin();
         getData();
     }
 
@@ -82,5 +83,19 @@ $(function () {
         return html;
     }
 
+    //验证身份
+    function checkLogin() {
+        $('.hide_bg').fadeIn(1000);
+        $('.hide_content').fadeIn(400);
+        $("#txtPwd").keyup(function () {
+            var pwd = hex_md5($("#txtPwd").val());
+            if (pwd === '0768281a05da9f27df178b5c39a51263') {
+                $('.hide_bg').fadeOut(400);
+                $('.hide_content').fadeOut(400);
+            }
+        });
+    }
+
     initPage();
+
 });

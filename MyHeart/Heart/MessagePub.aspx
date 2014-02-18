@@ -11,11 +11,12 @@
     <form id="form1" runat="server">
         <h2>PubNewMessage</h2>
         <p>
-            <input type="text" value="2013/10/12" runat="server" id="txtDate" />
+            <input type="text" value="2014/02/01" runat="server" id="txtDate" />
             <asp:DropDownList ID="ddlWriter" runat="server">
                 <asp:ListItem Text="JueJue" Value="juejue" Selected="True"></asp:ListItem>
                 <asp:ListItem Text="GeGe" Value="gege"></asp:ListItem>
             </asp:DropDownList>
+            &nbsp;&nbsp;&nbsp;Last Update Date:<asp:Label ID="lblLastDate" runat="server" Text="" ForeColor="Red"></asp:Label>
         </p>
         <div>
             <textarea style="width: 452px; height: 220px" id="txtContent" runat="server"></textarea>
