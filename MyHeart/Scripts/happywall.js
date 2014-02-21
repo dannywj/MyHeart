@@ -169,7 +169,7 @@ function GetData() {
         $("#loginpassword").val(cookie_password);
     }
 }
-
+//sina weibo login
 function InitSinaLogin() {
     $.get(ControllerPath + "User/OAuthInit", {}, function (data) {
         if (data.isSuccess != true) {
@@ -297,18 +297,17 @@ $(function () {
         }
     });
 
+    //var sinacode = $.Request("code");
+
+    //if (!sinacode) {
+    //    //获取新浪微博登陆链接
+    //    InitSinaLogin();
+    //}
+    //else {
+    //    GetSinaUserData(sinacode);
+    //}
 
     //获取许愿墙数据
-    var sinacode = $.Request("code");
-
-    if (!sinacode) {
-        //获取新浪微博登陆链接
-        InitSinaLogin();
-    }
-    else {
-        GetSinaUserData(sinacode);
-    }
-
     GetData();
 
     /*
