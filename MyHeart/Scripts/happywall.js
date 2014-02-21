@@ -7,6 +7,8 @@ var ControllerPath = "../";
 var gCurrentUser = ''; //UserLoginName
 var gUserNickName = '';
 var gHeartLevel = 1;
+var gMaxNum = 18;//max 比实际图片数小1
+var gRandomNumList = [];
 
 (function ($) {
     $.extend({
@@ -60,6 +62,19 @@ function FinishSignup() {
     $("#UserInfo").show();
 }
 
+//检查生成的随机数是否之前出现过
+function checkRandomNum(num) {
+    if ($.inArray(num, gRandomNumList) == -1) {
+        gRandomNumList.push(num);
+        return true;
+    } else {
+        if (gRandomNumList.length==gMaxNum) {//所有的随机数都出现过，则允许重复
+            return true;
+        }
+        return false;
+    }
+}
+
 function GetData() {
 
     //获取许愿墙数据
@@ -82,8 +97,12 @@ function GetData() {
             var btnTitle = $(tTr).find("#btnTitle");
 
             //随机生成背景文字配色方案
-            var maxNum = 18;//max 比实际图片数小1
-            var randomNum = CommonJS.RandomBy(1, maxNum);
+            
+            var randomNum = CommonJS.RandomBy(1, gMaxNum);
+            while (!checkRandomNum(randomNum)) {
+                randomNum = CommonJS.RandomBy(1, gMaxNum);
+            }
+
             var bg = $(tTr).find(".bg");
             bg.css('background-image', "url('../Content/img/bg/" + HeartBGConfig[randomNum].BGImage + "')");
             $(tTr).find("#item_title").css('color', HeartBGConfig[randomNum].TitleColor);
