@@ -13,7 +13,7 @@ namespace MyHeart.Controllers
 
         public void Index()
         {
-            Response.Redirect("Heart/happywallnew.html");
+            Response.Redirect("Heart/happywall.html");
         }
 
     }
