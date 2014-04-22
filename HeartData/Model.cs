@@ -43,6 +43,7 @@ namespace HeartData
         public string HeartContent { set; get; }
         public int HeartLevel { set; get; }
         public int Station { set; get; }
+        public int IsPrivate { set; get; }
     }
 
     //Message

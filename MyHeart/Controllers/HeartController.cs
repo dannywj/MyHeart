@@ -21,7 +21,18 @@ namespace MyHeart.Controllers
         public string GetAllHeart()
         {
             string re = string.Empty;
-            DataTable dt = DBTools.getAllHeart();
+            DataTable dt = new DataTable();
+            // 已登录用户获取全部心愿，未登录用户获取公开心愿
+            if (Session["CurrentUser"] != null)
+            {
+                string user = Session["CurrentUser"].ToString();
+                dt = DBTools.getAllHeart(user);
+            }
+            else
+            {
+                dt = DBTools.getAllHeart();
+            }
+
             if (dt.Rows.Count > 0)
             {
                 re = Common.CreateJsonParameters(dt);

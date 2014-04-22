@@ -23,6 +23,9 @@ GO
 alter table [dbo].[ht_heartInfo] add heartLevel int default((0));
 GO
 
+ALTER TABLE dbo.ht_heartInfo ADD isPrivate INT DEFAULT (0)
+GO
+
 --悄悄话信息表
 CREATE TABLE [dbo].[ht_message]
 (

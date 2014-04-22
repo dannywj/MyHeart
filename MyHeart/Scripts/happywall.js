@@ -263,12 +263,14 @@ function GetHeartListHTML(json) {
     return html;
 }
 
+//更新心愿状态（已实现）
 function ChangeHeartStationOK(id) {
     $.get(ControllerPath + "Heart/UpdateHeartStation?date=" + new Date(), { station: 1, heartId: id }, function (data) {
         if (data.isSuccess) {
             alert('真好，又实现了一个愿望！加油！！^_^');
             GetHeartListByLoginName(gCurrentUser);
             GetHeartsCount(gCurrentUser);
+            GetData();
         }
     });
 }
@@ -420,6 +422,7 @@ $(function () {
                     $.cookie('loginname', null);
                     $.cookie('password', null);
                 }
+                GetData();
             }
             else {
                 $("#LoginMessage").text('用户名或密码错误!');
@@ -443,6 +446,7 @@ $(function () {
                 $(".pubHeart").css("display", "none");
                 //$("#loginusername").val('');
                 //$("#loginpassword").val('');
+                GetData();
             }
         });
     });
@@ -480,6 +484,7 @@ $(function () {
         var hContact = $("#hContact").val();
         var hDate = $("#hDate").val();
         var hContent = $("#hContent").val();
+        var hIsPrivate = $("#hPublic").attr("checked") ? 0 : 1;
 
         //验证输入
         var errMsg = '';
@@ -505,7 +510,8 @@ $(function () {
             "Contact": hContact,
             "FinishDate": hDate,
             "HeartContent": hContent,
-            "HeartLevel": gHeartLevel
+            "HeartLevel": gHeartLevel,
+            "IsPrivate": hIsPrivate
         };
         $("#spPubNote").show();
         $.post(ControllerPath + "Heart/PublishNewHeart", { NewHeart: CommonJS.ToSerialize(NewHeart) }, function (data) {

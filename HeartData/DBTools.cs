@@ -10,10 +10,33 @@ namespace HeartData
 {
     public class DBTools
     {
+        /// <summary>
+        /// 获取公开心愿
+        /// </summary>
+        /// <returns></returns>
         public static DataTable getAllHeart()
         {
             DataTable dt = null;
-            string sql = " select top 24 *, NewID() as random from ht_heartInfo order by random";
+            string sql = " select top 24 *, NewID() as random from ht_heartInfo where isPrivate=0 order by random";
+            try
+            {
+                dt = SqlHelper.ExecuteDataset(ConnString.GetConString, CommandType.Text, sql.ToString()).Tables[0];
+            }
+            catch
+            {
+
+            }
+            return dt;
+        }
+        /// <summary>
+        /// 获取全部心愿，包含自己的隐私心愿
+        /// </summary>
+        /// <param name="currentUser"></param>
+        /// <returns></returns>
+        public static DataTable getAllHeart(string currentUser)
+        {
+            DataTable dt = null;
+            string sql = " select top 24 *, NewID() as random from ht_heartInfo where isPrivate=0 OR (isPrivate=1 AND pubId='" + currentUser + "') order by random";
             try
             {
                 dt = SqlHelper.ExecuteDataset(ConnString.GetConString, CommandType.Text, sql.ToString()).Tables[0];
@@ -135,7 +158,8 @@ namespace HeartData
                        ,[beginDate]
                        ,[endDate]
                        ,[heartLevel]
-                       ,[station])
+                       ,[station]
+                       ,[isPrivate])
                  VALUES
                        (@title
                        ,@pubID
@@ -147,7 +171,8 @@ namespace HeartData
                        ,@beginDate 
                        ,@endDate 
                        ,@heartLevel 
-                       ,@station)");
+                       ,@station
+                       ,@isPrivate)");
                 SqlParameter[] parameters = {
 					new SqlParameter("@title", SqlDbType.NVarChar),
                     new SqlParameter("@pubID", SqlDbType.NVarChar),
@@ -159,7 +184,8 @@ namespace HeartData
                     new SqlParameter("@beginDate", SqlDbType.DateTime),
                     new SqlParameter("@endDate", SqlDbType.DateTime),
                     new SqlParameter("@heartLevel", SqlDbType.Int),
-                    new SqlParameter("@station", SqlDbType.Int) 
+                    new SqlParameter("@station", SqlDbType.Int) ,
+                    new SqlParameter("@isPrivate", SqlDbType.Int) 
                                         };
                 parameters[0].Value = newHeart.Title;
                 parameters[1].Value = newHeart.PubId;
@@ -172,6 +198,7 @@ namespace HeartData
                 parameters[8].Value = newHeart.FinishDate == "" ? null : newHeart.FinishDate;
                 parameters[9].Value = newHeart.HeartLevel;
                 parameters[10].Value = 0;//newHeart.station;
+                parameters[11].Value = newHeart.IsPrivate;
                 object o = SqlHelper.ExecuteNonQuery(ConnString.GetConString, CommandType.Text, sql, parameters);
             }
             catch (Exception)

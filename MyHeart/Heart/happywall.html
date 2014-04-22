@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -62,12 +62,12 @@
                             邮箱或用户名:
                         </label>
                         <input class="field" type="text" name="loginusername" id="loginusername" value=""
-                            maxlength="30" size="23" />
+                               maxlength="30" size="23" />
                         <label class="grey" for="password">
                             密码:
                         </label>
                         <input class="field" type="password" name="password" id="loginpassword" size="23"
-                            maxlength="16" />
+                               maxlength="16" />
                         <label>
                             <input name="rememberMe" id="rememberMe" type="checkbox" checked="checked" value="1" />
                             &nbsp;记住我
@@ -101,17 +101,17 @@
                             已注册邮箱:
                         </label>
                         <input class="field" type="text" name="reg_username" id="reg_username" value="" size="23"
-                            maxlength="30" />
+                               maxlength="30" />
                         <label class="grey" for="reg_password">
                             新密码:
                         </label>
                         <input class="field" type="password" name="reg_password" id="reg_password" size="23"
-                            maxlength="16" />
+                               maxlength="16" />
                         <label class="grey" for="reg_password_confirm">
                             昵称:
                         </label>
                         <input class="field" type="text" name="reg_password_confirm" id="reg_nickname"
-                            maxlength="16" size="23" />
+                               maxlength="16" size="23" />
                         <!--  <label>
                         A password will be e-mailed to you.</label>-->
                         <input type="button" value="立即注册" class="bt_register" id="btnRegister" />
@@ -133,12 +133,17 @@
         <div class="tab">
             <ul class="login">
                 <li class="left">&nbsp;</li>
-                <li><span id="WelcomeName">欢迎来到许愿墙~</span><a class="pubHeart" href="#PubNewHeart">发布心愿
-                    <!--必须同时指定class和href-->
-                </a></li>
+                <li>
+                    <span id="WelcomeName">欢迎来到许愿墙~</span><a class="pubHeart" href="#PubNewHeart">
+                        发布心愿
+                        <!--必须同时指定class和href-->
+                    </a>
+                </li>
                 <li class="sep">|</li>
-                <li id="toggle"><a id="open" class="open" href="javascript:void(0)">登录 | 注册</a><a id="close" style="display: none;"
-                    class="close" href="javascript:void(0)">收起面板</a></li>
+                <li id="toggle">
+                    <a id="open" class="open" href="javascript:void(0)">登录 | 注册</a><a id="close" style="display: none;"
+                                                                                      class="close" href="javascript:void(0)">收起面板</a>
+                </li>
                 <li class="right">&nbsp;</li>
             </ul>
         </div>
@@ -195,7 +200,6 @@
         </dd>
     </div>
     <!--许愿墙模板End-->
-
     <!--心愿信息-->
     <div id='heartInfo_content' style='padding: 10px; background: #fff; display: none'>
         <div id="heartInfo">
@@ -219,12 +223,11 @@
                 <span id="heart_contact" style="font-size: 13px; height: 28px; line-height: 28px;"></span>
             </div>
             <div class="heartInfoLine" style="font-size: 14px; height: 28px; line-height: 28px; text-align: right; color: #04c588"
-                id="heatr_puber">
+                 id="heatr_puber">
             </div>
         </div>
     </div>
     <!--心愿信息End-->
-
     <!--Pub New Heart Panel-->
     <section id="PubNewHeartPanel">
         <div class="PubNewHeart" id="PubNewHeart">
@@ -239,27 +242,32 @@
                     <ul class="pubLine">
                         <li class="publeft"><span class="redStar">*</span>心愿名称:</li>
                         <li class="pubright">
-                            <input type="text" class="inputText" id="hTitle" /></li>
+                            <input type="text" class="inputText" id="hTitle" />
+                        </li>
                     </ul>
                     <ul class="pubLine">
                         <li class="publeft">心愿发布人:</li>
                         <li class="pubright">
-                            <input type="text" class="inputText" id="hPuber" /></li>
+                            <input type="text" class="inputText" id="hPuber" />
+                        </li>
                     </ul>
                     <ul class="pubLine">
                         <li class="publeft">期待参与者:</li>
                         <li class="pubright">
-                            <input type="text" class="inputText" id="hJoiner" /></li>
+                            <input type="text" class="inputText" id="hJoiner" />
+                        </li>
                     </ul>
                     <ul class="pubLine">
                         <li class="publeft">联系方式:</li>
                         <li class="pubright">
-                            <input type="text" class="inputText" id="hContact" /></li>
+                            <input type="text" class="inputText" id="hContact" />
+                        </li>
                     </ul>
                     <ul class="pubLine">
                         <li class="publeft">实现日期:</li>
                         <li class="pubright">
-                            <input type="text" class="inputText" id="hDate" readonly="readonly" /></li>
+                            <input type="text" class="inputText" id="hDate" readonly="readonly" />
+                        </li>
                     </ul>
                     <ul class="pubLine">
                         <li class="publeft"><span class="redStar">*</span>心愿等级:</li>
@@ -267,29 +275,36 @@
                             <div id="star"></div>
                         </li>
                     </ul>
+                    <ul class="pubLine">
+                        <li class="publeft"><span class="redStar">*</span>隐私选项:</li>
+                        <li class="pubright">
+                            <span style="float:left; margin-left:26px">
+                                <input type="radio" name="hShow" class="" id="hPublic" checked="checked" />公开&nbsp;&nbsp;
+                                <input type="radio" name="hShow" class="" id="hPrivate" />保密
+                            </span>
+                        </li>
+                    </ul>
                     <ul class="pubLine" style="height: 110px;">
                         <li class="publeft"><span class="redStar">*</span>心愿内容:</li>
                         <li class="pubright">
                             <textarea cols="10" rows="10" class="inputText" style="height: 100px; overflow: auto;"
-                                id="hContent"></textarea>
+                                      id="hContent"></textarea>
                         </li>
                     </ul>
                     <ul class="pubLine" style="margin-top: 10px;">
                         <li class="publeft"></li>
                         <li class="pubright">
                             <input id="btnPubNewHeart" type="button" class="pubBtn" value="发布心愿" />
-                            <br>
+                            <br />
                             <span class="spPubNote" id="spPubNote">发布中...</span>
                         </li>
                     </ul>
                 </div>
             </article>
-            <footer>
-            </footer>
+            <footer></footer>
         </div>
     </section>
     <!--Pub New Heart Panel End-->
-
     <!--Manage Heart Panel-->
     <section id="P_ManageHeartPanel">
         <div class="P_ManageHeart" id="P_ManageHeart">
@@ -300,8 +315,7 @@
                 <div id="pMyHeartList" class="pubContent">
                 </div>
             </article>
-            <footer>
-            </footer>
+            <footer></footer>
         </div>
     </section>
     <!--Manage Heart Panel End-->
