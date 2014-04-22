@@ -458,7 +458,7 @@ $(function () {
    */
     //显示发布愿望弹出层
     $(".pubHeart").colorbox({
-        inline: true, width: "50%", scrolling: false, width: "480px", height: "470px",
+        inline: true, width: "50%", scrolling: false, width: "480px", height: "480px",
         onOpen: function () {
             $(".PubNewHeart").show();
             $("#hTitle").val('');
