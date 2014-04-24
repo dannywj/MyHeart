@@ -68,7 +68,7 @@ function checkRandomNum(num) {
         gRandomNumList.push(num);
         return true;
     } else {
-        if (gRandomNumList.length==gMaxNum) {//所有的随机数都出现过，则允许重复
+        if (gRandomNumList.length == gMaxNum) {//所有的随机数都出现过，则允许重复
             return true;
         }
         return false;
@@ -97,7 +97,7 @@ function GetData() {
             var btnTitle = $(tTr).find("#btnTitle");
 
             //随机生成背景文字配色方案
-            
+
             var randomNum = CommonJS.RandomBy(1, gMaxNum);
             while (!checkRandomNum(randomNum)) {
                 randomNum = CommonJS.RandomBy(1, gMaxNum);
@@ -541,5 +541,128 @@ $(function () {
     });
 
 
+    //参与者输入事件
+    $("#hJoiner").keyup(function (event) {
+        autoComplete.start(event);
+    });
+
+    //====自动完成Begin=====
+
+    //自动完成操作类
+    function AutoComplete(obj, autoObj, suggustArr) {
+        this.obj = (obj);        //输入框
+        this.autoObj = (autoObj);//DIV的根节点
+        this.value_arr = suggustArr;        //不要包含重复值
+        this.index = -1;          //当前选中的DIV的索引
+        this.search_value = "";   //保存当前搜索的字符
+    }
+    //扩展方法
+    AutoComplete.prototype = {
+        //初始化建议列表
+        init: function () {
+            this.autoObj.css("left", "24px").css("top", "24px");
+            this.autoMouseover();
+            this.autoMouseout();
+            this.clickSelectedItem();
+            this.showResultDivs();
+        },
+        //显示结果列表
+        showResultDivs: function () {
+            this.autoObj.show();
+        },
+        //隐藏结果列表
+        hideResultDivs: function () {
+            this.autoObj.hide();
+        },
+        //删除建议结果Div
+        deleteResultDivs: function () {
+            this.autoObj.html('');
+        },
+        //移入显示特效
+        autoMouseover: function () {
+            this.autoObj.find(".suggestItems").mouseover(function () {
+                $(this).addClass("selected");
+            });
+        },
+        //移出显示特效
+        autoMouseout: function () {
+            this.autoObj.find(".suggestItems").mouseout(function () {
+                $(this).removeClass("selected");
+            });
+        },
+        //点击结果事件
+        clickSelectedItem: function () {
+            var autoObjParent = this;
+            this.autoObj.find(".suggestItems").click(function () {
+                autoObjParent.obj.val($(this).text());
+                autoObjParent.hideResultDivs();
+            });
+        },
+        //格式化选定文字
+        formatItemText: function (txt) {
+            return txt.replace('<strong>', '').replace('</strong>', '');
+        },
+        //更改建议列表项目样式
+        changeClassName: function (length) {
+            console.info(this.index);
+            var itemChilds = $(this.autoObj[0].children)[0].children;
+            for (var i = 0; i < length; i++) {
+                if (i != this.index) {
+                    $(itemChilds[i]).removeClass("selected");
+                } else {
+                    $(itemChilds[i]).addClass("selected");
+                    //this.obj.value = this.autoObj.childNodes[i].seq;
+                }
+            }
+        },
+        //绑定按键动作
+        pressKey: function (event) {
+            //计算建议列表数目
+            var length = $(this.autoObj[0].children)[0].children.length;
+
+            //向下方向键
+            if (event.keyCode == 40) {
+                this.index++;
+                if (this.index > length) {
+                    this.index = 0;
+                } else if (this.index == length) {
+                    //this.obj.value = this.search_value;
+                }
+                this.changeClassName(length);
+            }
+            //向上方向键
+            if (event.keyCode == 38) {
+                this.index--;
+                if (this.index < -1) {
+                    this.index = length - 1;
+                } else if (this.index == -1) {
+                    //this.obj.value = this.search_value;
+                }
+                this.changeClassName(length);
+            }
+            //回车
+            if (event.keyCode == 13) {
+                var itemChilds = $(this.autoObj[0].children)[0].children;
+                //alert($(itemChilds[this.index]).html());
+                this.search_value = this.formatItemText($(itemChilds[this.index]).html());
+                this.obj.val(this.search_value);
+                //TODO: Remove
+                this.hideResultDivs();
+            }
+        },
+        //操作入口方法
+        start: function (event) {
+            if (event.keyCode != 13 && event.keyCode != 38 && event.keyCode != 40) {
+                this.init();
+            }
+            //绑定按键动作
+            this.pressKey(event);
+        }
+    }
+
+    //实例化自动完成对象
+    var autoComplete = new AutoComplete($('#hJoiner'), $('#autocomplete-frame'), []);
+
+    //====自动完成End=====
 });
 

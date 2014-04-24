@@ -2,38 +2,76 @@
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
+    <script src="../Scripts/Plugin/jquery-1.4.1.js"></script>
+    <script src="../Scripts/Plugin/jquery-1.4.1-vsdoc.js"></script>
     <title>Rate Things!</title>
-    <!-- Make sure you change these to point to your actual files. --> 
-    <script src="../Scripts/Plugin/jquery-1.6.2.min.js"></script>
-    <script src="../Scripts/Plugin/lib/jquery.raty.js"></script>
-  
+    <style>
+        .autocomplete-w1 {
+            background: url(img/shadow.png) no-repeat bottom right;
+            position: absolute;
+            top: 34px;
+            left: 0px;
+            margin: 6px 0 0 6px; /* IE6 fix: */
+            _background: none;
+            _margin: 1px 0 0 0;
+        }
+
+        .autocomplete {
+            border: 1px solid #999;
+            background: #FFF;
+            cursor: default;
+            text-align: left;
+            max-height: 350px;
+            overflow: auto;
+            margin: -6px 6px 6px -6px; /* IE6 specific: */
+            _height: 350px;
+            _margin: 0;
+            _overflow-x: hidden;
+        }
+
+            .autocomplete .selected {
+                background: #F0F0F0;
+            }
+
+            .autocomplete div {
+                padding: 2px 5px;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+
+            .autocomplete strong {
+                font-weight: normal;
+                color: #3399FF;
+            }
+    </style>
+
+
+
+
 </head>
-<body>
-    <div id="star">
+<body style="margin:0;padding:0">
+    <input type="text" id="txt" style="display: block; position: relative; height: 30px; width: 200px; border: solid 1px red" />
+    <div id="main">
+        <div class="autocomplete-w1">
+            <div style="width: 299px;" id="Autocomplete_1240430421731" class="autocomplete">
+                <div><strong>Li</strong>beria</div>
+                <div><strong>Li</strong>byan Arab Jamahiriya</div>
+                <div><strong>Li</strong>echtenstein</div>
+                <div class="selected"><strong>Li</strong>thuania</div>
+            </div>
+        </div>
+
     </div>
-    <div id="result">
-    </div>
-    <script type="text/javascript">
-        $("#result").hide();//将结果DIV隐藏
-        $('#star').raty({
-            hints: ['1', '2', '3', '4', '5'],
-            path: "../Scripts/Plugin/lib/img",
-            starOff: 'star-off-big.png',
-            starOn: 'star-on-big.png',
-            size: 30,
-            target: '#result',
-            targetKeep: true
+
+
+
+
+    <script>
+        $(".autocomplete-w1").hide();
+        $("#txt").click(function () {
+            $(".autocomplete-w1").show();
         });
 
-        //弹出结果
-        var text = $('#result').text();
-        $('img').click(function () {
-            if ($('#result').text() != text) {
-                alert($('#result').text());
-                return;
-            }
-        });
     </script>
-  
 </body>
 </html>

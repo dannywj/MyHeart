@@ -62,12 +62,12 @@
                             邮箱或用户名:
                         </label>
                         <input class="field" type="text" name="loginusername" id="loginusername" value=""
-                               maxlength="30" size="23" />
+                            maxlength="30" size="23" />
                         <label class="grey" for="password">
                             密码:
                         </label>
                         <input class="field" type="password" name="password" id="loginpassword" size="23"
-                               maxlength="16" />
+                            maxlength="16" />
                         <label>
                             <input name="rememberMe" id="rememberMe" type="checkbox" checked="checked" value="1" />
                             &nbsp;记住我
@@ -101,17 +101,17 @@
                             已注册邮箱:
                         </label>
                         <input class="field" type="text" name="reg_username" id="reg_username" value="" size="23"
-                               maxlength="30" />
+                            maxlength="30" />
                         <label class="grey" for="reg_password">
                             新密码:
                         </label>
                         <input class="field" type="password" name="reg_password" id="reg_password" size="23"
-                               maxlength="16" />
+                            maxlength="16" />
                         <label class="grey" for="reg_password_confirm">
                             昵称:
                         </label>
                         <input class="field" type="text" name="reg_password_confirm" id="reg_nickname"
-                               maxlength="16" size="23" />
+                            maxlength="16" size="23" />
                         <!--  <label>
                         A password will be e-mailed to you.</label>-->
                         <input type="button" value="立即注册" class="bt_register" id="btnRegister" />
@@ -142,7 +142,7 @@
                 <li class="sep">|</li>
                 <li id="toggle">
                     <a id="open" class="open" href="javascript:void(0)">登录 | 注册</a><a id="close" style="display: none;"
-                                                                                      class="close" href="javascript:void(0)">收起面板</a>
+                        class="close" href="javascript:void(0)">收起面板</a>
                 </li>
                 <li class="right">&nbsp;</li>
             </ul>
@@ -223,7 +223,7 @@
                 <span id="heart_contact" style="font-size: 13px; height: 28px; line-height: 28px;"></span>
             </div>
             <div class="heartInfoLine" style="font-size: 14px; height: 28px; line-height: 28px; text-align: right; color: #04c588"
-                 id="heatr_puber">
+                id="heatr_puber">
             </div>
         </div>
     </div>
@@ -254,7 +254,17 @@
                     <ul class="pubLine">
                         <li class="publeft">期待参与者:</li>
                         <li class="pubright">
-                            <input type="text" class="inputText" id="hJoiner" />
+                            <div style="position: relative;">
+                                <input type="text" class="inputText" id="hJoiner" />
+                                <div class="autocomplete-frame" id="autocomplete-frame">
+                                    <div id="Autocomplete_1240430421731" class="autocomplete">
+                                        <div class="suggestItems"><strong>Li</strong>beria</div>
+                                        <div class="suggestItems"><strong>Li</strong>byan Arab Jamahiriya</div>
+                                        <div class="suggestItems"><strong>Li</strong>echtenstein</div>
+                                        <div class="suggestItems"><strong>Li</strong>thuania</div>
+                                    </div>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                     <ul class="pubLine">
@@ -278,7 +288,7 @@
                     <ul class="pubLine">
                         <li class="publeft"><span class="redStar">*</span>隐私选项:</li>
                         <li class="pubright">
-                            <span style="float:left; margin-left:26px">
+                            <span style="float: left; margin-left: 26px">
                                 <input type="radio" name="hShow" class="" id="hPublic" checked="checked" />公开&nbsp;&nbsp;
                                 <input type="radio" name="hShow" class="" id="hPrivate" />保密
                             </span>
@@ -288,7 +298,7 @@
                         <li class="publeft"><span class="redStar">*</span>心愿内容:</li>
                         <li class="pubright">
                             <textarea cols="10" rows="10" class="inputText" style="height: 100px; overflow: auto;"
-                                      id="hContent"></textarea>
+                                id="hContent"></textarea>
                         </li>
                     </ul>
                     <ul class="pubLine" style="margin-top: 10px;">
