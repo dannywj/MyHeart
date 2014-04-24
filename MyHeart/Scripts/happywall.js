@@ -543,9 +543,11 @@ $(function () {
 
     //参与者输入事件
     $("#hJoiner").keyup(function (event) {
-        autoComplete.start(event);
+        autoComplete.start(event,$(this).val());
     });
-
+    $("#hJoiner").focusout(function () {
+        autoComplete.hideResultDivs();
+    });
     //====自动完成Begin=====
 
     //自动完成操作类
@@ -555,6 +557,7 @@ $(function () {
         this.value_arr = suggustArr;        //不要包含重复值
         this.index = -1;          //当前选中的DIV的索引
         this.search_value = "";   //保存当前搜索的字符
+        this.key = '';
     }
     //扩展方法
     AutoComplete.prototype = {
@@ -592,10 +595,13 @@ $(function () {
         },
         //点击结果事件
         clickSelectedItem: function () {
+            
             var autoObjParent = this;
             this.autoObj.find(".suggestItems").click(function () {
-                autoObjParent.obj.val($(this).text());
-                autoObjParent.hideResultDivs();
+                console.error('ee');
+                alert(111);
+                //autoObjParent.obj.val($(this).text());
+                //autoObjParent.hideResultDivs();
             });
         },
         //格式化选定文字
@@ -650,13 +656,34 @@ $(function () {
                 this.hideResultDivs();
             }
         },
+        getData: function () {
+            //this.key;
+            this.value_arr= JSON.parse('[{"key":"a"},{"key":"ab"},{"key":"abc"},{"key":"abcd"},{"key":"abcde"},{"key":"abcdef"}]');
+        },
+        showResult:function(){
+            var html='';
+            html+='<div class="autocomplete">';
+            for (var i = 0; i < this.value_arr.length; i++) {
+                html+='<div class="suggestItems">'+this.formatKey(this.value_arr[i].key)+'</div>';
+            }
+            html += '</div>';
+            this.autoObj.html(html);
+            console.info(html);
+        },
+        formatKey: function (resultVal) {
+            return resultVal.replace(this.key, '<strong>' + this.key + '</strong>');
+        },
         //操作入口方法
-        start: function (event) {
+        start: function (event,key) {
             if (event.keyCode != 13 && event.keyCode != 38 && event.keyCode != 40) {
+                this.key = key;
+                this.getData();
+                this.showResult();
                 this.init();
             }
             //绑定按键动作
             this.pressKey(event);
+            console.info(key);
         }
     }
 

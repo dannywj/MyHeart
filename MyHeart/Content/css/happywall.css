@@ -339,7 +339,7 @@ p {
 
 /*自动完成相关Begin*/
 .autocomplete-frame {
-    background: url(img/shadow.png) no-repeat bottom right;
+    /*background: url(img/shadow.png) no-repeat bottom right;*/
     position: absolute;
     /*top: 24px;
     left: 24px;*/
