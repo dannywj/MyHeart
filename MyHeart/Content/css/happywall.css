@@ -192,6 +192,7 @@ p {
     margin-right: 10px;
     padding: 0;
     width: 240px;
+    padding-left: 6px;
 }
 
 .pubLine {
@@ -383,3 +384,33 @@ p {
     position: relative;
 }
 /*自动完成相关End*/
+
+#MsgBox {
+    border: solid 1px #dedede;
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    width: 130px;
+    float: right;
+    margin-top: -40px;
+    margin-right: 0px;
+    position: absolute;
+    right: 10px;
+    background-color: #fdffea;
+    color: Red;
+    z-index: 1000;
+    padding-left: 12px;
+}
+
+    #MsgBox a {
+        color: #15ADFF;
+    }
+
+.P_NewMessages {
+    width: 620px;
+    height: 476px;
+    text-align: center;
+    display: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+}

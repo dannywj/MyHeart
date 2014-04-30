@@ -10,6 +10,9 @@ namespace HeartData
 {
     public class DBTools
     {
+        //===================================================
+        //=======================Heart=======================
+        //===================================================
         /// <summary>
         /// 获取公开心愿
         /// </summary>
@@ -48,102 +51,13 @@ namespace HeartData
             return dt;
         }
 
-        public static bool CheckNewUser(string userName)
-        {
-            string sql = "  select count(*) from ht_userInfo where loginName=@userName";
-            SqlParameter[] parameters = {
-					new SqlParameter("@userName", SqlDbType.NVarChar)
-                                        };
-            parameters[0].Value = userName;
-            DataSet ds = SqlHelper.ExecuteDataset(ConnString.GetConString, CommandType.Text, sql, parameters);
-            if (ds != null && ds.Tables[0].Rows.Count > 0)
-            {
-                if (int.Parse(ds.Tables[0].Rows[0][0].ToString()) > 0)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public static bool RegisterNewUser(string userName, string password, bool useEmail, string userNickName)
-        {
-            string sql = "  insert into ht_userInfo(loginName,useEmail,password,nickName)values(@userName,@use_email,@password,@nickName)";
-            SqlParameter[] parameters = {
-					new SqlParameter("@userName", SqlDbType.NVarChar),
-                    new SqlParameter("@password", SqlDbType.NVarChar),
-                    new SqlParameter("@use_email", SqlDbType.Int),
-                    new SqlParameter("@nickName", SqlDbType.NVarChar),
-                                        };
-            parameters[0].Value = userName;
-            parameters[1].Value = password;
-            parameters[2].Value = useEmail ? "1" : "0";
-            parameters[3].Value = userNickName;
-
-            object o = SqlHelper.ExecuteNonQuery(ConnString.GetConString, CommandType.Text, sql, parameters);
-
-            if (Convert.ToInt32(o) > 0)
-            {
-                //if (HeartData.Common.CheckEmail(userName))
-                //{
-                //    string[] ParamList = { userNickName, password };
-                //HeartData.Common.SendMailWithTheme(userName, HeartData.MailTheme.HeartNewSignup, ParamList);
-                // 在新线程中运行
-                if (HeartData.Common.CheckEmail(userName))
-                {
-                    string[] ParamList = { userNickName, password };
-                    ThreadStart starter = delegate { SendMailWithTheme(userName, ParamList); };
-                    Thread t = new Thread(starter);
-                    t.Start();
-                }
-                //}
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
-
-        }
-
-        public static void SendMailWithTheme(string userName, string[] ParamList)
-        {
-            HeartData.Common.SendMailWithTheme(userName, HeartData.MailTheme.HeartNewSignup, ParamList);
-        }
-
-        public static bool UserLogin(string userName, string password)
-        {
-            try
-            {
-                string sql = " select * from  ht_userInfo where loginName=@userName and password=@password ";
-                SqlParameter[] parameters = {
-					new SqlParameter("@userName", SqlDbType.NVarChar),
-                    new SqlParameter("@password", SqlDbType.NVarChar)
-                                        };
-                parameters[0].Value = userName;
-                parameters[1].Value = password;
-                object o = SqlHelper.ExecuteScalar(ConnString.GetConString, CommandType.Text, sql, parameters);
-                if (Convert.ToInt32(o) > 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
-
-        public static bool PubNewHeart(NewHeart newHeart)
+        /// <summary>
+        /// 发布心愿
+        /// </summary>
+        /// <param name="newHeart">心愿内容</param>
+        /// <param name="joinerLoginName">参与者登录名（可选）</param>
+        /// <returns></returns>
+        public static bool PubNewHeart(NewHeart newHeart, string joinerLoginName = "")
         {
             try
             {
@@ -200,6 +114,13 @@ namespace HeartData
                 parameters[10].Value = 0;//newHeart.station;
                 parameters[11].Value = newHeart.IsPrivate;
                 object o = SqlHelper.ExecuteNonQuery(ConnString.GetConString, CommandType.Text, sql, parameters);
+
+                //获取heartId
+                string sql_maxId = "select max( heartId) from ht_heartInfo ";
+                object id = SqlHelper.ExecuteScalar(ConnString.GetConString, CommandType.Text, sql_maxId);
+
+                //绑定参与关系
+                BindUserJoin(int.Parse(id.ToString()), newHeart.PubId, newHeart.Joiner, joinerLoginName);
             }
             catch (Exception)
             {
@@ -209,6 +130,38 @@ namespace HeartData
             return true;
         }
 
+        /// <summary>
+        /// 绑定参与者 
+        /// </summary>
+        /// <param name="heartId">心愿id</param>
+        /// <param name="pubLoginName">发布者登录名</param>
+        /// <param name="joinerNickName">参与者昵称</param>
+        /// <param name="joinerLoginName">参与者登录名</param>
+        public static void BindUserJoin(int heartId, string pubLoginName, string joinerNickName, string joinerLoginName)
+        {
+            try
+            {
+                string sql = string.Format(@"insert into ht_userJoin
+                (heartId, pubLoginName,joinerNickName,joinerLoginName,isRead)
+                 VALUES
+                       ({0}
+                       ,'{1}'
+                       ,'{2}'
+                       ,'{3}'
+                       ,'false' )", heartId, pubLoginName, joinerNickName, joinerLoginName);
+                object o = SqlHelper.ExecuteNonQuery(ConnString.GetConString, CommandType.Text, sql);
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        /// <summary>
+        /// 根据登录名获取心愿信息
+        /// </summary>
+        /// <param name="loginName">登录名</param>
+        /// <returns></returns>
         public static List<NewHeart> GetHeartsByLoginName(string loginName)
         {
             DataTable dt = null;
@@ -250,7 +203,12 @@ namespace HeartData
             return list;
         }
 
-
+        /// <summary>
+        /// 更新心愿状态为已完成
+        /// </summary>
+        /// <param name="station">状态</param>
+        /// <param name="heartid">心愿id</param>
+        /// <returns></returns>
         public static bool UpdateHeartStation(int station, int heartid)
         {
             try
@@ -266,6 +224,11 @@ namespace HeartData
             return true;
         }
 
+        /// <summary>
+        /// 获取心愿条数
+        /// </summary>
+        /// <param name="loginName"></param>
+        /// <returns></returns>
         public static string GetHeartsCount(string loginName)
         {
             DataTable dt = new DataTable();
@@ -296,6 +259,134 @@ namespace HeartData
             return allcount + "_" + okcount;
         }
 
+
+        //===================================================
+        //=======================User========================
+        //===================================================
+        /// <summary>
+        /// 检查新用户是否可以使用
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public static bool CheckNewUser(string userName)
+        {
+            string sql = "  select count(*) from ht_userInfo where loginName=@userName";
+            SqlParameter[] parameters = {
+					new SqlParameter("@userName", SqlDbType.NVarChar)
+                                        };
+            parameters[0].Value = userName;
+            DataSet ds = SqlHelper.ExecuteDataset(ConnString.GetConString, CommandType.Text, sql, parameters);
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                if (int.Parse(ds.Tables[0].Rows[0][0].ToString()) > 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 注册新用户
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <param name="useEmail"></param>
+        /// <param name="userNickName"></param>
+        /// <returns></returns>
+        public static bool RegisterNewUser(string userName, string password, bool useEmail, string userNickName)
+        {
+            string sql = "  insert into ht_userInfo(loginName,useEmail,password,nickName)values(@userName,@use_email,@password,@nickName)";
+            SqlParameter[] parameters = {
+					new SqlParameter("@userName", SqlDbType.NVarChar),
+                    new SqlParameter("@password", SqlDbType.NVarChar),
+                    new SqlParameter("@use_email", SqlDbType.Int),
+                    new SqlParameter("@nickName", SqlDbType.NVarChar),
+                                        };
+            parameters[0].Value = userName;
+            parameters[1].Value = password;
+            parameters[2].Value = useEmail ? "1" : "0";
+            parameters[3].Value = userNickName;
+
+            object o = SqlHelper.ExecuteNonQuery(ConnString.GetConString, CommandType.Text, sql, parameters);
+
+            if (Convert.ToInt32(o) > 0)
+            {
+                //if (HeartData.Common.CheckEmail(userName))
+                //{
+                //    string[] ParamList = { userNickName, password };
+                //HeartData.Common.SendMailWithTheme(userName, HeartData.MailTheme.HeartNewSignup, ParamList);
+                // 在新线程中运行
+                if (HeartData.Common.CheckEmail(userName))
+                {
+                    string[] ParamList = { userNickName, password };
+                    ThreadStart starter = delegate { SendMailWithTheme(userName, ParamList); };
+                    Thread t = new Thread(starter);
+                    t.Start();
+                }
+                //}
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+
+        }
+
+        /// <summary>
+        /// 发送用户通知邮件
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="ParamList"></param>
+        public static void SendMailWithTheme(string userName, string[] ParamList)
+        {
+            HeartData.Common.SendMailWithTheme(userName, HeartData.MailTheme.HeartNewSignup, ParamList);
+        }
+
+        /// <summary>
+        /// 用户登录
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public static bool UserLogin(string userName, string password)
+        {
+            try
+            {
+                string sql = " select * from  ht_userInfo where loginName=@userName and password=@password ";
+                SqlParameter[] parameters = {
+					new SqlParameter("@userName", SqlDbType.NVarChar),
+                    new SqlParameter("@password", SqlDbType.NVarChar)
+                                        };
+                parameters[0].Value = userName;
+                parameters[1].Value = password;
+                object o = SqlHelper.ExecuteScalar(ConnString.GetConString, CommandType.Text, sql, parameters);
+                if (Convert.ToInt32(o) > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        /// <param name="loginName"></param>
+        /// <returns></returns>
         public static User GetUserInfoByLoginName(string loginName)
         {
             User u = new User();
@@ -308,7 +399,84 @@ namespace HeartData
             return u;
         }
 
-        //Message
+        /// <summary>
+        /// 获取所有用户
+        /// </summary>
+        /// <returns></returns>
+        public static List<User> getAllUser()
+        {
+            List<User> list = new List<User>();
+            DataTable dt = null;
+            string sql = "select * from ht_userInfo ";
+            try
+            {
+                dt = SqlHelper.ExecuteDataset(ConnString.GetConString, CommandType.Text, sql.ToString()).Tables[0];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    User u = new User();
+                    u.LoginName = dt.Rows[i]["loginName"].ToString();
+                    u.NickName = dt.Rows[i]["nickName"].ToString();
+                    u.Status = int.Parse(dt.Rows[i]["status"].ToString());
+                    list.Add(u);
+                }
+            }
+            catch
+            {
+
+            }
+            return list;
+        }
+
+        //===================================================
+        //=======================Others======================
+        //===================================================
+        #region Message Pub Tools
+        public static bool PubNewMessage(string date, string content, string writer)
+        {
+            try
+            {
+                string sql = string.Format(@"INSERT INTO ht_message ( writer, content, pub_date )
+                VALUES  ( '{0}', N'{1}',  '{2}')", writer, content, date);
+
+                object o = SqlHelper.ExecuteNonQuery(ConnString.GetConString, CommandType.Text, sql);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static int GetMessageCount()
+        {
+            try
+            {
+                string sql = string.Format(@"select count(*) from ht_message");
+                object o = SqlHelper.ExecuteScalar(ConnString.GetConString, CommandType.Text, sql);
+                return Convert.ToInt32(o);
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+
+        public static string GetLastMessageDate()
+        {
+            try
+            {
+                string sql = string.Format(@"SELECT TOP 1 Convert(varchar(10),[pub_date],120) AS pub_date from ht_message ORDER BY pub_date desc");
+                object o = SqlHelper.ExecuteScalar(ConnString.GetConString, CommandType.Text, sql);
+                return o.ToString();
+            }
+            catch (Exception)
+            {
+                return "";
+            }
+
+        }
+
+        //======Message======
         public static List<MessageItem> GetRandomMessage()
         {
             DataTable dt = null;
@@ -366,54 +534,6 @@ namespace HeartData
                 return null;
             }
             return list;
-        }
-
-
-
-        #region Message Pub Tools
-        public static bool PubNewMessage(string date, string content, string writer)
-        {
-            try
-            {
-                string sql = string.Format(@"INSERT INTO ht_message ( writer, content, pub_date )
-                VALUES  ( '{0}', N'{1}',  '{2}')", writer, content, date);
-
-                object o = SqlHelper.ExecuteNonQuery(ConnString.GetConString, CommandType.Text, sql);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        public static int GetMessageCount()
-        {
-            try
-            {
-                string sql = string.Format(@"select count(*) from ht_message");
-                object o = SqlHelper.ExecuteScalar(ConnString.GetConString, CommandType.Text, sql);
-                return Convert.ToInt32(o);
-            }
-            catch (Exception)
-            {
-                return 0;
-            }
-        }
-
-        public static string GetLastMessageDate()
-        {
-            try
-            {
-                string sql = string.Format(@"SELECT TOP 1 Convert(varchar(10),[pub_date],120) AS pub_date from ht_message ORDER BY pub_date desc");
-                object o = SqlHelper.ExecuteScalar(ConnString.GetConString, CommandType.Text, sql);
-                return o.ToString();
-            }
-            catch (Exception)
-            {
-                return "";
-            }
-
         }
         #endregion
     }

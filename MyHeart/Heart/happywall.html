@@ -33,6 +33,9 @@
     <script src="../Scripts/Plugin/jquery.ui.datepicker-zh-CN.js"></script>
 </head>
 <body>
+    <span id="MsgBox">您有新动态，<a href="#P_NewMessages" class="btnNewMessage">点击查看</a>
+    </span>
+
     <!-- Panel -->
     <div id="toppanel">
         <div id="panel">
@@ -255,14 +258,14 @@
                         <li class="publeft">期待参与者:</li>
                         <li class="pubright">
                             <div style="position: relative;">
-                                <input type="text" class="inputText" id="hJoiner" />
+                                <input type="text" class="inputText" id="hJoiner" placeholder="输入@选择朋友" />
                                 <div class="autocomplete-frame" id="autocomplete-frame">
-                                    <div id="Autocomplete_1240430421731" class="autocomplete">
+                                    <!--  <div id="Autocomplete_1240430421731" class="autocomplete">
                                         <div class="suggestItems"><strong>Li</strong>beria</div>
                                         <div class="suggestItems"><strong>Li</strong>byan Arab Jamahiriya</div>
                                         <div class="suggestItems"><strong>Li</strong>echtenstein</div>
                                         <div class="suggestItems"><strong>Li</strong>thuania</div>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                         </li>
@@ -289,8 +292,11 @@
                         <li class="publeft"><span class="redStar">*</span>隐私选项:</li>
                         <li class="pubright">
                             <span style="float: left; margin-left: 26px">
-                                <input type="radio" name="hShow" class="" id="hPublic" checked="checked" />公开&nbsp;&nbsp;
-                                <input type="radio" name="hShow" class="" id="hPrivate" />保密
+                                <input type="radio" name="hShow" class="" id="hPublic" checked="checked" />
+                                <label for="hPublic">公开</label>
+                                &nbsp;&nbsp;
+                                <input type="radio" name="hShow" class="" id="hPrivate" />
+                                <label for="hPrivate">保密</label>
                             </span>
                         </li>
                     </ul>
@@ -330,5 +336,18 @@
     </section>
     <!--Manage Heart Panel End-->
 
+    <!-- Message Box Panel Begin-->
+    <div class="P_NewMessages" id="P_NewMessages">
+        <header id="">
+            <h2 class="PubTitleText">我的消息</h2>
+        </header>
+        <article>
+            <div id="" class="pubContent">
+                舒服撒法
+            </div>
+        </article>
+        <footer></footer>
+    </div>
+    <!--Message Box Panel End-->
 </body>
 </html>

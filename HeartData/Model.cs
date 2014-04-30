@@ -47,7 +47,8 @@ namespace HeartData
     }
 
     //Message
-    public class MessageItem {
+    public class MessageItem
+    {
         public string PubDate { set; get; }
         public string Writer { set; get; }
         public string Content { set; get; }

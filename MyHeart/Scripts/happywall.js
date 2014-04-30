@@ -9,6 +9,7 @@ var gUserNickName = '';
 var gHeartLevel = 1;
 var gMaxNum = 18;//max 比实际图片数小1
 var gRandomNumList = [];
+var gPubHeartJoinerLoginName = '';
 
 (function ($) {
     $.extend({
@@ -41,6 +42,14 @@ function RenderTemplatefunction(container, template, data) {
     $(template).tmpl(data).appendTo(container);
 
 };
+
+jQuery.fn.clickOnce = function (callback) {
+    this.unbind('click');
+    this.click(function () {
+        callback();
+    });
+};
+
 //显示愿望弹出层
 function showDialog() {
     $(".heartInfo_inline").colorbox({
@@ -514,7 +523,7 @@ $(function () {
             "IsPrivate": hIsPrivate
         };
         $("#spPubNote").show();
-        $.post(ControllerPath + "Heart/PublishNewHeart", { NewHeart: CommonJS.ToSerialize(NewHeart) }, function (data) {
+        $.post(ControllerPath + "Heart/PublishNewHeart", { NewHeart: CommonJS.ToSerialize(NewHeart), joinerLoginName: gPubHeartJoinerLoginName }, function (data) {
             if (data.isSuccess === true) {
                 $("#spPubNote").hide();
                 jQuery().colorbox.close(); //不用写id也一样可以实现关闭功能
@@ -543,7 +552,7 @@ $(function () {
 
     //参与者输入事件
     $("#hJoiner").keyup(function (event) {
-        autoComplete.start(event,$(this).val());
+        autoComplete.start(event, $(this).val());
     });
     $("#hJoiner").focusout(function () {
         autoComplete.hideResultDivs();
@@ -564,10 +573,11 @@ $(function () {
         //初始化建议列表
         init: function () {
             this.autoObj.css("left", "24px").css("top", "24px");
+            //this.clickSelectedItem();
             this.autoMouseover();
             this.autoMouseout();
-            this.clickSelectedItem();
-            this.showResultDivs();
+
+            //this.showResultDivs();
         },
         //显示结果列表
         showResultDivs: function () {
@@ -583,8 +593,17 @@ $(function () {
         },
         //移入显示特效
         autoMouseover: function () {
+            //var itemChilds = $(this.autoObj[0].children)[0].children;
+            //for (var i = 0; i < itemChilds.length; i++) {
+            //    $(itemChilds[i]).mouseover(function () {
+            //        $(this).addClass("selected");
+            //    });
+            //}
+
+            //console.info(itemChilds);
             this.autoObj.find(".suggestItems").mouseover(function () {
                 $(this).addClass("selected");
+                //alert(22);
             });
         },
         //移出显示特效
@@ -595,14 +614,19 @@ $(function () {
         },
         //点击结果事件
         clickSelectedItem: function () {
-            
-            var autoObjParent = this;
-            this.autoObj.find(".suggestItems").click(function () {
-                console.error('ee');
-                alert(111);
-                //autoObjParent.obj.val($(this).text());
-                //autoObjParent.hideResultDivs();
+            //TODO
+
+            this.autoObj.find(".suggestItems").clickOnce(function () {
+                console.error('click');
             });
+
+            //var itemChilds = $(this.autoObj[0].children)[0].children;
+            //for (var i = 0; i < itemChilds.length; i++) {
+            //    console.info(itemChilds[i]);
+            //    $(itemChilds[i]).clickOnce(function () {
+            //        console.error('click');
+            //    });
+            //}
         },
         //格式化选定文字
         formatItemText: function (txt) {
@@ -610,7 +634,6 @@ $(function () {
         },
         //更改建议列表项目样式
         changeClassName: function (length) {
-            console.info(this.index);
             var itemChilds = $(this.autoObj[0].children)[0].children;
             for (var i = 0; i < length; i++) {
                 if (i != this.index) {
@@ -650,40 +673,55 @@ $(function () {
             if (event.keyCode == 13) {
                 var itemChilds = $(this.autoObj[0].children)[0].children;
                 //alert($(itemChilds[this.index]).html());
-                this.search_value = this.formatItemText($(itemChilds[this.index]).html());
+                //this.search_value = this.formatItemText($(itemChilds[this.index]).html());
+                this.search_value = $(itemChilds[this.index]).children().attr("name");
+                gPubHeartJoinerLoginName = $(itemChilds[this.index]).children().attr("value");
                 this.obj.val(this.search_value);
                 //TODO: Remove
                 this.hideResultDivs();
             }
         },
         getData: function () {
-            //this.key;
-            this.value_arr= JSON.parse('[{"key":"a"},{"key":"ab"},{"key":"abc"},{"key":"abcd"},{"key":"abcde"},{"key":"abcdef"}]');
+            var tempObj = this;
+            //this.value_arr = JSON.parse('[{"key":"a"},{"key":"ab"},{"key":"abc"},{"key":"abcd"},{"key":"abcde"},{"key":"abcdef"}]');
+            $.post(ControllerPath + "User/GetAllUser?date=" + new Date(), {}, function (data) {
+                if (data.isSuccess === true) {
+                    tempObj.value_arr = data.userList;
+                    tempObj.showResult();
+
+                    tempObj.autoMouseover();
+                    tempObj.autoMouseout();
+                    tempObj.clickSelectedItem();
+                }
+                else {
+
+                }
+            });
         },
-        showResult:function(){
-            var html='';
-            html+='<div class="autocomplete">';
+        showResult: function () {
+            var html = '';
+            html += '<div class="autocomplete">';
             for (var i = 0; i < this.value_arr.length; i++) {
-                html+='<div class="suggestItems">'+this.formatKey(this.value_arr[i].key)+'</div>';
+                html += '<div class="suggestItems"><input type="hidden" name="' + this.value_arr[i].NickName + '" value="' + this.value_arr[i].LoginName + '" />';
+                html += this.formatKey(this.value_arr[i].NickName) + '</div>';
             }
             html += '</div>';
+            this.autoObj.empty();
             this.autoObj.html(html);
-            console.info(html);
+            this.showResultDivs();
         },
         formatKey: function (resultVal) {
             return resultVal.replace(this.key, '<strong>' + this.key + '</strong>');
         },
         //操作入口方法
-        start: function (event,key) {
+        start: function (event, key) {
             if (event.keyCode != 13 && event.keyCode != 38 && event.keyCode != 40) {
                 this.key = key;
                 this.getData();
-                this.showResult();
                 this.init();
             }
             //绑定按键动作
             this.pressKey(event);
-            console.info(key);
         }
     }
 
@@ -691,5 +729,12 @@ $(function () {
     var autoComplete = new AutoComplete($('#hJoiner'), $('#autocomplete-frame'), []);
 
     //====自动完成End=====
+
+    //显示消息盒子弹出层
+    $(".btnNewMessage").colorbox({
+        inline: true, width: "50%", scrolling: false, width: "680px", height: "550px",
+        onOpen: function () { $(".P_NewMessages").show(); $("#close").click(); GetHeartListByLoginName(gCurrentUser); },
+        onClosed: function () { $(".P_NewMessages").hide(); }
+    });
 });
 

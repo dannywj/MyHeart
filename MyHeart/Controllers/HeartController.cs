@@ -49,12 +49,13 @@ namespace MyHeart.Controllers
             //发布心愿采用form方式。。。。
             NewHeart newHeart = new NewHeart();
             newHeart = Common.JosnDeserialize<NewHeart>(Request.Form["NewHeart"].ToString(), null);
+            string joinerLoginName = Request.Form["joinerLoginName"].ToString();
 
             JsonResult jr = new JsonResult();
             jr.ContentType = "text/json";
             jr.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
 
-            if (DBTools.PubNewHeart(newHeart))
+            if (DBTools.PubNewHeart(newHeart, joinerLoginName))
             {
                 jr.Data = new { isSuccess = true };
             }

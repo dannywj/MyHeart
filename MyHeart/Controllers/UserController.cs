@@ -175,5 +175,15 @@ namespace MyHeart.Controllers
             jr.Data = new { isSuccess = true };
             return jr;
         }
+
+        public JsonResult GetAllUser()
+        {
+            JsonResult jr = new JsonResult();
+            jr.ContentType = "text/json";
+            jr.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            List<User> userlist = DBTools.getAllUser();
+            jr.Data = new { isSuccess = true, userList = userlist };
+            return jr;
+        }
     }
 }
