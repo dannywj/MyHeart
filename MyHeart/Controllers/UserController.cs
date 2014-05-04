@@ -176,12 +176,20 @@ namespace MyHeart.Controllers
             return jr;
         }
 
-        public JsonResult GetAllUser()
+        public JsonResult GetAllUser(string key)
         {
             JsonResult jr = new JsonResult();
             jr.ContentType = "text/json";
             jr.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            List<User> userlist = DBTools.getAllUser();
+            List<User> userlist = new List<HeartData.User>();
+            if (key.Trim() == "@")
+            {
+                userlist = DBTools.getAllUser();
+            }
+            else
+            {
+                userlist = DBTools.getAllUser(key);
+            }
             jr.Data = new { isSuccess = true, userList = userlist };
             return jr;
         }

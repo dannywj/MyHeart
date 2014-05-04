@@ -385,9 +385,10 @@ p {
 }
 /*自动完成相关End*/
 
+/*消息盒子Begin*/
 #MsgBox {
     border: solid 1px #dedede;
-    display: block;
+    display: none;
     height: 30px;
     line-height: 30px;
     width: 130px;
@@ -407,10 +408,39 @@ p {
     }
 
 .P_NewMessages {
-    width: 620px;
-    height: 476px;
+    height: 140px;
     text-align: center;
     display: none;
     overflow-y: auto;
     overflow-x: hidden;
 }
+
+.newMsgTitle {
+    text-align: left;
+    font-size: 12px;
+    line-height: 16px;
+    margin-top: 10px;
+    padding-left: 10px;
+}
+
+    .newMsgTitle a {
+        color: #15ADFF;
+    }
+
+.newMsgContent {
+    text-align: left;
+    font-size: 12px;
+    display: none;
+    margin-top: 4px;
+    margin-bottom: 10px;
+    padding-left: 16px;
+    color: #15ADFF;
+    font-weight: bold;
+    line-height: 16px;
+}
+
+.font-org {
+    color: #ff6a00;
+    font-weight: bold;
+}
+/*消息盒子End*/

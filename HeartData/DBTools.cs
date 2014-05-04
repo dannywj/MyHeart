@@ -259,6 +259,85 @@ namespace HeartData
             return allcount + "_" + okcount;
         }
 
+        /// <summary>
+        /// 获取个人未读新动态条数
+        /// </summary>
+        /// <param name="loginName"></param>
+        /// <returns></returns>
+        public static int GetNewMessageCount(string loginName)
+        {
+            string sql = string.Format(@"
+            select count(*) as newcount from ht_userJoin where joinerLoginName='{0}' and isRead='false' ", loginName);
+            int allcount = 0;
+            try
+            {
+                object o = SqlHelper.ExecuteScalar(ConnString.GetConString, CommandType.Text, sql.ToString());
+                allcount = Convert.ToInt32(o);
+            }
+            catch
+            {
+                return 0;
+            }
+            return allcount;
+        }
+
+        public static List<NewHeart> GetNewMessage(string loginName)
+        {
+            DataTable dt = null;
+            List<NewHeart> list = new List<NewHeart>();
+
+            string sql = string.Format(@"select *  from ht_userJoin j
+                    inner join ht_heartInfo h on j.heartId=h.heartId
+                    where joinerLoginName='{0}' and isRead='false' ", loginName);
+            try
+            {
+                dt = SqlHelper.ExecuteDataset(ConnString.GetConString, CommandType.Text, sql.ToString()).Tables[0];
+                if (dt.Rows.Count > 0)
+                {
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        NewHeart nh = new NewHeart();
+                        nh.Contact = dt.Rows[i]["contact"].ToString();
+                        if (string.IsNullOrEmpty(dt.Rows[i]["endDate"].ToString()))
+                        {
+                            nh.FinishDate = string.Empty;
+                        }
+                        else
+                        {
+                            nh.FinishDate = Convert.ToDateTime(dt.Rows[i]["endDate"].ToString()).ToString("yyyy-MM-dd");
+                        }
+                        nh.HeartContent = dt.Rows[i]["content"].ToString();
+                        nh.HeartLevel = int.Parse(dt.Rows[i]["heartLevel"].ToString());
+                        nh.Joiner = dt.Rows[i]["participator"].ToString();
+                        nh.Puber = dt.Rows[i]["pubName"].ToString();
+                        nh.Title = dt.Rows[i]["title"].ToString();
+                        nh.Station = int.Parse(dt.Rows[i]["station"].ToString());
+                        nh.HeartId = int.Parse(dt.Rows[i]["heartId"].ToString());
+                        list.Add(nh);
+                    }
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            return list;
+        }
+
+        public static bool UpdateNewMessageStatus(string loginName)
+        {
+            try
+            {
+                string sql = string.Format(@"update ht_userJoin set isRead='true' where joinerLoginName='{0}' and isRead='false'", loginName);
+
+                object o = SqlHelper.ExecuteNonQuery(ConnString.GetConString, CommandType.Text, sql);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
 
         //===================================================
         //=======================User========================
@@ -408,6 +487,34 @@ namespace HeartData
             List<User> list = new List<User>();
             DataTable dt = null;
             string sql = "select * from ht_userInfo ";
+            try
+            {
+                dt = SqlHelper.ExecuteDataset(ConnString.GetConString, CommandType.Text, sql.ToString()).Tables[0];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    User u = new User();
+                    u.LoginName = dt.Rows[i]["loginName"].ToString();
+                    u.NickName = dt.Rows[i]["nickName"].ToString();
+                    u.Status = int.Parse(dt.Rows[i]["status"].ToString());
+                    list.Add(u);
+                }
+            }
+            catch
+            {
+
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 获取所有用户by key
+        /// </summary>
+        /// <returns></returns>
+        public static List<User> getAllUser(string key)
+        {
+            List<User> list = new List<User>();
+            DataTable dt = null;
+            string sql = string.Format("select * from ht_userInfo where nickName like '%{0}%'", key);
             try
             {
                 dt = SqlHelper.ExecuteDataset(ConnString.GetConString, CommandType.Text, sql.ToString()).Tables[0];

@@ -185,6 +185,9 @@ function GetData() {
             gUserNickName = data.NickName;
             showLoginInfo(data.CurrentUser);
             GetHeartsCount(gCurrentUser);
+            //获取消息盒子数据
+            GetMessageDataCount();
+            window.setInterval(GetMessageDataCount, 3000);
         }
     });
 
@@ -196,6 +199,9 @@ function GetData() {
         $("#loginusername").val(cookie_loginname);
         $("#loginpassword").val(cookie_password);
     }
+
+
+
 }
 //sina weibo login
 function InitSinaLogin() {
@@ -298,7 +304,66 @@ function isEmail(str) {
     return reg.test(str);
 }
 
+//消息盒子部分Begin
+function GetMessageDataCount() {
+    $.get(ControllerPath + "Heart/HasNewMessage?date=" + new Date(), { loginName: gCurrentUser }, function (data) {
+        if (data.isSuccess) {
+            if (data.hasNewMessage) {
+                ShowMessageBox();
+            } else {
+                HideMessageBox();
+            }
+        }
+    });
+}
 
+function GetMessageData() {
+    $.get(ControllerPath + "Heart/GetNewMessage?date=" + new Date(), { loginName: gCurrentUser }, function (data) {
+        if (data.isSuccess) {
+            if (data.heartInfo.length > 0) {
+                var cHTML = '';
+                for (var i = 0; i < data.heartInfo.length; i++) {
+                    cHTML += '<p> <div id="" class="newMsgTitle">';
+                    cHTML += '<span>•</span>&nbsp;<span class="font-org">' + data.heartInfo[i].Puber + '</span>期待与你完成心愿《<span class="font-org">' + data.heartInfo[i].Title + '</span>》';
+                    cHTML += '<a href="javascript:void(0);" onclick="ToggleNewMessage(\'' + data.heartInfo[i].HeartId + '\')" >心愿详情</a>';
+                    cHTML += '</div><div id="' + data.heartInfo[i].HeartId + '" class="newMsgContent">';
+                    cHTML += data.heartInfo[i].HeartContent;
+                    cHTML += '</div> </p>';
+                }
+                $("#newMessageContent").html(cHTML);
+                UpdateNewMessageStatus();
+            } else {
+
+            }
+        }
+    });
+}
+
+function UpdateNewMessageStatus() {
+    $.get(ControllerPath + "Heart/UpdateNewMessageStatus?date=" + new Date(), { loginName: gCurrentUser }, function (data) {
+
+    });
+}
+
+function ToggleNewMessage(id) {
+    $("#" + id).toggle();
+}
+
+function ShowMessageBox() {
+    $("#MsgBox").html('您有新动态，<a href="#P_NewMessages" class="btnNewMessage">点击查看</a>');
+    //初始化消息盒子panel
+    $(".btnNewMessage").colorbox({
+        inline: true, width: "50%", scrolling: false, width: "480px", height: "220px",
+        onOpen: function () { $(".P_NewMessages").show(); GetMessageData(gCurrentUser); },
+        onClosed: function () { $(".P_NewMessages").hide(); }
+    });
+    $("#MsgBox").show();
+}
+
+function HideMessageBox() {
+    $("#MsgBox").hide();
+}
+//消息盒子部分End
 
 /*
    ***********************************************
@@ -684,7 +749,7 @@ $(function () {
         getData: function () {
             var tempObj = this;
             //this.value_arr = JSON.parse('[{"key":"a"},{"key":"ab"},{"key":"abc"},{"key":"abcd"},{"key":"abcde"},{"key":"abcdef"}]');
-            $.post(ControllerPath + "User/GetAllUser?date=" + new Date(), {}, function (data) {
+            $.post(ControllerPath + "User/GetAllUser?date=" + new Date(), { key: this.key }, function (data) {
                 if (data.isSuccess === true) {
                     tempObj.value_arr = data.userList;
                     tempObj.showResult();
@@ -730,11 +795,6 @@ $(function () {
 
     //====自动完成End=====
 
-    //显示消息盒子弹出层
-    $(".btnNewMessage").colorbox({
-        inline: true, width: "50%", scrolling: false, width: "680px", height: "550px",
-        onOpen: function () { $(".P_NewMessages").show(); $("#close").click(); GetHeartListByLoginName(gCurrentUser); },
-        onClosed: function () { $(".P_NewMessages").hide(); }
-    });
+
 });
 

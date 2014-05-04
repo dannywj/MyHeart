@@ -98,5 +98,53 @@ namespace MyHeart.Controllers
             jr.Data = new { isSuccess = true, allcount = resultstr.Split('_')[0].ToString(), okcount = resultstr.Split('_')[1].ToString() };
             return jr;
         }
+
+        /// <summary>
+        /// 获取当前用户是否有新消息
+        /// </summary>
+        /// <param name="loginName"></param>
+        /// <returns></returns>
+        public JsonResult HasNewMessage(string loginName)
+        {
+            JsonResult jr = new JsonResult();
+            jr.ContentType = "text/json";
+            jr.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
+            var count = DBTools.GetNewMessageCount(loginName);
+            jr.Data = new { isSuccess = true, hasNewMessage = count > 0 ? true : false, allCount = count };
+            return jr;
+        }
+
+        /// <summary>
+        /// 获取当前用户的新消息
+        /// </summary>
+        /// <param name="loginName"></param>
+        /// <returns></returns>
+        public JsonResult GetNewMessage(string loginName)
+        {
+            JsonResult jr = new JsonResult();
+            jr.ContentType = "text/json";
+            jr.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
+            var list = DBTools.GetNewMessage(loginName);
+            jr.Data = new { isSuccess = true, heartInfo = list };
+            return jr;
+        }
+
+        /// <summary>
+        /// 更新消息状态为已读
+        /// </summary>
+        /// <param name="loginName"></param>
+        /// <returns></returns>
+        public JsonResult UpdateNewMessageStatus(string loginName)
+        {
+            JsonResult jr = new JsonResult();
+            jr.ContentType = "text/json";
+            jr.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
+            var result = DBTools.UpdateNewMessageStatus(loginName);
+            jr.Data = new { isSuccess = true, isUpdate = result };
+            return jr;
+        }
     }
 }
