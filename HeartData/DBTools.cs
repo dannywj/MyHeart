@@ -377,19 +377,21 @@ namespace HeartData
         /// <param name="useEmail"></param>
         /// <param name="userNickName"></param>
         /// <returns></returns>
-        public static bool RegisterNewUser(string userName, string password, bool useEmail, string userNickName)
+        public static bool RegisterNewUser(string userName, string password, bool useEmail, string userNickName, string nickNamePinYin="")
         {
-            string sql = "  insert into ht_userInfo(loginName,useEmail,password,nickName)values(@userName,@use_email,@password,@nickName)";
+            string sql = "  insert into ht_userInfo(loginName,useEmail,password,nickName,nickNamePy)values(@userName,@use_email,@password,@nickName,@nickNamePy)";
             SqlParameter[] parameters = {
 					new SqlParameter("@userName", SqlDbType.NVarChar),
                     new SqlParameter("@password", SqlDbType.NVarChar),
                     new SqlParameter("@use_email", SqlDbType.Int),
                     new SqlParameter("@nickName", SqlDbType.NVarChar),
+                    new SqlParameter("@nickNamePy", SqlDbType.VarChar),
                                         };
             parameters[0].Value = userName;
             parameters[1].Value = password;
             parameters[2].Value = useEmail ? "1" : "0";
             parameters[3].Value = userNickName;
+            parameters[4].Value = nickNamePinYin;
 
             object o = SqlHelper.ExecuteNonQuery(ConnString.GetConString, CommandType.Text, sql, parameters);
 

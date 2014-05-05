@@ -53,6 +53,9 @@ GO
 ALTER TABLE [dbo].[ht_userInfo] ADD CONSTRAINT [PK_ht_user_info] PRIMARY KEY CLUSTERED  ([id]) ON [PRIMARY]
 GO
 
+ALTER TABLE dbo.[ht_userInfo] ADD nickNamePy varchar(2000) null;
+GO
+
 --用户参与信息表
 CREATE TABLE [ht_userJoin]
 (
@@ -66,31 +69,3 @@ CREATE TABLE [ht_userJoin]
 GO
 ALTER TABLE [dbo].[ht_userJoin] ADD CONSTRAINT [PK_ht_userJoin] PRIMARY KEY CLUSTERED  ([id]) ON [PRIMARY]
 GO
-
-
-
-
----test SQL
-
-SELECT top 6 NewID() as random, Convert(varchar(10),[pub_date],120) as pubdate,[writer],[content]
-FROM [heart].[dbo].[ht_message]
-where writer='juejue'
-ORDER BY random desc
-
-select * from ht_heartInfo
-where pubName='w'
- order by heartId desc
-
-select (
-	select count(*) from ht_heartInfo
-	where pubName='w'
-) as allcount,
-(
-	select count(*) from ht_heartInfo
-	where pubName='w' and station=1
-) as okcount
-
-
-select * from ht_message where pub_date='2014-01-01'
-
-update ht_userInfo set nickName='格格' where id=1

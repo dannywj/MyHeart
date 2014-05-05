@@ -9,6 +9,8 @@ using System.Web;
 using System.Web.Script.Serialization;
 using System.Runtime.Serialization;
 using System.Web.Script.Serialization;
+using Microsoft.International.Converters.PinYinConverter;
+using System.Collections;
 
 namespace HeartData
 {
@@ -161,34 +163,137 @@ namespace HeartData
             str = str.Replace("[害羞]", "<img src='../Content/images/qqface/haixiu.gif' />");
             return str;
         }
+
+        /// <summary>
+        /// 获取汉字拼音全拼
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static string GetFullPinYin(string text)
+        {
+            string result = string.Empty;
+            var chars = text.ToCharArray();
+            //保存原始信息数组
+            List<string[]> list = new List<string[]>();
+
+            foreach (char c in chars)
+            {
+                if (ChineseChar.IsValidChar(c))//非汉子字符直接追加
+                {
+                    ChineseChar chineseChar = new ChineseChar(c);
+                    var py = chineseChar.Pinyins;
+                    ArrayList charList = new ArrayList();
+                    foreach (var item in py)
+                    {
+                        if (item != null)
+                        {
+                            string addItem = item.Substring(0, item.Length - 1);
+                            if (!charList.Contains(addItem))//不同音去重
+                            {
+                                charList.Add(addItem);
+                            }
+                        }
+                    }
+                    list.Add((string[])charList.ToArray(typeof(string)));//强制转换并添加
+                }
+                else
+                {
+                    list.Add(new string[] { c.ToString() });//强制转换并添加
+                }
+
+            }
+
+            List<string> finalList = new List<string>();
+            Descartes(list, 0, finalList, string.Empty);
+
+            foreach (var item in finalList)
+            {
+                result += (item + ";");
+            }
+
+            return result.ToLower();
+        }
+
+        /// <summary>
+        /// 获取汉字拼音首字母
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static string GetFirstPinYin(string text)
+        {
+            string result = string.Empty;
+            var chars = text.ToCharArray();
+            //保存原始信息数组
+            List<string[]> list = new List<string[]>();
+
+            foreach (char c in chars)
+            {
+                if (ChineseChar.IsValidChar(c))//非汉子字符直接追加
+                {
+                    ChineseChar chineseChar = new ChineseChar(c);
+                    var py = chineseChar.Pinyins;
+                    ArrayList charList = new ArrayList();
+                    foreach (var item in py)
+                    {
+                        if (item != null)
+                        {
+                            string addItem = item.Substring(0, 1);
+                            if (!charList.Contains(addItem))//不同音去重
+                            {
+                                charList.Add(addItem);
+                            }
+                        }
+                    }
+                    list.Add((string[])charList.ToArray(typeof(string)));//强制转换并添加
+                }
+                else
+                {
+                    list.Add(new string[] { c.ToString() });//强制转换并添加
+                }
+
+            }
+
+            List<string> finalList = new List<string>();
+            Descartes(list, 0, finalList, string.Empty);
+
+            foreach (var item in finalList)
+            {
+                result += (item + ";");
+            }
+
+            return result.ToLower();
+        }
+
+        /// <summary>
+        /// 笛卡尔积算法
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="count"></param>
+        /// <param name="result"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private static string Descartes(List<string[]> list, int count, List<string> result, string data)
+        {
+            string temp = data;
+            //获取当前数组
+            string[] astr = list[count];
+            //循环当前数组
+            foreach (var item in astr)
+            {
+                if (count + 1 < list.Count)
+                {
+                    temp += Descartes(list, count + 1, result, data + item);
+                }
+                else
+                {
+                    result.Add(data + item);
+                }
+            }
+            return temp;
+        }
+
+
     }
 
-    //public class JSONModelBinder<T> : IModelBinder
-    //{
-    //    public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
-    //    {
-    //        // 从请求中获取提交的参数数据 
-    //        var json = controllerContext.HttpContext.Request.Form[bindingContext.ModelName] as string;
-    //        // 霍力强替换后台自动创建的ExtensionData
-    //        json = json.Replace("\"ExtensionData\":{},", string.Empty);
-    //        // 提交参数是对象 )
-    //        if (json.StartsWith("{") && json.EndsWith("}"))
-    //        {
-    //            JavaScriptSerializer js = new JavaScriptSerializer();
-    //            object obj = js.Deserialize<T>(json);
-    //            return obj;
-    //        }
 
-    //        // 提交参数是数组 
-    //        if (json.StartsWith("[") && json.EndsWith("]"))
-    //        {
-    //            JavaScriptSerializer js = new JavaScriptSerializer();
-    //            List<T> obj = js.Deserialize<List<T>>(json);
-
-    //            return obj;
-    //        }
-
-    //        return null;
-    //    }
-    //}
 }

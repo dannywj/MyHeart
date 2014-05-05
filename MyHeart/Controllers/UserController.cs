@@ -46,7 +46,18 @@ namespace MyHeart.Controllers
             {
                 isEmail = true;
             }
-            if (DBTools.RegisterNewUser(userName, password, isEmail, userNickName))
+
+            string pinyin = string.Empty;
+            try
+            {
+                pinyin = Common.GetFullPinYin(userNickName);
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            if (DBTools.RegisterNewUser(userName, password, isEmail, userNickName, pinyin))
             {
                 //Session["CurrentUser"] = userName;
                 jr.Data = new { isSuccess = true };

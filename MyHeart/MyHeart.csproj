@@ -230,6 +230,7 @@
     <Content Include="Content\img\walltitle.png" />
     <Content Include="Content\MailTheme_sinup.xml" />
     <Content Include="DBScripts\ht.createTable.sql" />
+    <Content Include="DLL\ChnCharInfo.dll" />
     <Content Include="DLL\GotDotNet.ApplicationBlocks.Data.dll" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />

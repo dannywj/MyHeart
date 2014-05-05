@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ChnCharInfo">
+      <HintPath>..\MyHeart\DLL\ChnCharInfo.dll</HintPath>
+    </Reference>
     <Reference Include="GotDotNet.ApplicationBlocks.Data">
       <HintPath>..\MyHeart\DLL\GotDotNet.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
