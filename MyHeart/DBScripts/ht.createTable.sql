@@ -69,3 +69,6 @@ CREATE TABLE [ht_userJoin]
 GO
 ALTER TABLE [dbo].[ht_userJoin] ADD CONSTRAINT [PK_ht_userJoin] PRIMARY KEY CLUSTERED  ([id]) ON [PRIMARY]
 GO
+
+
+

@@ -22,6 +22,7 @@
     <!--许愿墙部分-->
     <link rel="stylesheet" type="text/css" href="../Content/css/type.css" />
     <link rel="stylesheet" type="text/css" href="../Content/css/happywall.css" />
+    <script src="../Scripts/Plugin/md5.js"></script>
     <script type="text/javascript" src="../Scripts/happywall.js"></script>
     <script type="text/javascript" src="../Scripts/Common.js"></script>
     <!--网站图标-->
@@ -85,7 +86,7 @@
                         <h1>用户信息</h1>
                         <h2>当前用户:</h2>
                         <label class="grey">
-                            <span id="info_userLoginName"></span>
+                            <span id="info_userLoginName"></span>&nbsp;&nbsp;<a href="#P_UserInfoUpdate" class="btnUpdateUserInfo">修改昵称</a>
                         </label>
                         <!-- <label class="grey"><a href="#">修改密码</a></label>-->
                         <br />
@@ -251,7 +252,7 @@
                     <ul class="pubLine">
                         <li class="publeft">心愿发布人:</li>
                         <li class="pubright">
-                            <input type="text" class="inputText" id="hPuber" />
+                            <input type="text" class="inputText" id="hPuber" readonly="readonly" />
                         </li>
                     </ul>
                     <ul class="pubLine">
@@ -346,5 +347,35 @@
         <footer></footer>
     </div>
     <!--Message Box Panel End-->
+
+    <!-- User Info Panel Begin-->
+    <div class="P_UserInfoUpdate" id="P_UserInfoUpdate">
+        <header id="">
+            <h2 class="PubTitleText">修改昵称</h2>
+        </header>
+        <article id="userinfoupdateContent">
+            <div id="updateErrorMessage">
+                请输入正确的信息
+            </div>
+            <div class="pubContent">
+                <ul class="pubLine">
+                    <li class="publeft">新昵称:</li>
+                    <li class="pubright">
+                        <input type="text" class="inputText" id="txt_user_new_nick_name" />
+                    </li>
+                </ul>
+
+                <ul class="pubLine">
+                    <li class="publeft"></li>
+                    <li class="pubright">
+                        <input id="btnUpdateUserInfo" type="button" class="pubBtn" value="确认修改" />
+                    </li>
+                </ul>
+
+            </div>
+        </article>
+        <footer></footer>
+    </div>
+    <!--User Info Panel End-->
 </body>
 </html>

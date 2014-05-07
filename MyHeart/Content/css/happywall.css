@@ -444,3 +444,37 @@ p {
     font-weight: bold;
 }
 /*消息盒子End*/
+
+/*修改用户信息begin*/
+.P_UserInfoUpdate {
+    height: 200px;
+    display: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+    .P_UserInfoUpdate .inputText {
+        border: 1px solid #C3CED9;
+        border-radius: 5px 5px 5px 5px;
+        font-size: 14px;
+        height: 20px;
+        line-height: 20px;
+        padding: 0;
+        width: 150px;
+        padding-left: 6px;
+        margin-left: 10px;
+    }
+
+#btnUpdateUserInfo {
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+#updateErrorMessage {
+    color: #cc0000;
+    font-size: 12px;
+    margin: 6px;
+    display: none;
+    text-align: center;
+}
+/*修改用户信息end*/

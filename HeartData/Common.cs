@@ -8,7 +8,6 @@ using System.Data;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Runtime.Serialization;
-using System.Web.Script.Serialization;
 using Microsoft.International.Converters.PinYinConverter;
 using System.Collections;
 

@@ -377,7 +377,7 @@ namespace HeartData
         /// <param name="useEmail"></param>
         /// <param name="userNickName"></param>
         /// <returns></returns>
-        public static bool RegisterNewUser(string userName, string password, bool useEmail, string userNickName, string nickNamePinYin="")
+        public static bool RegisterNewUser(string userName, string password, bool useEmail, string userNickName, string nickNamePinYin = "")
         {
             string sql = "  insert into ht_userInfo(loginName,useEmail,password,nickName,nickNamePy)values(@userName,@use_email,@password,@nickName,@nickNamePy)";
             SqlParameter[] parameters = {
@@ -457,7 +457,7 @@ namespace HeartData
                     return false;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -488,7 +488,7 @@ namespace HeartData
         {
             List<User> list = new List<User>();
             DataTable dt = null;
-            string sql = "select * from ht_userInfo ";
+            string sql = "select * from ht_userInfo where status=0 ";
             try
             {
                 dt = SqlHelper.ExecuteDataset(ConnString.GetConString, CommandType.Text, sql.ToString()).Tables[0];
@@ -512,11 +512,11 @@ namespace HeartData
         /// 获取所有用户by key
         /// </summary>
         /// <returns></returns>
-        public static List<User> getAllUser(string key)
+        public static List<User> getAllUser(string key, string currentUserLoginName)
         {
             List<User> list = new List<User>();
             DataTable dt = null;
-            string sql = string.Format("select * from ht_userInfo where nickName like '%{0}%'", key);
+            string sql = string.Format("select top 10 * from ht_userInfo where (nickName like '%{0}%' or nickNamePy like '%{0}%') and loginName<>'{1}'  and status=0 ", key, currentUserLoginName);
             try
             {
                 dt = SqlHelper.ExecuteDataset(ConnString.GetConString, CommandType.Text, sql.ToString()).Tables[0];
@@ -536,6 +536,27 @@ namespace HeartData
             return list;
         }
 
+        public static bool UpdateUserInfo(string loginName, string userNickName, string nickNamePinYin)
+        {
+            string sql = "update ht_userInfo set nickName=@nickName,nickNamePy=@nickNamePy where loginName='" + loginName + "'";
+            SqlParameter[] parameters = {
+                    new SqlParameter("@nickName", SqlDbType.NVarChar),
+                    new SqlParameter("@nickNamePy", SqlDbType.VarChar),
+                                        };
+            parameters[0].Value = userNickName;
+            parameters[1].Value = nickNamePinYin;
+
+            try
+            {
+                object o = SqlHelper.ExecuteNonQuery(ConnString.GetConString, CommandType.Text, sql, parameters);
+                return true;
+            }
+            catch (Exception)
+            {
+
+            }
+            return false;
+        }
         //===================================================
         //=======================Others======================
         //===================================================

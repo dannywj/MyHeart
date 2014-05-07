@@ -1218,6 +1218,7 @@
     <Content Include="Scripts\Plugin\bootstrap-3.0.3\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Scripts\Plugin\bootstrap-3.0.3\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Properties\PublishProfiles\newPub.pubxml" />
+    <None Include="Properties\PublishProfiles\RayooTech.pubxml" />
     <None Include="Scripts\Plugin\EXTJS\resources\images\access\form\clear-trigger.psd" />
     <None Include="Scripts\Plugin\EXTJS\resources\images\access\form\date-trigger.psd" />
     <None Include="Scripts\Plugin\EXTJS\resources\images\access\form\search-trigger.psd" />

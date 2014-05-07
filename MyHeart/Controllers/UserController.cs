@@ -50,9 +50,9 @@ namespace MyHeart.Controllers
             string pinyin = string.Empty;
             try
             {
-                pinyin = Common.GetFullPinYin(userNickName);
+                pinyin = Common.GetFullPinYin(userNickName) + Common.GetFirstPinYin(userNickName);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -117,7 +117,7 @@ namespace MyHeart.Controllers
                 return jr;
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -153,7 +153,7 @@ namespace MyHeart.Controllers
                 return jr;
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -195,13 +195,43 @@ namespace MyHeart.Controllers
             List<User> userlist = new List<HeartData.User>();
             if (key.Trim() == "@")
             {
-                userlist = DBTools.getAllUser();
+                userlist = DBTools.getAllUser(string.Empty, Session["CurrentUser"].ToString());
             }
             else
             {
-                userlist = DBTools.getAllUser(key);
+                if (Session["CurrentUser"] != null)
+                {
+                    userlist = DBTools.getAllUser(key.Replace("@", ""), Session["CurrentUser"].ToString());
+                }
             }
             jr.Data = new { isSuccess = true, userList = userlist };
+            return jr;
+        }
+
+        public JsonResult UpdateUserInfo(string loginName, string userNickName)
+        {
+            JsonResult jr = new JsonResult();
+            jr.ContentType = "text/json";
+            jr.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            string pinyin = string.Empty;
+            try
+            {
+                pinyin = Common.GetFullPinYin(userNickName) + Common.GetFirstPinYin(userNickName);
+            }
+            catch (Exception)
+            {
+
+            }
+
+            if (DBTools.UpdateUserInfo(loginName, userNickName, pinyin))
+            {
+                jr.Data = new { isSuccess = true };
+            }
+            else
+            {
+                jr.Data = new { isSuccess = false };
+            }
+
             return jr;
         }
     }

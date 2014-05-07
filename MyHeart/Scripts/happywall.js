@@ -10,6 +10,7 @@ var gHeartLevel = 1;
 var gMaxNum = 18;//max 比实际图片数小1
 var gRandomNumList = [];
 var gPubHeartJoinerLoginName = '';
+var gMsgSetIntervalId = 0;
 
 (function ($) {
     $.extend({
@@ -35,6 +36,10 @@ var gPubHeartJoinerLoginName = '';
 //JS拓展replace
 String.prototype.replaceAll = function (s1, s2) {
     return this.replace(new RegExp(s1, "gm"), s2);
+}
+
+String.prototype.Trim = function () {
+    return this.replace(/(^\s*)|(\s*$)/g, "");
 }
 
 function RenderTemplatefunction(container, template, data) {
@@ -66,7 +71,7 @@ function FinishSignup() {
     $("#close").click();
     $("#RegisterErrorMsg").hide();
     $("#WelcomeName").text("欢迎你：" + gUserNickName + "~");
-    $("#info_userLoginName").text(gCurrentUser);
+    $("#info_userLoginName").text(gUserNickName + '[' + gCurrentUser + ']');
     $("#LoginForm").hide();
     $("#UserInfo").show();
 }
@@ -187,7 +192,7 @@ function GetData() {
             GetHeartsCount(gCurrentUser);
             //获取消息盒子数据
             GetMessageDataCount();
-            window.setInterval(GetMessageDataCount, 3000);
+            gMsgSetIntervalId=window.setInterval(GetMessageDataCount, 3000);
         }
     });
 
@@ -228,15 +233,15 @@ function GetSinaUserData(code) {
 
 //登录成功后的显示
 function showLoginInfo(userName) {
+    gCurrentUser = userName;
     $("#LoginForm").hide();
     $("#UserInfo").show();
     $("#open").text("我的信息");
-    $("#info_userLoginName").text(userName);
+    $("#info_userLoginName").text(gUserNickName + ' [' + gCurrentUser + ']');
     //自动收起
     $("#WelcomeName").text("欢迎你：" + gUserNickName + "~");
     $(".pubHeart").css("display", "inline-block");
     //setTimeout('$("#close").click();', 2000);
-    gCurrentUser = userName;
     $("#P_UserHeartInfo").show();
     $("#P_UserRegisterInfo").hide();
 }
@@ -365,6 +370,10 @@ function HideMessageBox() {
 }
 //消息盒子部分End
 
+//用户信息更新begin
+
+//用户信息更新end
+
 /*
    ***********************************************
    * 页面加载，初始化
@@ -452,7 +461,7 @@ $(function () {
         $("#RegisterErrorMsg").show();
 
         //Register
-        $.get(ControllerPath + "User/RegisterNewUser", { userName: userName, password: userPwd, userNickName: userNickName }, function (data) {
+        $.get(ControllerPath + "User/RegisterNewUser", { userName: userName, password: hex_md5(userPwd), userNickName: userNickName }, function (data) {
             if (data.isSuccess === true) {
                 gUserNickName = userNickName;
                 gCurrentUser = userName;
@@ -483,7 +492,11 @@ $(function () {
         }
         $("#LoginMessage").hide();
         //Login
-        $.get(ControllerPath + "User/UserLogin", { userName: userName, password: password }, function (data) {
+        var md5_pwd = password;
+        if (password.length < 16) {
+            md5_pwd = hex_md5(password);
+        }
+        $.get(ControllerPath + "User/UserLogin", { userName: userName, password: md5_pwd }, function (data) {
             if (data.isSuccess === true) {
                 gUserNickName = data.nickName;
                 showLoginInfo(userName);
@@ -491,7 +504,7 @@ $(function () {
                 //设置记住用户cookie
                 if ($("#rememberMe").attr("checked") == "checked") {
                     $.cookie('loginname', userName, { expires: 7 });
-                    $.cookie('password', password, { expires: 7 });
+                    $.cookie('password', md5_pwd, { expires: 7 });
                 } else {
                     $.cookie('loginname', null);
                     $.cookie('password', null);
@@ -520,7 +533,10 @@ $(function () {
                 $(".pubHeart").css("display", "none");
                 //$("#loginusername").val('');
                 //$("#loginpassword").val('');
+                
                 GetData();
+                window.clearInterval(gMsgSetIntervalId);
+                HideMessageBox();
             }
         });
     });
@@ -716,7 +732,7 @@ $(function () {
 
             //向下方向键
             if (event.keyCode == 40) {
-                this.index++;
+                ++this.index;
                 if (this.index > length) {
                     this.index = 0;
                 } else if (this.index == length) {
@@ -726,7 +742,7 @@ $(function () {
             }
             //向上方向键
             if (event.keyCode == 38) {
-                this.index--;
+                --this.index;
                 if (this.index < -1) {
                     this.index = length - 1;
                 } else if (this.index == -1) {
@@ -751,12 +767,16 @@ $(function () {
             //this.value_arr = JSON.parse('[{"key":"a"},{"key":"ab"},{"key":"abc"},{"key":"abcd"},{"key":"abcde"},{"key":"abcdef"}]');
             $.post(ControllerPath + "User/GetAllUser?date=" + new Date(), { key: this.key }, function (data) {
                 if (data.isSuccess === true) {
-                    tempObj.value_arr = data.userList;
-                    tempObj.showResult();
-
-                    tempObj.autoMouseover();
-                    tempObj.autoMouseout();
-                    tempObj.clickSelectedItem();
+                    if (data.userList.length > 0) {
+                        tempObj.value_arr = data.userList;
+                        tempObj.showResult();
+                        tempObj.autoMouseover();
+                        tempObj.autoMouseout();
+                        tempObj.clickSelectedItem();
+                    } else {
+                        tempObj.value_arr = [];
+                        tempObj.hideResultDivs();
+                    }
                 }
                 else {
 
@@ -795,6 +815,37 @@ $(function () {
 
     //====自动完成End=====
 
+    /*
+   ***********************************************
+   * 用户信息修改
+   ***********************************************
+   */
+    $(".btnUpdateUserInfo").colorbox({
+        inline: true, scrolling: false, width: "400px", height: "220px",
+        onOpen: function () { $(".P_UserInfoUpdate").show(); $("#updateErrorMessage").hide() },
+        onClosed: function () { $(".P_UserInfoUpdate").hide(); }
+    });
 
+    $("#btnUpdateUserInfo").clickOnce(function () {
+        var new_user_nickname = $("#txt_user_new_nick_name").val();
+        if (new_user_nickname.Trim() == '') {
+            $("#updateErrorMessage").html('请输入昵称');
+            $("#updateErrorMessage").show();
+            return false;
+        }
+
+        $.get(ControllerPath + "User/UpdateUserInfo", { loginName: gCurrentUser, userNickName: new_user_nickname }, function (data) {
+            if (data.isSuccess === true) {
+                window.location = window.location;
+            }
+            else {
+                $("#updateErrorMessage").html('更新失败');
+                $("#updateErrorMessage").show();
+            }
+        });
+
+
+
+    });
 });
 
