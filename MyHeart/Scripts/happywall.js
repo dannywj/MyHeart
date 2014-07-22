@@ -192,7 +192,7 @@ function GetData() {
             GetHeartsCount(gCurrentUser);
             //获取消息盒子数据
             GetMessageDataCount();
-            gMsgSetIntervalId=window.setInterval(GetMessageDataCount, 3000);
+            gMsgSetIntervalId = window.setInterval(GetMessageDataCount, 3000);
         }
     });
 
@@ -533,7 +533,7 @@ $(function () {
                 $(".pubHeart").css("display", "none");
                 //$("#loginusername").val('');
                 //$("#loginpassword").val('');
-                
+
                 GetData();
                 window.clearInterval(gMsgSetIntervalId);
                 HideMessageBox();
@@ -630,189 +630,48 @@ $(function () {
         onClosed: function () { $(".P_ManageHeart").hide(); }
     });
 
-
-    //参与者输入事件
-    $("#hJoiner").keyup(function (event) {
-        autoComplete.start(event, $(this).val());
-    });
-    $("#hJoiner").focusout(function () {
-        autoComplete.hideResultDivs();
-    });
     //====自动完成Begin=====
-
-    //自动完成操作类
-    function AutoComplete(obj, autoObj, suggustArr) {
-        this.obj = (obj);        //输入框
-        this.autoObj = (autoObj);//DIV的根节点
-        this.value_arr = suggustArr;        //不要包含重复值
-        this.index = -1;          //当前选中的DIV的索引
-        this.search_value = "";   //保存当前搜索的字符
-        this.key = '';
-    }
-    //扩展方法
-    AutoComplete.prototype = {
-        //初始化建议列表
-        init: function () {
-            this.autoObj.css("left", "24px").css("top", "24px");
-            //this.clickSelectedItem();
-            this.autoMouseover();
-            this.autoMouseout();
-
-            //this.showResultDivs();
-        },
-        //显示结果列表
-        showResultDivs: function () {
-            this.autoObj.show();
-        },
-        //隐藏结果列表
-        hideResultDivs: function () {
-            this.autoObj.hide();
-        },
-        //删除建议结果Div
-        deleteResultDivs: function () {
-            this.autoObj.html('');
-        },
-        //移入显示特效
-        autoMouseover: function () {
-            //var itemChilds = $(this.autoObj[0].children)[0].children;
-            //for (var i = 0; i < itemChilds.length; i++) {
-            //    $(itemChilds[i]).mouseover(function () {
-            //        $(this).addClass("selected");
-            //    });
-            //}
-
-            //console.info(itemChilds);
-            this.autoObj.find(".suggestItems").mouseover(function () {
-                $(this).addClass("selected");
-                //alert(22);
-            });
-        },
-        //移出显示特效
-        autoMouseout: function () {
-            this.autoObj.find(".suggestItems").mouseout(function () {
-                $(this).removeClass("selected");
-            });
-        },
-        //点击结果事件
-        clickSelectedItem: function () {
-            //TODO
-
-            this.autoObj.find(".suggestItems").clickOnce(function () {
-                console.error('click');
-            });
-
-            //var itemChilds = $(this.autoObj[0].children)[0].children;
-            //for (var i = 0; i < itemChilds.length; i++) {
-            //    console.info(itemChilds[i]);
-            //    $(itemChilds[i]).clickOnce(function () {
-            //        console.error('click');
-            //    });
-            //}
-        },
-        //格式化选定文字
-        formatItemText: function (txt) {
-            return txt.replace('<strong>', '').replace('</strong>', '');
-        },
-        //更改建议列表项目样式
-        changeClassName: function (length) {
-            var itemChilds = $(this.autoObj[0].children)[0].children;
-            for (var i = 0; i < length; i++) {
-                if (i != this.index) {
-                    $(itemChilds[i]).removeClass("selected");
-                } else {
-                    $(itemChilds[i]).addClass("selected");
-                    //this.obj.value = this.autoObj.childNodes[i].seq;
-                }
-            }
-        },
-        //绑定按键动作
-        pressKey: function (event) {
-            //计算建议列表数目
-            var length = $(this.autoObj[0].children)[0].children.length;
-
-            //向下方向键
-            if (event.keyCode == 40) {
-                ++this.index;
-                if (this.index > length) {
-                    this.index = 0;
-                } else if (this.index == length) {
-                    //this.obj.value = this.search_value;
-                }
-                this.changeClassName(length);
-            }
-            //向上方向键
-            if (event.keyCode == 38) {
-                --this.index;
-                if (this.index < -1) {
-                    this.index = length - 1;
-                } else if (this.index == -1) {
-                    //this.obj.value = this.search_value;
-                }
-                this.changeClassName(length);
-            }
-            //回车
-            if (event.keyCode == 13) {
-                var itemChilds = $(this.autoObj[0].children)[0].children;
-                //alert($(itemChilds[this.index]).html());
-                //this.search_value = this.formatItemText($(itemChilds[this.index]).html());
-                this.search_value = $(itemChilds[this.index]).children().attr("name");
-                gPubHeartJoinerLoginName = $(itemChilds[this.index]).children().attr("value");
-                this.obj.val(this.search_value);
-                //TODO: Remove
-                this.hideResultDivs();
-            }
-        },
-        getData: function () {
-            var tempObj = this;
-            //this.value_arr = JSON.parse('[{"key":"a"},{"key":"ab"},{"key":"abc"},{"key":"abcd"},{"key":"abcde"},{"key":"abcdef"}]');
-            $.post(ControllerPath + "User/GetAllUser?date=" + new Date(), { key: this.key }, function (data) {
-                if (data.isSuccess === true) {
-                    if (data.userList.length > 0) {
-                        tempObj.value_arr = data.userList;
-                        tempObj.showResult();
-                        tempObj.autoMouseover();
-                        tempObj.autoMouseout();
-                        tempObj.clickSelectedItem();
-                    } else {
-                        tempObj.value_arr = [];
-                        tempObj.hideResultDivs();
-                    }
-                }
-                else {
-
+    $("#hJoiner").autocomplete({
+        minLength: 0,
+        source: function (request, response) {
+            var term = request.term;
+            $.ajax({
+                url: ControllerPath + "User/GetAllUser?date=" + new Date(),
+                dataType: "json",
+                data: {
+                    key: request.term
+                },
+                success: function (data) {
+                    response($.map(data.userList, function (item) {
+                        return {
+                            //自定义返回项目
+                            label: item.NickName,
+                            value: item.LoginName
+                        }
+                    }));
                 }
             });
-        },
-        showResult: function () {
-            var html = '';
-            html += '<div class="autocomplete">';
-            for (var i = 0; i < this.value_arr.length; i++) {
-                html += '<div class="suggestItems"><input type="hidden" name="' + this.value_arr[i].NickName + '" value="' + this.value_arr[i].LoginName + '" />';
-                html += this.formatKey(this.value_arr[i].NickName) + '</div>';
-            }
-            html += '</div>';
-            this.autoObj.empty();
-            this.autoObj.html(html);
-            this.showResultDivs();
-        },
-        formatKey: function (resultVal) {
-            return resultVal.replace(this.key, '<strong>' + this.key + '</strong>');
-        },
-        //操作入口方法
-        start: function (event, key) {
-            if (event.keyCode != 13 && event.keyCode != 38 && event.keyCode != 40) {
-                this.key = key;
-                this.getData();
-                this.init();
-            }
-            //绑定按键动作
-            this.pressKey(event);
         }
-    }
-
-    //实例化自动完成对象
-    var autoComplete = new AutoComplete($('#hJoiner'), $('#autocomplete-frame'), []);
-
+            ,
+        focus: function (event, ui) {
+            $("#hJoiner").val(ui.item.label);
+            return false;
+        },
+        select: function (event, ui) {
+            $("#hJoiner").val(ui.item.label);
+            $("#hJoinerValue").val(ui.item.value);
+            gPubHeartJoinerLoginName = ui.item.value;
+            //$("#project-description").html(ui.item.desc);
+            //$("#project-icon").attr("src", "images/" + ui.item.icon);
+            return false;
+        }
+    })
+        .data("autocomplete")._renderItem = function (ul, item) {
+            return $("<li>")
+                .data("item.autocomplete", item)
+                .append("<a>" + item.label + "</a>")
+                .appendTo(ul);
+        };
     //====自动完成End=====
 
     /*
