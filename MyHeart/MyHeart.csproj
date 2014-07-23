@@ -1178,6 +1178,7 @@
     <Content Include="Scripts\Plugin\ratyStar\img\star-on.png" />
     <Content Include="Scripts\Plugin\ratyStar\jquery.raty.js" />
     <Content Include="Scripts\Plugin\login.js" />
+    <Content Include="Scripts\Plugin\ratyStar\jquery.raty.min.js" />
     <Content Include="Scripts\pubheart.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
