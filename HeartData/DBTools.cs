@@ -20,7 +20,7 @@ namespace HeartData
         public static DataTable getAllHeart()
         {
             DataTable dt = null;
-            string sql = " select top 24 *, NewID() as random from ht_heartInfo where isPrivate=0 order by random";
+            string sql = " select top 24 *, NewID() as random from ht_heartInfo where isPrivate=0 and (station=0 or( station=1 and addDate>'" + DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd") + "') )  order by random";
             try
             {
                 dt = SqlHelper.ExecuteDataset(ConnString.GetConString, CommandType.Text, sql.ToString()).Tables[0];
@@ -39,7 +39,7 @@ namespace HeartData
         public static DataTable getAllHeart(string currentUser)
         {
             DataTable dt = null;
-            string sql = " select top 24 *, NewID() as random from ht_heartInfo where isPrivate=0 OR (isPrivate=1 AND pubId='" + currentUser + "') order by random";
+            string sql = " select top 24 *, NewID() as random from ht_heartInfo where (isPrivate=0 OR (isPrivate=1 AND pubId='" + currentUser + "') )and (station=0 or( station=1 and addDate>'" + DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd") + "') ) order by random";
             try
             {
                 dt = SqlHelper.ExecuteDataset(ConnString.GetConString, CommandType.Text, sql.ToString()).Tables[0];
